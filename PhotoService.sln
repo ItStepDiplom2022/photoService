@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32519.379
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoService", "PhotoService\PhotoService.csproj", "{783C4CE5-925B-4E65-9780-3C1EF0ACDFF0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhotoService", "PhotoService\PhotoService.csproj", "{783C4CE5-925B-4E65-9780-3C1EF0ACDFF0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoService.DAL", "PhotoService.DAL\PhotoService.DAL.csproj", "{0FFB053F-F931-4CA3-A0A9-189E9AC3D5F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoService.BLL", "PhotoService.BLL\PhotoService.BLL.csproj", "{2184170B-1C44-403E-8E04-F8E153B2808D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{783C4CE5-925B-4E65-9780-3C1EF0ACDFF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{783C4CE5-925B-4E65-9780-3C1EF0ACDFF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{783C4CE5-925B-4E65-9780-3C1EF0ACDFF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FFB053F-F931-4CA3-A0A9-189E9AC3D5F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FFB053F-F931-4CA3-A0A9-189E9AC3D5F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FFB053F-F931-4CA3-A0A9-189E9AC3D5F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FFB053F-F931-4CA3-A0A9-189E9AC3D5F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2184170B-1C44-403E-8E04-F8E153B2808D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2184170B-1C44-403E-8E04-F8E153B2808D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2184170B-1C44-403E-8E04-F8E153B2808D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2184170B-1C44-403E-8E04-F8E153B2808D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
