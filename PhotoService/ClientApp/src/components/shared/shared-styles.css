@@ -1,0 +1,77 @@
+.authorization-page-main-content{
+    display: flex;
+    width: 100%;
+    height: 90vh;
+}
+
+.authorization-page-image-div{
+    width: 35%;
+    background-image: url('/public/images/sea-image.jpg');
+}
+
+.authorization-page-form-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 65%;
+}
+
+@media only screen and (max-width: 573px) {
+    .authorization-page-image-div{
+        width: 0%;
+    }
+
+    .authorization-page-form-div{
+        width: 100%;
+        background-image: url('/public/images/sea-image-big.jpg');
+    }
+
+    .authorization-page-side-color-div{
+        width: 0%;
+    }
+    
+}
+
+@media only screen and (min-height: 900px), screen and (min-width:1635px) {
+    .authorization-page-image-div{
+        background-image: url('/public/images/sea-image-big.jpg');
+    } 
+}
+
+@media only screen and (min-height: 1250px), screen and (min-width:2285px) {
+    .authorization-page-image-div{
+        background-image: url('/public/images/sea-image-extra-big.jpg');
+    } 
+}
+
+.authorization-form{
+    width: 50%;
+}
+
+.authorization-form input{
+    margin: 3%;
+    font-size: x-large;
+}
+
+.authorization-form button{
+    width: 50%;
+    font-size: large;
+    font-weight: bolder;
+}
+
+.authorization-form span{
+    margin: 0;
+    font-size: smaller;
+}
+
+.authorization-form-heading{
+    color:#1A4769;
+    text-align: center;
+}
+
+.center-div{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    text-align: center;
+}

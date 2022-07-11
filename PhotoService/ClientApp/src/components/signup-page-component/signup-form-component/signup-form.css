@@ -1,0 +1,8 @@
+.error-message{
+    display: inline;
+    color:red;
+}
+
+.invisible{
+    display: none;
+}
