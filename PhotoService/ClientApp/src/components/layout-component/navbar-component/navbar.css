@@ -8,4 +8,13 @@
 
 .custom-navbar{
     background-color: #112D4E;
+    padding: 5px 0 0 0;
+}
+
+.search-field{
+    margin: 10px 0 0 0;
+}
+
+.nav-link-custom{
+    font-size: 20px;
 }
