@@ -2,7 +2,7 @@ import './../shared/shared-styles.css'
 import React from 'react';
 import LoginForm from './login-form-component/login-form';
 
-const LoginPage = () => {
+const LoginPage = ({onLoggedChange}) => {
 
     return (
         <div className='authorization-page-main-content'>
@@ -10,7 +10,7 @@ const LoginPage = () => {
             </div>
 
             <div className='authorization-page-form-div'>
-                <LoginForm/>
+                <LoginForm onLoggedChange={onLoggedChange}/>
             </div>
 
         </div>

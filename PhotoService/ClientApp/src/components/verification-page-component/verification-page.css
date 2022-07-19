@@ -1,0 +1,9 @@
+.verification-message{
+    width: 50%;
+    text-overflow: clip;
+    border:solid thin black;
+    border-radius: 1vh;
+    background-color: #1A4769;
+    color:white;
+    padding: 2vh;
+}

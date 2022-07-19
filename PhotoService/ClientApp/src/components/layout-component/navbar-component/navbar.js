@@ -2,8 +2,15 @@ import './navbar.css';
 import { Link } from 'react-router-dom';
 import React from 'react';
 import SearchIcon from '@mui/icons-material/Search';
+import authService from '../../../services/auth.service';
 
-export default function Navbar() {
+export default function Navbar({isLoggedIn, onLoggedChange}) {
+
+    function logoutHadler(e) {
+        authService.logout();
+        onLoggedChange()
+    }
+
     return (
         <nav className="navbar navbar-expand-lg navbar-dark custom-navbar">
             <div className="container-fluid">
@@ -27,9 +34,21 @@ export default function Navbar() {
                         <li className="nav-item">
                             <Link className="nav-link nav-link-custom" to="/">About us</Link>
                         </li>
-                        <li className="nav-item">
-                            <Link className="nav-link nav-link-custom" to="/login">Log in</Link>
-                        </li>
+                        {
+                            isLoggedIn ?
+                                <>
+                                    <li className="nav-item">
+                                        <Link className="nav-link nav-link-custom" to="profile">My profile</Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link className="nav-link nav-link-custom" to="/login" onClick={logoutHadler}>Log out</Link>
+                                    </li>
+                                </>
+                                :
+                                <li className="nav-item">
+                                    <Link className="nav-link nav-link-custom" to="/login">Log in</Link>
+                                </li>
+                        }
                     </ul>
                 </div>
 

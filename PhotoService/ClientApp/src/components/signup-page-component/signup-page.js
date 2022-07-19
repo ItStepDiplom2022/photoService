@@ -2,7 +2,7 @@ import './../shared/shared-styles.css'
 import React from 'react';
 import SignupForm from './signup-form-component/signup-form';
 
-const SignupPage = () => {
+const SignupPage = ({onLoggedChange}) => {
 
     return (
         <div className='authorization-page-main-content'>
@@ -10,7 +10,7 @@ const SignupPage = () => {
             </div>
 
             <div className='authorization-page-form-div'>
-                <SignupForm/>
+                <SignupForm onLoggedChange={onLoggedChange}/>
             </div>
         </div>
     );
