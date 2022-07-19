@@ -1,0 +1,9 @@
+﻿@model PhotoService.EmailTemplates.VerificationEmailModel
+@{
+    Layout = "_Layout.cshtml";
+}
+
+<h4>Hello, @Model.UserName!</h4>
+<p>Welcome to our photo service! Click this 
+    <a href="https://localhost:7042/api/account/verify/?email=@Model.Email">link</a> to verify your email
+</p>

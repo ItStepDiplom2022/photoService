@@ -1,14 +1,19 @@
 import './signup-form.css';
 import '../../shared/shared-styles.css'
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import authService from '../../../services/auth.service';
+import { Alert, Snackbar } from '@mui/material';
 
 
-const SignupForm = () => {
+const SignupForm = ({ onLoggedChange }) => {
 
     const initialData = { username: '', email: '', password: '', passwordConfirm: '' }
     const [userData, setUserData] = useState(initialData)
     const [passwordsMatch, setPasswordsMatch] = useState(true)
+    const [snackBarOptions, setSnackBarOptions] = useState({ isOpen: false, severity: 'success', message: '' })
+
+    const navigate = useNavigate()
 
     //handles ALL changes in the form
     const handleChange = (e) => {
@@ -24,10 +29,20 @@ const SignupForm = () => {
             return
         } else
             setPasswordsMatch(true)
+        setSnackBarOptions({ isOpen: true, severity: 'info', message: "Wait a second..." })
 
-        //just a mock
-        alert(`You entered ${userData.username},  ${userData.email},  ${userData.password},  ${userData.passwordConfirm}`)
+        authService.signup(userData.username, userData.email, userData.password)
+            .then(() => {
+                return navigate('/verify')
+            })
+            .catch(error => {
+                setSnackBarOptions({ isOpen: true, severity: 'error', message: error })
+            })
     }
+
+    const handleSnackBarClose = (event) => {
+        setSnackBarOptions({ isOpen: false, severity: 'error' })
+    };
 
     const validatePassword = () => {
         return userData.password === userData.passwordConfirm
@@ -52,6 +67,12 @@ const SignupForm = () => {
                     </span>
                 </div>
             </form>
+
+            <Snackbar open={snackBarOptions.isOpen} autoHideDuration={5000} onClose={handleSnackBarClose} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
+                <Alert severity={snackBarOptions.severity} sx={{ width: '100%' }} onClose={handleSnackBarClose} variant="filled">
+                    {snackBarOptions.message}
+                </Alert>
+            </Snackbar>
         </>
     );
 }

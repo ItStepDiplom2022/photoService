@@ -1,11 +1,16 @@
 import '../../shared/shared-styles.css'
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import AuthService from "../../../services/auth.service";
+import { Alert, Snackbar } from '@mui/material';
 
-const LoginForm = () => {
+const LoginForm = ({onLoggedChange}) => {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+
+    const [snackBarOptions, setSnackBarOptions] = useState({ isOpen: false, severity: 'success', message: '' })
+    const navigate = useNavigate()
 
 
     function onEmailChange(e) {
@@ -17,10 +22,20 @@ const LoginForm = () => {
     }
 
     const handleSubmit = (e) => {
-        //just a mock
-        e.preventDefault();
-        alert(`You entered ${email}, ${password}`)
+        e.preventDefault()
+        AuthService.login(email, password)
+        .then(() => {
+                onLoggedChange()
+                return navigate('/')
+            })
+        .catch(error=>{
+            setSnackBarOptions({ isOpen: true, severity: 'error', message: error })
+        })
     }
+
+    const handleSnackBarClose = (event) => {
+        setSnackBarOptions({ isOpen: false, severity: 'error' })
+    };
 
     return (
         <>
@@ -37,6 +52,12 @@ const LoginForm = () => {
                     </span>
                 </div>
             </form>
+
+            <Snackbar open={snackBarOptions.isOpen} autoHideDuration={5000} onClose={handleSnackBarClose} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
+                <Alert severity={snackBarOptions.severity} sx={{ width: '100%' }} onClose={handleSnackBarClose} variant="filled">
+                    {snackBarOptions.message}
+                </Alert>
+            </Snackbar>
         </>
     );
 }
