@@ -25,5 +25,7 @@ namespace PhotoService.DAL.Entities
         public string City { get; set; }
 
         public DateTime DateOfBirth { get; set; }
+
+        public IEnumerable<string> Roles { get; set; } = new List<string>();
     }
 }

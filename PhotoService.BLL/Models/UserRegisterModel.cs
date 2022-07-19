@@ -21,5 +21,8 @@ namespace PhotoService.BLL.Models
         public string Password { get; set; }
 
         public bool IsVerified { get; set; }
+
+        public IEnumerable<string> Roles { get; set; } = new List<string>();
+
     }
 }

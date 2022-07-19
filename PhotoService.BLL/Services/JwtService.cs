@@ -8,7 +8,7 @@ namespace PhotoService.BLL.Services
 {
     public class JwtService : IJwtService
     {
-        public string CreateToken(string key, string email)
+        public string CreateToken(string key, string email,string roles)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
 
@@ -18,7 +18,8 @@ namespace PhotoService.BLL.Services
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Email, email)
+                    new Claim(ClaimTypes.Email, email),
+                    new Claim(ClaimTypes.Role, roles)
                 }),
 
                 Expires = DateTime.UtcNow.AddDays(1),

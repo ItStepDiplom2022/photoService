@@ -22,4 +22,11 @@ namespace PhotoService.BLL.Enums
         [Description("This email was already verified")]
         EMAIL_ALREADY_VERIFIED
     }
+
+    public enum UserRoles
+    {
+        REGISTERED_USER,
+        VERIFIED_USER,
+        ADMIN
+    }
 }

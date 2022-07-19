@@ -37,7 +37,7 @@ namespace PhotoService.BLL.Services
             if (!userToAuth.IsVerified)
                 throw new AuthorizationException(PhotoServiceExceptions.EMAIL_NOT_VERIFIED.GetDescription());
 
-            return _jwtService.CreateToken(key, email);
+            return _jwtService.CreateToken(key, email, string.Join(",", userToAuth.Roles));
         }
 
         public void Create(UserRegisterModel newUser)
@@ -51,6 +51,7 @@ namespace PhotoService.BLL.Services
             if (users.FirstOrDefault(x => x.UserName == newUser.UserName) != null)
                 throw new AuthorizationException(PhotoServiceExceptions.USERNAME_ALREADY_REGISTERED.GetDescription());
 
+            (newUser.Roles as List<string>).Add(UserRoles.REGISTERED_USER.ToString());
             newUser.Password = BCrypt.Net.BCrypt.HashPassword(newUser.Password);
             newUser.IsVerified = false;
             _userRepository.Create(_mapper.Map<User>(newUser));
@@ -75,6 +76,7 @@ namespace PhotoService.BLL.Services
             if (user.IsVerified)
                 throw new AuthorizationException(PhotoServiceExceptions.EMAIL_ALREADY_VERIFIED.GetDescription());
 
+            (user.Roles as List<string>).Add(UserRoles.VERIFIED_USER.ToString());
             user.IsVerified = true;
             _userRepository.Update(user);
         }
