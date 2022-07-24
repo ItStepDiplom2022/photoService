@@ -1,0 +1,23 @@
+.comments-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 1% 4% 1% 4%;
+}
+
+.add-comment {
+    width: 100%;
+}
+
+.all-comments {
+    margin-top: 2vh;
+}
+
+.comment-amount {
+    font-size: 28px;
+}
+
+.add-comment-btn {
+    margin-top: 1vh;
+    font-size: large;
+}

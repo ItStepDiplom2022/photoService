@@ -1,0 +1,14 @@
+.previous-btn {
+    position: absolute;
+    margin: 5vh 4vh;
+    text-decoration: none;
+    padding: 8px 16px;
+    background-color: #112D4E;
+    color: white;
+    border-radius: 50%;
+}
+
+.previous-btn:hover {
+    background-color: #ddd;
+    color: black;
+}
