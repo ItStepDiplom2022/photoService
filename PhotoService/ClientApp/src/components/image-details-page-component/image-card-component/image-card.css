@@ -1,0 +1,97 @@
+.center-div {
+    display: flex;
+    justify-content: center;
+}
+
+.card-content {
+    display: flex;
+    width: 85%;
+    padding: 5vh;
+    margin: 5vh 0;
+    background-color: #DFF6FF;
+    border-radius: 2vh;
+}
+
+.image-part {
+    width: 40%;
+}
+
+.image-part img {
+    width: 100%;
+    border-radius: 2vh;
+}
+
+.description-part {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    align-items: flex-start;
+    padding: 0 3vh;
+}
+
+@font-face {
+    font-family: "Fondamento";
+    src: url('/public/fonts/Fondamento-Regular.ttf');
+}
+
+.image-title {
+    font-family: "Fondamento";
+}
+
+.image-author {
+    font-weight: bold;
+}
+
+.divider {
+    font-weight: bold;
+    margin: 0 2vh;
+}
+
+.image-description {
+    padding: 2vh 0;
+    text-align: left;
+}
+
+.image-tags {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.image-tags b {
+    margin: 4px 1vh 0 0;
+}
+
+.btn-icon {
+    margin-right: 1vh;
+}
+
+.buttons {
+    display: flex;
+    margin: 1vh 0;
+    flex-wrap: wrap;
+}
+
+.buttons button {
+    margin: 1vh 0.5vh;
+    color: white;
+}
+
+@media screen and (max-width: 758px) {
+     .card-content{
+        flex-direction: column;
+    }
+
+    .image-part{
+        width: 100%;
+    }
+
+    .description-part{
+        width: 100%;
+        padding: 0 1vh;
+
+    }
+
+    .image-title{
+        margin-top:1vh
+    }
+  }
