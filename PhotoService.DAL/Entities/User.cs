@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PhotoService.DAL.Entities
 {
-    public class User
+    public class User:BaseEntity
     {
         public string UserName { get; set; }
 

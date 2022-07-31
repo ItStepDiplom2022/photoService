@@ -1,6 +1,7 @@
 .center-div {
     display: flex;
     justify-content: center;
+    text-align: start;
 }
 
 .card-content {
@@ -19,6 +20,11 @@
 .image-part img {
     width: 100%;
     border-radius: 2vh;
+}
+
+.image-date{
+    opacity: 0.6;
+    font-weight: bolder;
 }
 
 .description-part {

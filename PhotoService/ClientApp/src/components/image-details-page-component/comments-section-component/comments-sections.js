@@ -20,7 +20,7 @@ const CommentsSection = (props) => {
             </div>
 
             <div className='all-comments'>
-                {comments.map((c) => <Comment userName={c.userName} date={c.date} commentText={c.commentText} />)}
+                {comments?.map((c) => <Comment userName={c.userAdded?.userName} date={c.dateAdded} commentText={c.commentText} />)}
             </div>
         </div>
     )

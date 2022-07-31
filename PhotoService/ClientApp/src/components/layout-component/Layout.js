@@ -158,7 +158,7 @@ export default function Layout() {
         <Route exact path='/login' element={<LoginPage onLoggedChange={onLoggedChange} />} />
         <Route exact path='/signup' element={<SignupPage onLoggedChange={onLoggedChange} />} />
         <Route exact path='/verify' element={<VerificationPage />} />
-        <Route exact path='/detailed' element={<ImageDetailsPage/>}/>
+        <Route exact path='/image/:id' element={<ImageDetailsPage/>}/>
         <Route exact path='/' element={<Home images={images}/>} />
       </Routes>
       <Footer />

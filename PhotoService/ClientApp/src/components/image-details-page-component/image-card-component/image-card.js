@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShareFromSquare } from '@fortawesome/free-solid-svg-icons'
 import { faDownload } from '@fortawesome/free-solid-svg-icons'
 import { faSave, faHeart, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const ImageCard = (props) => {
 
@@ -17,41 +17,57 @@ const ImageCard = (props) => {
         setIsLiked(!isLiked)
     }
 
+    const getDateParsed = () =>{
+        let date = new Date(Date.parse(image.dateAdded))
+        return `${date.getFullYear()}/${date.getMonth()}/${date.getDay()}`
+    }
+
+    const checkIfIsLiked = () =>{
+        let ls = localStorage.getItem("user")
+        let email = JSON.parse(ls).email
+
+        setIsLiked( image.likes.filter(like=>like.user?.email===email).length===1)
+    }
+
+    useEffect(() => {
+        checkIfIsLiked();
+    },[])
+
     return (
         <>
             <div className='center-div'>
                 <div className='card-content'>
 
                     <div className='image-part'>
-                        <img src={image.url} />
+                        <img src={image.imageUrl} />
                     </div>
 
                     <div className='description-part'>
                         <h1 className='image-title'>
-                            Imagine this is title
+                            {image.title }
                         </h1>
 
                         <div>
                             <AccountCircleIcon className='profile-picture' />
-                            <span className='image-author'>{image.author}</span>
+                            <span className='image-author'>{image?.author.userName}</span>
                             <span className='divider'>|</span>
-                            <span>{image.date}</span>
+                            <span className='image-date'>{getDateParsed()}</span>
                         </div>
 
-                        <div className='image-description'>
-                            {image.desctiption}
-                        </div>
+                            <div className='image-description'>
+                                {image.description}
+                            </div>
 
-                        <div className='image-tags'>
-                            <b>Tags:</b>
-                            {image.tags.map(tag => <Tag tagName={tag}></Tag>)}
-                        </div>
+                            <div className='image-tags'>
+                                <b>Tags:</b>
+                                {image.hashtags?.map(tag => <Tag tagName={tag.title}></Tag>)}
+                            </div>
 
                         <div className='buttons'>
 
                             <button className={isLiked ? 'btn btn-danger' : 'btn btn-secondary'} onClick={onLikePressed}>
                                 <FontAwesomeIcon className='btn-icon' icon={faHeart} />
-                                {isLiked ? 'Liked' : 'Like'} | {image.likes}
+                                {isLiked ? 'Liked' : 'Like'} | {image.likes?.length}
                             </button>
 
                             <button className='btn btn-primary'>

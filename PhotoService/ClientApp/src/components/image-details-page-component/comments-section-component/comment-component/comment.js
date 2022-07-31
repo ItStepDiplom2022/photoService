@@ -4,6 +4,12 @@ import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Comment = (props) => {
+
+    const getDateParsed = () =>{
+        let date = new Date(Date.parse(props.date))
+        return `${date.getFullYear()}/${date.getMonth()}/${date.getDay()}`
+    }
+
     return (
         <>
             <div className='comment-container'>
@@ -12,7 +18,7 @@ const Comment = (props) => {
                 </div>
 
                 <div className="comment-text">
-                    <h5><b>{props.userName}</b> <small className='date-text'>{props.date}</small></h5>
+                    <h5><b>{props.userName}</b> <small className='date-text'>{getDateParsed()}</small></h5>
                     <p className="">{props.commentText}</p>
                 </div>
             </div>
