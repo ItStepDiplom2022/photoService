@@ -4,27 +4,23 @@ import Close from "@mui/icons-material/Close";
 import "./SearchBar.css";
 import DataItem from "./dataItem-component/DataItem";
 import { useNavigate } from "react-router";
+import SearchService from "../../services/search.service";
 
-function SearchBar({ placeholder="", data=[], labelKey=["label"], urlKey=["url"] }) {
+function SearchBar({ placeholder="" }) {
   const [filterData, setFilterData] = useState([]);
   const [wordEntered, setWordEntered] = useState("");
   const navigate = useNavigate();
 
-  const handleFilter = (event) => {
+  const handleFilter = async (event) => {
     const searchWord = event.target.value;
     setWordEntered(searchWord);
-    let newFilter = data.filter((value) => {
-      return value.label.toLowerCase().includes(searchWord.toLowerCase());
-    });
-    if (searchWord === "") {
-      setFilterData([]);
-      return;
+    let newFilter = [];
+    if (searchWord !== "") {
+      newFilter = await SearchService.getByFilter(searchWord);
     }
-    //teat part
-    if (newFilter.length === 0) {
-      newFilter = [{label: searchWord, url: `/PATH?tag=${searchWord}`},{label: searchWord, url: `/PATH?autor=${searchWord}`}]
-    }
-    //
+
+    console.log(newFilter);
+
     setFilterData(newFilter);
   };
 
@@ -33,11 +29,10 @@ function SearchBar({ placeholder="", data=[], labelKey=["label"], urlKey=["url"]
     setWordEntered("");
   };
 
-  const getKeyArray = (key) => (Array.isArray(key) ? [...key] : [key]);
-
-  const getValueByKey = (obj, key) => {
-    return getKeyArray(key).reduce((acc, curKey) => acc[curKey], obj);
-  };
+  const defaultSearch = () => {
+    if(wordEntered !== "")
+      navigate(`/?q=${wordEntered}`);
+  }
 
   return (
     <div className="search">
@@ -49,29 +44,27 @@ function SearchBar({ placeholder="", data=[], labelKey=["label"], urlKey=["url"]
           onChange={handleFilter}
           onKeyPress={(ev) => {
             if (ev.key === "Enter") {
-              //test part
-              navigate(`/PATH?q=${wordEntered}`);
-              //
+              navigate(`/?q=${wordEntered}`);
             }
           }}
         />
         <div className="searchIcon">
           {filterData.length === 0 ? (
-            <SearchIcon id="searchBtn" onClick={() => navigate(`/PATH?q=${wordEntered}`)}/>
+            <SearchIcon id="searchBtn" onClick={defaultSearch}/>
           ) : (
             <Close id="clearBtn" onClick={clearInput} />
           )}
         </div>
       </div>
-      {filterData.length != 0 && (
+      {filterData.length !== 0 && (
         <div className="dataResult">
           {filterData.slice(0, 15).map((value, key) => {
             return (
               <DataItem 
-                //test part
-                displayText={getValueByKey(value, labelKey)} link={getValueByKey(value, urlKey)} avatarUrl={key % 2 ? "https://i.pinimg.com/564x/c3/c5/a4/c3c5a4a61a8782051eb2bf2d033ef512.jpg" : ""
-                //
-              } />
+                displayText={value.label}
+                link={value.url} 
+                avatarUrl={value.avatarUrl}
+                />
             );
           })}
         </div>
