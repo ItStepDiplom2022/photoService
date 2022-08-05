@@ -23,8 +23,10 @@ IMapper mapper = mappingConfig.CreateMapper();
 builder.Services.AddSingleton(mapper);
 
 builder.Services.AddSingleton<IUserRepository, UserRepository>();
+builder.Services.AddSingleton<IImageRepository, ImageRepository>();
 builder.Services.AddSingleton<IJwtService,JwtService>();
 builder.Services.AddSingleton<IUserService, UserService>();
+builder.Services.AddSingleton<IImageService, ImageService>();
 builder.Services.AddSingleton<IEmailService, EmailService>();
 builder.Services.AddSingleton<IHtmlRenderer, HtmlRenderer>();
 

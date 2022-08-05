@@ -1,0 +1,25 @@
+.comment-container {
+    display: flex;
+    width: 100%
+}
+
+.comment-user {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 40px;
+    margin-right: 10px;
+    border: solid thin black;
+    border-radius: 50%;
+}
+
+.comment-text {
+    width: 90%;
+    margin-left: 1%;
+}
+
+.date-text {
+    opacity: 0.6;
+    color: #6F6F6F;
+}

@@ -1,11 +1,6 @@
 ﻿using AutoMapper;
 using PhotoService.BLL.Models;
 using PhotoService.DAL.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PhotoService.BLL
 {
@@ -21,6 +16,18 @@ namespace PhotoService.BLL
                 .ReverseMap();
 
             CreateMap<UserRegisterModel, User>()
+                .ReverseMap();
+
+            CreateMap<ImageModel, Image>()
+                .ReverseMap();
+
+            CreateMap<CommentModel, Comment>()
+                .ReverseMap();
+
+            CreateMap<HashtagModel, Hashtag>()
+                .ReverseMap();
+
+            CreateMap<LikeModel, Like>()
                 .ReverseMap();
 
         }
