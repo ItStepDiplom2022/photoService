@@ -13,12 +13,13 @@ import Gallery from './gallery-component/gallery';
     params.tag = searchParams.get('tag');
     params.author = searchParams.get('author');
 
-    setImages(await searchService.search(params));
+    setImages((await searchService.search(params)).data);
+    console.log(images);
   }
 
   useEffect(() => {
     loadContent();
-  }, [])
+  }, [searchParams])
 
   return (
       <div>

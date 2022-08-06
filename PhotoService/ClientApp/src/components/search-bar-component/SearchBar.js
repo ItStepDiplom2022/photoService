@@ -16,7 +16,7 @@ function SearchBar({ placeholder="" }) {
     setWordEntered(searchWord);
     let newFilter = [];
     if (searchWord !== "") {
-      newFilter = await SearchService.getByFilter(searchWord);
+      newFilter = (await SearchService.getByFilter(searchWord)).data;
     }
 
     console.log(newFilter);
@@ -61,9 +61,9 @@ function SearchBar({ placeholder="" }) {
           {filterData.slice(0, 15).map((value, key) => {
             return (
               <DataItem 
-                displayText={value.label}
-                link={value.url} 
-                avatarUrl={value.avatarUrl}
+                displayText={value.text}
+                link={value.type == 0 ? `/?author=${value.text}` : `/?tag=${value.text}` } 
+                avatarUrl={value.imageUrl}
                 />
             );
           })}

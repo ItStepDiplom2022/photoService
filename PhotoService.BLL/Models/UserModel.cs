@@ -21,5 +21,7 @@ namespace PhotoService.BLL.Models
 
         public IEnumerable<string> Roles { get; set; } = new List<string>();
 
+        public string AvatarUrl { get; set; }
+
     }
 }

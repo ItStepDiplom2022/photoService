@@ -12,6 +12,7 @@ class SearchService {
 
         return axios.get(API_URL, {params: query})
         .then((respond) => {
+            console.log(respond.data);
             return respond;
         })
         .catch((err) => {throw err.response.data})
