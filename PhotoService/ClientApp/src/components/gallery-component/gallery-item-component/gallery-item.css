@@ -1,0 +1,8 @@
+.img-title {
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    max-width: 100%;
+    overflow: hidden;
+    word-break: break-word;
+    -webkit-line-clamp: 2;
+}

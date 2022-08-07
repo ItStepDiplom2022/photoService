@@ -28,6 +28,7 @@ builder.Services.AddSingleton<IJwtService,JwtService>();
 builder.Services.AddSingleton<IUserService, UserService>();
 builder.Services.AddSingleton<IImageService, ImageService>();
 builder.Services.AddSingleton<IEmailService, EmailService>();
+builder.Services.AddSingleton<ISearchService, SearchService>();
 builder.Services.AddSingleton<IHtmlRenderer, HtmlRenderer>();
 
 builder.Services.AddAuthentication(x =>
