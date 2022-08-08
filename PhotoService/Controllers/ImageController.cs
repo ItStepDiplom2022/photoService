@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PhotoService.BLL.Interfaces;
+using PhotoService.BLL.Models;
 
 namespace PhotoService.Controllers
 {
@@ -28,6 +29,21 @@ namespace PhotoService.Controllers
             catch (Exception)
             {
                 return StatusCode(500);
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult PostImage([FromBody] ImageAddModel image)
+        {
+            try
+            {
+                var addedImage=_imageService.AddImage(image);
+                return Ok(addedImage);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
             }
         }
 

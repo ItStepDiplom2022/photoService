@@ -2,12 +2,25 @@ import axios from "axios";
 import configData from "../config.json";
 import authHeader from './auth.header';
 
-const API_URL = `${configData.SERVER_URL}image/`;
+const API_URL = `${configData.SERVER_URL}image`;
 
 class ImageService{
 
     getImage(id){
-        return axios.get(API_URL + `${id}`)
+        return axios.get(API_URL + `/${id}`)
+        .then((promise)=> {
+            return promise
+        }).catch((err)=>{
+            throw err.response.data
+        });
+    }
+
+    postImage(title,description,hashtags,imageBase64,userEmail){
+        return axios.post(API_URL,{
+            title,description,hashtags,imageBase64,userEmail
+        }, { 
+            headers: authHeader() 
+        })
         .then((promise)=> {
             return promise
         }).catch((err)=>{

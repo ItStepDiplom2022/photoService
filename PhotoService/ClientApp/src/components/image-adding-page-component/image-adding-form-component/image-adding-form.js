@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
+import authService from '../../../services/auth.service';
 import imageService from '../../../services/image.service';
 import Tag from '../../shared/tag-component/tag';
 import './image-adding-form.css'
@@ -13,6 +15,9 @@ const ImageAddingForm = () => {
     const [isTagDeleting, setIsTagDeleting] = useState(false)
     const [image, setImage] = useState()
     const [imageName, setImageName] = useState()
+    const ownerEmail = authService.getOwnerEmail()
+
+    const navigate = useNavigate()
 
     const deleteTagEffect = () => {
         if (isTagDeleting) {
@@ -61,7 +66,17 @@ const ImageAddingForm = () => {
 
     const addImage = (e) => {
         e.preventDefault()
-        //TODO: send image to back-end
+        
+        imageService.postImage(
+            title,
+            description,
+            tagsNamesCollection.map(function(tagName) {
+                return {title:tagName}
+            }),
+            image,
+            ownerEmail).then((promise)=>{
+                navigate(`../image/${promise.data.id}`)
+            })
     }
 
     return (
@@ -123,7 +138,7 @@ const ImageAddingForm = () => {
                     <div className="form-group">
                         <label for="tags">Add tags:</label>
                         <div className="flex-group">
-                            <input type="text" className="form-control tag-input" id="tags" placeholder="Enter tags" value={tagToAdd} onChange={onTagToAddChange} />
+                            <input type="text" className="form-control tag-input" id="tags" placeholder="Enter tag" value={tagToAdd} onChange={onTagToAddChange} />
                             <button className='btn btn-primary' onClick={onTagAdd} disabled={tagsCollection.length >= 5 || tagToAdd.length === 0 || tagsNamesCollection.includes(tagToAdd)}>Add</button>
                         </div>
                     </div>

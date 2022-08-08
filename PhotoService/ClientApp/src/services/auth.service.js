@@ -38,6 +38,10 @@ class AuthService{
     isLoggedIn() {
         return JSON.parse(localStorage.getItem('user'));;
     }
+
+    getOwnerEmail(){
+        return JSON.parse(localStorage.getItem('user')).email
+    }
 }
 
 export default new AuthService()
