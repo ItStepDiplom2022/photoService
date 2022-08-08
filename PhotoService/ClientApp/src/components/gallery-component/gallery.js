@@ -2,7 +2,8 @@ import "./gallery.css";
 import React from "react";
 import GalleryItem from "./gallery-item-component/gallery-item";
 
-export default function Gallery(props) {
+export default function Gallery({images}) {
+
   var getVal = function (elem, style) {
     return parseInt(window.getComputedStyle(elem).getPropertyValue(style));
   };
@@ -36,8 +37,8 @@ export default function Gallery(props) {
   }
 
   return (
-    <div class="gallery" id="gallery">
-      {props.images.map(function (image) {
+    <div className="gallery" id="gallery">
+      {images.map((image) => {
         return <GalleryItem image={image} resizing={resizeItem} />;
       })}
     </div>

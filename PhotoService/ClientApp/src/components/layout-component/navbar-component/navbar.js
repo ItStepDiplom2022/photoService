@@ -1,8 +1,9 @@
 import './navbar.css';
 import { Link } from 'react-router-dom';
 import React from 'react';
-import SearchIcon from '@mui/icons-material/Search';
 import authService from '../../../services/auth.service';
+import SearchBar from '../../search-bar-component/SearchBar';
+
 
 export default function Navbar({isLoggedIn, onLoggedChange}) {
 
@@ -26,7 +27,7 @@ export default function Navbar({isLoggedIn, onLoggedChange}) {
                     <span className="navbar-toggler-icon"></span>
                 </button>
 
-                <div className="navbar-collapse collapse col-8" id="collapseNavbar">
+                <div className="navbar-collapse collapse col-auto" id="collapseNavbar">
                     <ul className="navbar-nav left-navbar-part">
                         <li className="nav-item">
                             <Link className="nav-link nav-link-custom" to="/">Main</Link>
@@ -52,13 +53,8 @@ export default function Navbar({isLoggedIn, onLoggedChange}) {
                     </ul>
                 </div>
 
-                <div className="input-group mb-3 search-field">
-                    <input type="text" className="form-control" placeholder="Search..." aria-label="Search" />
-                    <div className="input-group-append">
-                        <button className="btn btn-primary" type="button">
-                            <SearchIcon/>
-                        </button>
-                    </div>
+                <div className="mb-3 search-field justify-content-end col-3">
+                    <SearchBar />
                 </div>
 
             </div>

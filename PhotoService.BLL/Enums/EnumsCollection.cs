@@ -29,4 +29,10 @@ namespace PhotoService.BLL.Enums
         VERIFIED_USER,
         ADMIN
     }
+
+    public enum SearchResultType
+    {
+        Author,
+        Tag
+    }
 }

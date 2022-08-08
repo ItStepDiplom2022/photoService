@@ -1,21 +1,16 @@
 import React from "react";
 import { useNavigate } from "react-router";
+import "./gallery-item.css"
 
 export default function GalleryItem(props)
 {
     let navigate = useNavigate();
 
-    let maxTitleLength = 35;
-    let shortTitle = props.image.title;
-    if(shortTitle.length > maxTitleLength) {
-        shortTitle =  shortTitle.substring(0, maxTitleLength-3).concat('...');
-    }
-
     return (
         <div className="gallery-item">
             <div className="content byebye" onClick={() => navigate(`/path/${props.image.id}`)}>
-                <img src={props.image.url} alt="" onLoad={(ev) => {props.resizing(ev.target)}}/>
-                <b>{shortTitle}</b>
+                <img src={props.image.imageUrl} alt="" onLoad={(ev) => {props.resizing(ev.target)}}/>
+                <b className="img-title">{props.image.title}</b>
             </div>
         </div>
     );

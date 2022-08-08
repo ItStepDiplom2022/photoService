@@ -20,7 +20,8 @@ namespace PhotoService.DAL.Repositories
                 Author = new User
                 {
                     Email = "email@mail.com",
-                    UserName = "username1"
+                    UserName = "username1",
+                    AvatarUrl = "https://source.unsplash.com/random/?tech,studied"
                 },
                 Likes = new List<Like>
                 {
