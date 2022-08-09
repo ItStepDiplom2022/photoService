@@ -53,7 +53,7 @@ namespace PhotoService.BLL
                 {
                     Text = user.UserName,
                     Type = Enums.SearchResultType.Author,
-                    ImageUrl = user.AvatarUrl
+                    ImageBase64 = user.AvatarUrl
                 });
         }
     }

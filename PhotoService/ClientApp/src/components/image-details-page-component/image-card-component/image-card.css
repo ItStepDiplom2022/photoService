@@ -82,6 +82,15 @@
     color: white;
 }
 
+.download-link{
+    text-decoration: none;
+    color: white;
+}
+
+.buttons button:hover,.download-link:hover{
+    color: black;
+}
+
 @media screen and (max-width: 758px) {
      .card-content{
         flex-direction: column;

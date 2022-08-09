@@ -33,6 +33,12 @@ const ImageCard = (props) => {
         checkIfIsLiked();
     },[])
 
+    const createFileDonwloadName = () => {
+        return image.title + '.' + image.imageBase64.slice(
+            image.imageBase64.indexOf('/')+1,image.imageBase64.indexOf(';')
+        )
+    }
+
     return (
         <>
             <div className='center-div'>
@@ -76,8 +82,9 @@ const ImageCard = (props) => {
                             </button>
 
                             <button className='btn btn-success'>
-                                <FontAwesomeIcon className='btn-icon' icon={faDownload} />
-                                Download
+                                <a className='download-link' download={createFileDonwloadName()} href={image.imageBase64}>
+                                    <FontAwesomeIcon className='btn-icon' icon={faDownload} />
+                                    Download</a>
                             </button>
 
                             <button className='btn btn-info'>
