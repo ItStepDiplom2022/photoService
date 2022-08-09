@@ -1,0 +1,42 @@
+.container{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.form-container{
+    width: 90%;
+    padding-top: 5vh;
+    margin-bottom: 5vh;
+}
+
+.form-title{
+    font-size: 40px;
+}
+
+.form-subtitle{
+    font-size: 24px;
+    color: #848484;
+}
+
+.form-group, .tags-collection{
+    margin-bottom: 2vh;
+}
+
+.flex-group{
+    display: flex;
+}
+
+.tag-input{
+    width: 50%;
+    margin-right: 2vh;
+}
+
+.tags-collection{
+    display:flex;
+    flex-wrap: wrap;
+}
+
+.btn-submit{
+    font-size: large;
+}

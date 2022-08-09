@@ -39,7 +39,7 @@ const ImageCard = (props) => {
                 <div className='card-content'>
 
                     <div className='image-part'>
-                        <img src={image.imageUrl} />
+                        <img src={image.imageBase64 } />
                     </div>
 
                     <div className='description-part'>

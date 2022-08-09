@@ -5,3 +5,7 @@
     padding: 5px 10px;
     margin: 0 0.5vh 0.5vh 0.5vh;
 }
+
+.delete-btn:hover{
+    color: red;
+}

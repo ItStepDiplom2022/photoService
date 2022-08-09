@@ -15,7 +15,7 @@ namespace PhotoService.DAL.Repositories
                 Id = 1,
                 Title = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.",
                 Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. ",
-                ImageUrl = "https://source.unsplash.com/random/?tech,care",
+                ImageBase64 = "https://source.unsplash.com/random/?tech,care",
                 DateAdded = new DateTime(2021,10,12),
                 Author = new User
                 {
@@ -85,6 +85,9 @@ namespace PhotoService.DAL.Repositories
 
         public Image Add(Image image)
         {
+            //mock
+            image.Id=_images.Last().Id + 1;
+
             _images.Add(image);
             return image;
         }

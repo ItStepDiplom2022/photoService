@@ -28,6 +28,9 @@ namespace PhotoService.BLL
             CreateMap<SimpleImageViewModel, ImageModel>()
                 .ReverseMap();
 
+            CreateMap<ImageAddModel, Image>()
+                .ReverseMap();
+
             CreateMap<CommentModel, Comment>()
                 .ReverseMap();
 

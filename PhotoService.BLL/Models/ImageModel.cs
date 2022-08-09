@@ -5,7 +5,8 @@ namespace PhotoService.BLL.Models
 {
     public class ImageModel
     {
-        public string ImageUrl { get; set; }
+        public int Id { get; set; }
+        public string ImageBase64 { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public UserModel Author { get; set; }
