@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Route, Routes } from 'react-router';
 import authService from '../../services/auth.service';
-import { Home } from '../Home';
+import Home  from '../Home';
 import ImageAddingPage from '../image-adding-page-component/image-adding-page';
 import ImageDetailsPage from '../image-details-page-component/image-details-page';
 import LoginPage from '../login-page-component/login-page';

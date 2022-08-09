@@ -13,7 +13,7 @@ namespace PhotoService.BLL.Models
 
         public SearchResultType Type { get; set; }
 
-        public string? ImageUrl { get; set; }
+        public string? ImageBase64 { get; set; }
 
         public float MatchPercent { get; set; } = 0.0f;
     }

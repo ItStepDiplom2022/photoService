@@ -8,7 +8,7 @@ namespace PhotoService.BLL.ViewModels
 {
     public class SimpleImageViewModel
     {
-        public string ImageUrl { get; set; }
+        public string ImageBase64 { get; set; }
         public string Title { get; set; }
         public SimpleUserViewModel Author { get; set; }
     }
