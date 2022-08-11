@@ -21,7 +21,7 @@
   color: black;
 }
 
-.avatar-wrapper {
+.dataItem .avatar-wrapper {
   height: 80%; 
   aspect-ratio: 1;
   border-radius: 100%;

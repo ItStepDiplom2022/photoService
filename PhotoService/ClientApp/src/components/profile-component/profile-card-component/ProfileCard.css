@@ -1,0 +1,54 @@
+.profile-card {
+    padding: 50px 30px;
+    max-width: 400px;
+    min-width: 300px;
+}
+
+.profile-card .avatar-wrapper {
+    width: 50%; 
+    aspect-ratio: 1;
+    border-radius: 100%;
+    overflow: hidden;
+}
+
+#profile-username, .profile-card a {
+    color: #ffffff;
+}
+
+.profile-card .tab {
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.tab.selected {
+    color: black;
+}
+  
+.profile-card .tab:hover {
+    color: #1f1f1f;
+    cursor: pointer;
+}
+
+.profile-card {
+    background-color: #2e2e98;
+    border-radius: 20%;
+}
+
+.profile-card .user-info-part {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-card * {
+    margin-inline: auto;
+}
+
+.profile-card .tabs-part * {
+    display: block;
+    width: fit-content;
+    margin-left: 0px;
+}
+
+.my::before {
+    content: 'My ';
+}
