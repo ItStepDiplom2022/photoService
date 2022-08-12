@@ -42,5 +42,11 @@ namespace PhotoService.BLL.Services
 
             return _mapper.Map<ImageModel>(_imageRepository.Add(image));
         }
+
+        public IEnumerable<ImageModel> GetImagesByUserEmail(string email)
+        {
+            return _mapper.Map<IEnumerable<ImageModel>>
+                            (_imageRepository.FindAll(i => i.Author.Email == email));
+        }
     }
 }

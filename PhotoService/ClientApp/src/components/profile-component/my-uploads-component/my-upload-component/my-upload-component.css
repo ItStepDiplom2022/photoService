@@ -1,0 +1,68 @@
+.center-div {
+    display: flex;
+    justify-content: center;
+    text-align: start;
+}
+
+.card-content {
+    display: flex;
+    width: 85%;
+    padding: 3vh;
+    margin: 0;
+    background-color: #ffffff;
+    border-radius: 2vh;
+}
+
+.image-part {
+    width: 40%;
+}
+
+.image-part img {
+    width: 100%;
+    border-radius: 2vh;
+}
+
+@font-face {
+    font-family: "Fondamento";
+    src: url('/public/fonts/Fondamento-Regular.ttf');
+}
+
+.image-title {
+    font-family: "Fondamento";
+}
+
+.image-details{
+    font-weight: bold;
+    font-size: larger;
+}
+
+.link{
+    padding-left: 0;
+    font-weight: bolder;
+    font-size: larger;
+}
+
+.divider{
+    color: black;
+    height: 5px;
+    width: 80%;
+}
+
+@media screen and (max-width: 758px) {
+     .card-content{
+        flex-direction: column;
+    }
+
+    .image-part{
+        width: 100%;
+    }
+
+    .description-part{
+        width: 100%;
+        padding: 0 1vh;
+    }
+
+    .image-title{
+        margin-top:1vh
+    }
+  }

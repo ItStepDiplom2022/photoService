@@ -1,20 +1,22 @@
-import { height, width } from '@mui/system';
 import React from 'react';
 import { useParams } from 'react-router';
+import MyUploads from './my-uploads-component/my-uploads-component';
 import ProfileCard from './profile-card-component/ProfileCard';
 import './Profile.css'
 
 const Profile = () => {
-    const {id, tab} = useParams();
+    const { tab} = useParams();
 
     return (
         <div className='profile-page'>
             <div className='row'>
                 <div className="col-auto fs-4">
-                    <ProfileCard userId={id} tab={tab}/>
+                    <ProfileCard tab={tab}/>
                 </div>
                 <div className="col">
-                    <div style={{height: '800px', width: "10px"}}></div>
+                    {
+                        tab=='uploads'?<MyUploads/>:"NONE"
+                    }
                 </div>
             </div>
         </div>

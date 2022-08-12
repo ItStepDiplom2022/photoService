@@ -6,10 +6,10 @@ const ProfileCard = ({avatarUrl="https://icon-library.com/images/default-user-ic
     const navigate = useNavigate();
 
     const handleClick = (subpath) => {
-        navigate(`/profile/${userId}/${subpath}/`)
+        navigate(`/profile/${subpath}/`)
     }
     
-    useEffect(() => { console.log(userId); }, []);
+    useEffect(() => {  }, []);
 
     return (
         <div className='profile-card'>

@@ -30,7 +30,7 @@ export default function Layout() {
         <Route exact path='/verify' element={<VerificationPage />} />
         <Route exact path='/image/:id' element={<ImageDetailsPage/>}/>
         <Route exact path='/image/add' element={<ImageAddingPage/>}/>
-        <Route exact path="/profile/:id" element={<Profile/>} >
+        <Route exact path="/profile" element={<Profile/>} >
           <Route exact path=":tab" element={<Profile/>} />
         </Route>
         <Route exact path='/' element={<Home/>} />
