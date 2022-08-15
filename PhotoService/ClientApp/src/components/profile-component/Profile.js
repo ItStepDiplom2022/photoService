@@ -2,13 +2,15 @@ import { height, width } from '@mui/system';
 import React from 'react';
 import { useParams } from 'react-router';
 import profileService from '../../services/profile.service';
+import Collections from './collections-component/Collections';
 import ProfileCard from './profile-card-component/ProfileCard';
+import collections from './collections-component/tempfiles/collections.json'
 import './Profile.css'
  
-const Profile = async () => {
+const Profile = () => {
     const {username, tab} = useParams();
-    const user = (await profileService.getUser(username)).data;
-
+    const user = { username: username};
+    const collectionList = collections
     return (
         <div className='profile-page'>
             <div className='row'>
@@ -16,7 +18,11 @@ const Profile = async () => {
                     <ProfileCard avatarUrl={user.url} username={user.username} tab={tab}/>
                 </div>
                 <div className="col">
-                    <div style={{height: '800px', width: "10px"}}></div>
+                    {
+                        tab === "collections" && (
+                            <Collections items={collectionList}/>
+                        )
+                    }
                 </div>
             </div>
         </div>

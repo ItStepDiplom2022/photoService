@@ -1,0 +1,38 @@
+.collection-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 250px;
+    height: 200px;
+    border-radius: 25%;
+    border: 2px black solid;
+    margin: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #f8f8f8;
+}
+
+.collection-item:hover {
+    background-color: #bbb;
+    transform: scale(1.025);
+}
+
+.collection-item:active{
+    background-color: #999;
+}
+
+.collection-item .image-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+
+.collection-item .image-wrapper img {
+    width: 100px;
+    height: 100px;
+}
+
+.collection-item .text {
+    font-weight: 700;
+    text-align: center;
+}
