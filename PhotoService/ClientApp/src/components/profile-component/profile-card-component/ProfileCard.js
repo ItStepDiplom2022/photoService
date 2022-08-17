@@ -1,15 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import './ProfileCard.css';
 
-const ProfileCard = ({avatarUrl="https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg", username="Username1", userId=1, tab="uploads"}) => {
+const ProfileCard = ({avatarUrl="https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg", username, userId=1, tab="uploads"}) => {
     const navigate = useNavigate();
+    const [selectedTab, setSelectedTab] = useState("uploads")
 
     const handleClick = (subpath) => {
-        navigate(`/profile/${subpath}/`)
+        setSelectedTab(subpath)
+        navigate(`/profile/${username}/${subpath}/`)
     }
     
-    useEffect(() => {  }, []);
+    useEffect(() => { 
+        navigate(`/profile/${username}/${selectedTab}/`)
+     }, []);
 
     return (
         <div className='profile-card'>
@@ -20,8 +24,8 @@ const ProfileCard = ({avatarUrl="https://icon-library.com/images/default-user-ic
                 <span id='profile-username'>{username}</span>
             </div>  
             <div className="tabs-part">
-                <a className='tab my' onClick={(e) => { e.preventDefault(); handleClick('uploads')}}>Uploads</a>
-                <a className='tab selected my' onClick={(e) => { e.preventDefault(); handleClick('collections')}}>Collection</a>
+                <a className={selectedTab==='uploads'?'tab my selected':'tab my'} onClick={(e) => { e.preventDefault(); handleClick('uploads')}}>Uploads</a>
+                <a className={selectedTab==='collections'?'tab my selected':'tab my'} onClick={(e) => { e.preventDefault(); handleClick('collections')}}>Collection</a>
             </div>
         </div>
     );

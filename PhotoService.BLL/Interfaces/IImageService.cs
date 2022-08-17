@@ -8,5 +8,7 @@ namespace PhotoService.BLL.Interfaces
         ImageModel GetImage(int id);
         ImageModel AddImage(ImageAddModel model);
         IEnumerable<ImageModel> GetImagesByUserEmail(string email);
+        IEnumerable<ImageModel> GetImagesByUserName(string email);
+
     }
 }

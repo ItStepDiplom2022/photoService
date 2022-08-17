@@ -3,7 +3,7 @@ import imageService from '../../../services/image.service';
 import authService from '../../../services/auth.service';
 import MyUpload from './my-upload-component/my-upload-component';
 
-const MyUploads = () => {
+const MyUploads = (props) => {
     const [projects, setProjects] = useState()
     const [userEmail] = useState(authService.getOwnerEmail())
 
@@ -12,7 +12,7 @@ const MyUploads = () => {
     },[])
 
     const fetchProjects = async () => {
-        const data = await imageService.getImagesByUserEmail(userEmail)
+        const data = await imageService.getImagesByUserName(props.userName)
         setProjects(data.data)
     }
 

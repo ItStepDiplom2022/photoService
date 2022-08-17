@@ -5,17 +5,17 @@ import ProfileCard from './profile-card-component/ProfileCard';
 import './Profile.css'
 
 const Profile = () => {
-    const { tab} = useParams();
+    const { userName,tab} = useParams();
 
     return (
         <div className='profile-page'>
             <div className='row'>
                 <div className="col-auto fs-4">
-                    <ProfileCard tab={tab}/>
+                    <ProfileCard username={userName} tab={tab}/>
                 </div>
                 <div className="col">
                     {
-                        tab=='uploads'?<MyUploads/>:"NONE"
+                        tab=='uploads'?<MyUploads userName={userName}/>:"NONE"
                     }
                 </div>
             </div>
