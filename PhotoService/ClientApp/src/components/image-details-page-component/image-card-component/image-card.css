@@ -46,6 +46,8 @@
 
 .image-author {
     font-weight: bold;
+    text-decoration: none;
+    color: black;
 }
 
 .divider {

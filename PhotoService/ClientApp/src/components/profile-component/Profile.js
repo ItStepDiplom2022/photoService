@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router';
-import MyUploads from './my-uploads-component/my-uploads-component';
+import MyUploads from './my-uploads-component/my-uploads';
 import ProfileCard from './profile-card-component/ProfileCard';
 import './Profile.css'
 

@@ -1,4 +1,4 @@
-import './my-upload-component.css'
+import './my-upload.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDownload } from '@fortawesome/free-solid-svg-icons'
 import { faSave, faHeart } from '@fortawesome/free-solid-svg-icons'

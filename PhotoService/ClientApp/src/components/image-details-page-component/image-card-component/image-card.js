@@ -55,7 +55,7 @@ const ImageCard = (props) => {
 
                         <div>
                             <AccountCircleIcon className='profile-picture' />
-                            <span className='image-author'>{image?.author.userName}</span>
+                            <a href={'profile/'+image?.author.userName} className='image-author'>{image?.author.userName}</a>
                             <span className='divider'>|</span>
                             <span className='image-date'>{getDateParsed()}</span>
                         </div>
