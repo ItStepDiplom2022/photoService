@@ -11,6 +11,7 @@ namespace PhotoService.BLL.Interfaces
     {
         Task<List<UserModel>> GetUsers();
         Task<UserModel> GetUser(string id);
+        UserModel GetUserByEmail(string email);
         void Create(UserRegisterModel user);
         string Autheticate(string email, string password);
         void VerifyUser(string email);
