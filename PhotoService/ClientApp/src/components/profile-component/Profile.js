@@ -9,8 +9,8 @@ import './Profile.css'
  
 const Profile = () => {
     const {username, tab} = useParams();
-    const user = { username: username};
-    const collectionList = collections
+    // const user = profileService.getUser(username);
+    const user = { username: username };
     return (
         <div className='profile-page'>
             <div className='row'>
@@ -20,7 +20,7 @@ const Profile = () => {
                 <div className="col">
                     {
                         tab === "collections" && (
-                            <Collections items={collectionList}/>
+                            <Collections username={user.username}/>
                         )
                     }
                 </div>

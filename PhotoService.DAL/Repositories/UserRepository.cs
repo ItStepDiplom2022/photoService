@@ -42,6 +42,11 @@ namespace PhotoService.DAL.Repositories
             return _users.FirstOrDefault(user => user.Email == email);
         }
 
+        public User GetUserByUsername(string username)
+        {
+            return _users.FirstOrDefault(user => user.UserName.ToLower() == username.ToLower());
+        }
+
         public List<User> GetUsers()
         {
             return _users;
