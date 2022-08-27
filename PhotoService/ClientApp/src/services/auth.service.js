@@ -42,6 +42,10 @@ class AuthService{
     getOwnerEmail(){
         return JSON.parse(localStorage.getItem('user')).email
     }
+
+    getOwnerUsername(){
+        return JSON.parse(localStorage.getItem('user'))?.username 
+    }
 }
 
 export default new AuthService()

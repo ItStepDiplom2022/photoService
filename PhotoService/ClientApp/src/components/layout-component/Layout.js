@@ -11,14 +11,17 @@ import SignupPage from '../signup-page-component/signup-page';
 import VerificationPage from '../verification-page-component/verification-page';
 import Footer from './footer-component/footer';
 import Navbar from './navbar-component/navbar';
+import './Layout.css'
 
 export default function Layout() {
   
 
   const [isLoggedIn, setIsLogged] = useState(authService.isLoggedIn())
+  const [userName, setUsername] = useState(authService.getOwnerUsername())
 
   const onLoggedChange = () => {
     setIsLogged(authService.isLoggedIn())
+    setUsername(authService.getOwnerUsername())
   }
 
   return (

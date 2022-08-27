@@ -1,4 +1,3 @@
-import { height, width } from '@mui/system';
 import React from 'react';
 import { useParams } from 'react-router';
 import profileService from '../../services/profile.service';
@@ -21,6 +20,9 @@ const Profile = () => {
                     {
                         tab === "collections" && (
                             <Collections username={user.username}/>
+                        )
+                        tab === "uploads" && (
+                            <MyUploads userName={userName}/>
                         )
                     }
                 </div>

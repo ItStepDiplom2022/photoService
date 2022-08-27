@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import './ProfileCard.css';
 import defaultUserImage from './tempfiles/default-user-icon.jpg'

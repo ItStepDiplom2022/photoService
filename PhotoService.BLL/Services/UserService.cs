@@ -37,7 +37,7 @@ namespace PhotoService.BLL.Services
             if (!userToAuth.IsVerified)
                 throw new AuthorizationException(PhotoServiceExceptions.EMAIL_NOT_VERIFIED.GetDescription());
 
-            return _jwtService.CreateToken(key, email, string.Join(",", userToAuth.Roles));
+            return _jwtService.CreateToken(key, email, string.Join(",", userToAuth.Roles),userToAuth.UserName);
         }
 
         public void Create(UserRegisterModel newUser)
@@ -60,6 +60,11 @@ namespace PhotoService.BLL.Services
         public Task<UserModel> GetUser(string id)
         {
             throw new NotImplementedException();
+        }
+
+        public UserModel GetUserByEmail(string email)
+        {
+            return _mapper.Map<UserModel>(_userRepository.GetUser(email: email));
         }
 
         public Task<List<UserModel>> GetUsers()

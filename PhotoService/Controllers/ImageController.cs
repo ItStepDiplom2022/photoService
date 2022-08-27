@@ -32,6 +32,34 @@ namespace PhotoService.Controllers
             }
         }
 
+        [HttpGet("email/{email:}")]
+        public ActionResult GetImagesByEmail(string email)
+        {
+            try
+            {
+                var image = _imageService.GetImagesByUserEmail(email);
+                return Ok(image);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
+
+        [HttpGet("username/{username:}")]
+        public ActionResult GetImagesByuserName(string username)
+        {
+            try
+            {
+                var images = _imageService.GetImagesByUserName(username);
+                return Ok(images);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
+
         [AllowAnonymous]
         [HttpPost]
         public ActionResult PostImage([FromBody] ImageAddModel image)
