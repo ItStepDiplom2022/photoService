@@ -15,6 +15,6 @@ namespace PhotoService.BLL.Interfaces
         void Create(UserRegisterModel user);
         string Autheticate(string email, string password);
         void VerifyUser(string email);
-
+        UserModel GetUserByUsername(string username);
     }
 }

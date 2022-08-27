@@ -17,7 +17,7 @@ export default function Layout() {
   
 
   const [isLoggedIn, setIsLogged] = useState(authService.isLoggedIn())
-  const [userName, setUsername] = useState(authService.getOwnerUsername())
+  const [username, setUsername] = useState(authService.getOwnerUsername())
 
   const onLoggedChange = () => {
     setIsLogged(authService.isLoggedIn())
@@ -26,7 +26,7 @@ export default function Layout() {
 
   return (
     <div>
-      <Navbar isLoggedIn={isLoggedIn} onLoggedChange={onLoggedChange} />
+      <Navbar isLoggedIn={isLoggedIn} onLoggedChange={onLoggedChange} username={username} />
       <Routes >
         <Route exact path='/login' element={<LoginPage onLoggedChange={onLoggedChange} />} />
         <Route exact path='/signup' element={<SignupPage onLoggedChange={onLoggedChange} />} />

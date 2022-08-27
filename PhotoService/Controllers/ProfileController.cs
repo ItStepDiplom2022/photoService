@@ -12,10 +12,12 @@ namespace PhotoService.Controllers
     public class ProfileController : ControllerBase
     {
         private readonly IUserCollectionService _userCollectionService;
+        private readonly IUserService _userService;
 
-        public ProfileController(IUserCollectionService userCollectionService)
+        public ProfileController(IUserCollectionService userCollectionService, IUserService userService)
         {
             _userCollectionService = userCollectionService;
+            _userService = userService;
         }
 
         [AllowAnonymous]
@@ -43,6 +45,22 @@ namespace PhotoService.Controllers
             {
                 var collection = _userCollectionService.CreateCollection(model.Username, model.CollectionName);
                 return Ok(collection);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("user")]
+        public ActionResult GetUser([FromQuery] string username)
+        {
+            try
+            {
+                var user = _userService.GetUserByUsername(username);
+                return Ok(user);
             }
             catch (Exception)
             {

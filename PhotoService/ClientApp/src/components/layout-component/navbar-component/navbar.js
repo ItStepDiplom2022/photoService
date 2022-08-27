@@ -7,7 +7,6 @@ import SearchBar from '../../search-bar-component/SearchBar';
 
 export default function Navbar({isLoggedIn, onLoggedChange, username}) {
 
-    const username = localStorage.getItem('user')
 
     function logoutHadler(e) {
         authService.logout();
