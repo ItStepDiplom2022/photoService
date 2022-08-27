@@ -11,6 +11,7 @@ import SignupPage from '../signup-page-component/signup-page';
 import VerificationPage from '../verification-page-component/verification-page';
 import Footer from './footer-component/footer';
 import Navbar from './navbar-component/navbar';
+import './Layout.css'
 
 export default function Layout() {
   
@@ -24,21 +25,23 @@ export default function Layout() {
   }
 
   return (
-    <div>
+    <>
       <Navbar isLoggedIn={isLoggedIn} onLoggedChange={onLoggedChange} username={userName}/>
-      <Routes >
-        <Route exact path='/login' element={<LoginPage onLoggedChange={onLoggedChange} />} />
-        <Route exact path='/signup' element={<SignupPage onLoggedChange={onLoggedChange} />} />
-        <Route exact path='/verify' element={<VerificationPage />} />
-        <Route exact path='/image/:id' element={<ImageDetailsPage/>}/>
-        <Route exact path='/image/add' element={<ImageAddingPage/>}/>
-        <Route exact path="/profile/:userName" element={<Profile/>} >
-          <Route exact path=":tab" element={<Profile/>} />
-        </Route>
-        <Route exact path='/' element={<Home/>} />
-      </Routes>
-      <Footer />
-    </div>
+      <div className='main-content'>
+        <Routes >
+          <Route exact path='/login' element={<LoginPage onLoggedChange={onLoggedChange} />} />
+          <Route exact path='/signup' element={<SignupPage onLoggedChange={onLoggedChange} />} />
+          <Route exact path='/verify' element={<VerificationPage />} />
+          <Route exact path='/image/:id' element={<ImageDetailsPage/>}/>
+          <Route exact path='/image/add' element={<ImageAddingPage/>}/>
+          <Route exact path="/profile/:userName" element={<Profile/>} >
+            <Route exact path=":tab" element={<Profile/>} />
+          </Route>
+          <Route exact path='/' element={<Home/>} />
+        </Routes>
+      </div>
+      <Footer/>
+    </>
   );
 
 }
