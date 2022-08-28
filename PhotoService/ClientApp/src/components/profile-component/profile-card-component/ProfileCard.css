@@ -15,6 +15,11 @@
     color: #ffffff;
 }
 
+#profile-username {
+    text-transform: lowercase;
+    font-weight: 600;
+}
+
 .profile-card .tab {
     font-weight: bold;
     text-decoration: none;

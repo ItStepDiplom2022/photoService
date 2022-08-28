@@ -1,3 +1,7 @@
 .profile-page {
     margin: 10px 50px;
 }
+
+.profile-page>div {
+    flex-wrap: nowrap;
+}

@@ -67,6 +67,11 @@ namespace PhotoService.BLL.Services
             return _mapper.Map<UserModel>(_userRepository.GetUser(email: email));
         }
 
+        public UserModel GetUserByUsername(string username)
+        {
+            return _mapper.Map<UserModel>(_userRepository.GetUserByUsername(username));
+        }
+
         public Task<List<UserModel>> GetUsers()
         {
             throw new NotImplementedException();

@@ -7,6 +7,7 @@ import SearchBar from '../../search-bar-component/SearchBar';
 
 export default function Navbar({isLoggedIn, onLoggedChange, username}) {
 
+
     function logoutHadler(e) {
         authService.logout();
         onLoggedChange()
@@ -39,7 +40,7 @@ export default function Navbar({isLoggedIn, onLoggedChange, username}) {
                             isLoggedIn ?
                                 <>
                                     <li className="nav-item">
-                                        <Link className="nav-link nav-link-custom" to={'profile/'+username}>My profile</Link>
+                                        <Link className="nav-link nav-link-custom" to={`/profile/${username}`}>My profile</Link>
                                     </li>
                                     <li className="nav-item">
                                         <Link className="nav-link nav-link-custom" to="/login" onClick={logoutHadler}>Log out</Link>

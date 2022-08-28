@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using PhotoService.BLL.Models;
 using PhotoService.BLL.ViewModels;
+using PhotoService.DAL;
 using PhotoService.DAL.Entities;
 
 namespace PhotoService.BLL
@@ -55,6 +56,10 @@ namespace PhotoService.BLL
                     Type = Enums.SearchResultType.Author,
                     ImageBase64 = user.AvatarUrl
                 });
+
+            CreateMap<Collection, CollectionModel>()
+                .AfterMap((collection, collectionModel) => collectionModel.UrlName = collection.Name.ToLower().Replace(' ', '-'))
+                .ReverseMap();
         }
     }
 }

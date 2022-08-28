@@ -1,5 +1,6 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using PhotoService.BLL;
 using PhotoService.BLL.Interfaces;
@@ -24,11 +25,13 @@ builder.Services.AddSingleton(mapper);
 
 builder.Services.AddSingleton<IUserRepository, UserRepository>();
 builder.Services.AddSingleton<IImageRepository, ImageRepository>();
+builder.Services.AddSingleton<ICollectionRepository, CollectionRepository>();
 builder.Services.AddSingleton<IJwtService,JwtService>();
 builder.Services.AddSingleton<IUserService, UserService>();
 builder.Services.AddSingleton<IImageService, ImageService>();
 builder.Services.AddSingleton<IEmailService, EmailService>();
 builder.Services.AddSingleton<ISearchService, SearchService>();
+builder.Services.AddSingleton<IUserCollectionService, UserCollectionService>();
 builder.Services.AddSingleton<IHtmlRenderer, HtmlRenderer>();
 
 builder.Services.AddAuthentication(x =>
@@ -66,7 +69,15 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
+//app.UseStaticFiles();
+
+//app.UseStaticFiles(new StaticFileOptions()
+//{
+//    FileProvider = new PhysicalFileProvider(Path.Combine(app.Environment.ContentRootPath, "Images")),
+//    RequestPath = "/api/files/images",
+
+//});
+
 app.UseRouting();
 app.UseCors();
 
@@ -83,6 +94,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
 
-app.MapFallbackToFile("index.html"); ;
+//app.MapFallbackToFile("index.html");
 
 app.Run();

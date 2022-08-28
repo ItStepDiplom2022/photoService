@@ -22,7 +22,8 @@ namespace PhotoService.DAL.Repositories
                 Password="$2a$11$Am8FabDqHpPhRkqfMs6opOxF9r95/YUAlDpPiLlb3I9kiKkDCTWiW",
                 IsVerified=true,
                 Country="Ukraine",
-                City="Lviv"
+                City="Lviv",
+                AvatarUrl="https://upload.wikimedia.org/wikipedia/commons/9/9a/Gull_portrait_ca_usa.jpg"
             } 
         };
 
@@ -40,6 +41,11 @@ namespace PhotoService.DAL.Repositories
         public User GetUser(string email)
         {
             return _users.FirstOrDefault(user => user.Email == email);
+        }
+
+        public User GetUserByUsername(string username)
+        {
+            return _users.FirstOrDefault(user => user.UserName.ToLower() == username.ToLower());
         }
 
         public List<User> GetUsers()

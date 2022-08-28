@@ -1,0 +1,5 @@
+.collections-component {
+    display: flex;
+    flex-wrap: wrap;
+    min-width: 540px;
+}

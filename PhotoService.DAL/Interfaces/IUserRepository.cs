@@ -13,6 +13,7 @@ namespace PhotoService.DAL.Interfaces
     {
         List<User> GetUsers();
         User GetUser(string email);
+        User GetUserByUsername(string username);
         User Create(User user);
         void Update(User user);
         IEnumerable<User> FindAll(Expression<Func<User, bool>> predicate);
