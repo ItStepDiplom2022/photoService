@@ -17,7 +17,7 @@ const MyUpload = (props) => {
     return (
         <>
             <div className='center-div'>
-                <div className='card-content'>
+                <div className='upload-card-content'>
 
                     <div className='image-part'>
                         <img src={image.imageBase64 } />
