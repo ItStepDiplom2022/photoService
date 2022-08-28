@@ -10,12 +10,13 @@ import authService from '../../services/auth.service';
  
 const Profile = () => {
     const {username, tab="uploads"} = useParams();
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState({isLoaded: false});
     //const user = { username: username };
     const ownerName = authService.getOwnerUsername();
 
     const fetchUser = async (username) => {
-        setUser((await profileService.getUser(username)).data);
+        const data = {...((await profileService.getUser(username)).data), isLoaded: true}
+        setUser(data);
         console.log(user);
     }
 
@@ -32,7 +33,7 @@ const Profile = () => {
                 <div className="col">
                     {
                         tab === "collections" && (
-                            <Collections username={user.username}/>
+                            <Collections username={username}/>
                         )
                     }
                     {
