@@ -37,7 +37,7 @@ namespace PhotoService.BLL.Services
         public ImageModel AddImage(ImageAddModel model)
         {
             var image = _mapper.Map<DAL.Entities.Image>(model);
-            image.Author = _userRepository.GetUser(model.UserEmail);
+            image.User = _userRepository.GetUser(model.UserEmail);
             image.DateAdded = DateTime.Now;
 
             return _mapper.Map<ImageModel>(_imageRepository.Add(image));
@@ -46,13 +46,13 @@ namespace PhotoService.BLL.Services
         public IEnumerable<ImageModel> GetImagesByUserEmail(string email)
         {
             return _mapper.Map<IEnumerable<ImageModel>>
-                            (_imageRepository.FindAll(i => i.Author.Email == email));
+                            (_imageRepository.FindAll(i => i.User.Email == email));
         }
 
         public IEnumerable<ImageModel> GetImagesByUserName(string username)
         {
             return _mapper.Map<IEnumerable<ImageModel>>
-                            (_imageRepository.FindAll(i => i.Author.UserName == username));
+                            (_imageRepository.FindAll(i => i.User.UserName == username));
         }
     }
 }

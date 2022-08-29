@@ -1,9 +1,14 @@
-﻿namespace PhotoService.DAL.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace PhotoService.DAL.Entities
 {
     public class Comment:BaseEntity
     {
-        public User UserAdded { get; set; }
+        [Required]
         public DateTime DateAdded { get; set; }
+        [Required]
         public string CommentText { get; set; }
+        public virtual Image Image { get; set; }
+        public virtual User UserAdded { get; set; }
     }
 }

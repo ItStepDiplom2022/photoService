@@ -38,9 +38,6 @@ namespace PhotoService.BLL
             CreateMap<HashtagModel, Hashtag>()
                 .ReverseMap();
 
-            CreateMap<LikeModel, Like>()
-                .ReverseMap();
-
 
             CreateMap<HashtagModel, SearchResultModel>()
                 .ConvertUsing(tag => new SearchResultModel()

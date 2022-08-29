@@ -11,55 +11,58 @@ namespace PhotoService.DAL.Repositories
 {
     public class UserRepository:IUserRepository
     {
+        private readonly PhotoServiceDbContext _dbContext;
+
+        public UserRepository(PhotoServiceDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
         //mock
         //TODO: add connections to DB
-        List<User> _users=new List<User>
-        {
-            new User
-            {
-                Email="admin@admin.com",
-                UserName="admin",
-                Password="$2a$11$Am8FabDqHpPhRkqfMs6opOxF9r95/YUAlDpPiLlb3I9kiKkDCTWiW",
-                IsVerified=true,
-                Country="Ukraine",
-                City="Lviv",
-                AvatarUrl="https://upload.wikimedia.org/wikipedia/commons/9/9a/Gull_portrait_ca_usa.jpg"
-            } 
-        };
+        //List<User> _users=new List<User>
+        //{
+        //    new User
+        //    {
+        //        Email="admin@admin.com",
+        //        UserName="admin",
+        //        PasswordHash="$2a$11$Am8FabDqHpPhRkqfMs6opOxF9r95/YUAlDpPiLlb3I9kiKkDCTWiW",
+        //        IsVerified=true,
+        //        Country="Ukraine",
+        //        City="Lviv",
+        //        AvatarUrl="https://upload.wikimedia.org/wikipedia/commons/9/9a/Gull_portrait_ca_usa.jpg"
+        //    } 
+        //};
 
-        public User Create(User user)
+        public async Task<User> Create(User user)
         {
-            _users.Add(user);
-            return user;
+            var addedUser = await _dbContext.Users.AddAsync(user);
+            return addedUser.Entity;
         }
 
         public IEnumerable<User> FindAll(Expression<Func<User, bool>> predicate)
         {
-            return _users.AsQueryable().Where(predicate);
+            return _dbContext.Users.AsQueryable().Where(predicate);
         }
 
         public User GetUser(string email)
         {
-            return _users.FirstOrDefault(user => user.Email == email);
+            return _dbContext.Users.FirstOrDefault(user => user.Email == email);
         }
 
         public User GetUserByUsername(string username)
         {
-            return _users.FirstOrDefault(user => user.UserName.ToLower() == username.ToLower());
+            return _dbContext.Users.FirstOrDefault(user => user.UserName.ToLower() == username.ToLower());
         }
 
-        public List<User> GetUsers()
+        public IEnumerable<User> GetUsers()
         {
-            return _users;
+            return _dbContext.Users.AsEnumerable();
         }
 
         public void Update(User user)
         {
-            var u=_users.First(x => x.UserName == user.UserName);
-
-            u.IsVerified = user.IsVerified;
-            u.Email = user.Email;
-            //and so on
+            _dbContext.Users.Update(user);
         }
     }
 }

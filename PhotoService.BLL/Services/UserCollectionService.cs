@@ -31,8 +31,8 @@ namespace PhotoService.BLL.Services
             Collection entity = new Collection()
             {
                 Name = name,
-                User = user,
-                ImageUrl= "/images/collection-images/Folders.png",
+                Owner = user,
+                ImageBase64= "/images/collection-images/Folders.png",
             };
 
             return _mapper.Map<CollectionModel>(_collectionRepository.Create(entity));

@@ -13,6 +13,5 @@ namespace PhotoService.BLL.Models
         public DateTime DateAdded { get; set; }
         public IEnumerable<CommentModel> Comments { get; set; }
         public IEnumerable<HashtagModel> Hashtags { get; set; }
-        public IEnumerable<LikeModel> Likes { get; set; }
     }
 }

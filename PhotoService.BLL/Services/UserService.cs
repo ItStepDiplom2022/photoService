@@ -31,7 +31,7 @@ namespace PhotoService.BLL.Services
             if (userToAuth == null)
                 throw new AuthorizationException(PhotoServiceExceptions.WRONG_CREDENTIALS.GetDescription());
 
-            if (!BCrypt.Net.BCrypt.Verify(password, userToAuth.Password))
+            if (!BCrypt.Net.BCrypt.Verify(password, userToAuth.PasswordHash))
                 throw new AuthorizationException(PhotoServiceExceptions.WRONG_CREDENTIALS.GetDescription());
 
             if (!userToAuth.IsVerified)

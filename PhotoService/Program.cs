@@ -1,10 +1,11 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.FileProviders;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using PhotoService.BLL;
 using PhotoService.BLL.Interfaces;
 using PhotoService.BLL.Services;
+using PhotoService.DAL;
 using PhotoService.DAL.Interfaces;
 using PhotoService.DAL.Repositories;
 using PhotoService.Renderes;
@@ -20,6 +21,10 @@ var mappingConfig = new MapperConfiguration(mc =>
     mc.AddProfile(new AutoMapperSettings());
 });
 
+builder.Services.AddDbContext<PhotoServiceDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("PhotoService")));
+
+
 IMapper mapper = mappingConfig.CreateMapper();
 builder.Services.AddSingleton(mapper);
 
@@ -33,6 +38,7 @@ builder.Services.AddSingleton<IEmailService, EmailService>();
 builder.Services.AddSingleton<ISearchService, SearchService>();
 builder.Services.AddSingleton<IUserCollectionService, UserCollectionService>();
 builder.Services.AddSingleton<IHtmlRenderer, HtmlRenderer>();
+builder.Services.AddSingleton<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddAuthentication(x =>
 {
