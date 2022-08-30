@@ -12,6 +12,8 @@ namespace PhotoService.DAL.Interfaces
         IImageRepository ImageRepository { get; }
         ICollectionRepository CollectionRepository { get; }
 
+        IRoleRepository RoleRepository { get; }
+
         Task<int> SaveAsync();
     }
 }

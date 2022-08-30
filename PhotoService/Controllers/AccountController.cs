@@ -61,7 +61,7 @@ namespace PhotoService.Controllers
             {
                 var htmlBody = await _htmlRenderer.RenderEmail(new VerificationEmailModel { Email = user.Email, UserName = user.UserName });
 
-                 _userService.Create(user);
+                await _userService.Create(user);
                 await _emailService.SendEmail(user.Email, "PHOTO SERVICE EMAIL VERIFICATION", htmlBody);
                 return Ok(new { email = user.Email });
             }
@@ -90,13 +90,28 @@ namespace PhotoService.Controllers
             {
                 var htmlBody = await _htmlRenderer.RenderEmail(new SuccessfulVerificationModel { Email = email });
 
-                _userService.VerifyUser(email);
+                await _userService.VerifyUser(email);
                 await _emailService.SendEmail(email, "PHOTO SERVICE EMAIL VERIFICATION SUCCESSFUL", htmlBody);
                 return Ok("Your email was successfuly verified");
             }
             catch (AuthorizationException e)
             {
                 return BadRequest(e.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
+
+
+        [AllowAnonymous]
+        [HttpGet("all")]
+        public async Task<ActionResult> GetAllUsers()
+        {
+            try
+            {
+                return Ok(_userService.GetUsers());
             }
             catch (Exception)
             {

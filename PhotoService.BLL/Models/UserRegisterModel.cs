@@ -22,7 +22,7 @@ namespace PhotoService.BLL.Models
 
         public bool IsVerified { get; set; }
 
-        public IEnumerable<string> Roles { get; set; } = new List<string>();
+        public ICollection<RoleModel> Roles { get; set; } = new List<RoleModel>();
 
     }
 }

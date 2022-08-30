@@ -28,17 +28,18 @@ builder.Services.AddDbContext<PhotoServiceDbContext>(options =>
 IMapper mapper = mappingConfig.CreateMapper();
 builder.Services.AddSingleton(mapper);
 
-builder.Services.AddSingleton<IUserRepository, UserRepository>();
-builder.Services.AddSingleton<IImageRepository, ImageRepository>();
-builder.Services.AddSingleton<ICollectionRepository, CollectionRepository>();
-builder.Services.AddSingleton<IJwtService,JwtService>();
-builder.Services.AddSingleton<IUserService, UserService>();
-builder.Services.AddSingleton<IImageService, ImageService>();
-builder.Services.AddSingleton<IEmailService, EmailService>();
-builder.Services.AddSingleton<ISearchService, SearchService>();
-builder.Services.AddSingleton<IUserCollectionService, UserCollectionService>();
-builder.Services.AddSingleton<IHtmlRenderer, HtmlRenderer>();
-builder.Services.AddSingleton<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IImageRepository, ImageRepository>();
+builder.Services.AddScoped<ICollectionRepository, CollectionRepository>();
+builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+builder.Services.AddScoped<IJwtService,JwtService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IImageService, ImageService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<ISearchService, SearchService>();
+builder.Services.AddScoped<IUserCollectionService, UserCollectionService>();
+builder.Services.AddScoped<IHtmlRenderer, HtmlRenderer>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddAuthentication(x =>
 {

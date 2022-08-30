@@ -12,7 +12,7 @@ using PhotoService.DAL;
 namespace PhotoService.DAL.Migrations
 {
     [DbContext(typeof(PhotoServiceDbContext))]
-    [Migration("20220829174404_Initial")]
+    [Migration("20220829184635_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

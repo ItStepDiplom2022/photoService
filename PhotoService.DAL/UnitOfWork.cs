@@ -14,6 +14,7 @@ namespace PhotoService.DAL
         private IImageRepository _imageRepository;
         private IUserRepository _userRepository;
         private ICollectionRepository _collectionRepository;
+        private IRoleRepository _roleRepository;
 
         public UnitOfWork(PhotoServiceDbContext dbContext)
         {
@@ -50,6 +51,17 @@ namespace PhotoService.DAL
                     _collectionRepository = new CollectionRepository(_dbContext);
 
                 return _collectionRepository;
+            }
+        }
+
+        public IRoleRepository RoleRepository
+        {
+            get
+            {
+                if (_roleRepository == null)
+                    _roleRepository = new RoleRepository(_dbContext);
+
+                return _roleRepository;
             }
         }
 

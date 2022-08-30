@@ -1,4 +1,5 @@
-﻿using PhotoService.DAL.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using PhotoService.DAL.Entities;
 using PhotoService.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -60,9 +61,39 @@ namespace PhotoService.DAL.Repositories
             return _dbContext.Users.AsEnumerable();
         }
 
+        public void AddRole(User user, Role role)
+        {
+            if(user.Roles.Any())
+                user.Roles.Add(role);
+            else
+                user.Roles = new List<Role> { role};
+
+            _dbContext.Users.Update(user);
+        }
+
         public void Update(User user)
         {
             _dbContext.Users.Update(user);
         }
+
+        public IQueryable<User> Include(params Expression<Func<User, object>>[] includeProperties)
+        {
+            IQueryable<User> query = _dbContext.Users;
+            return includeProperties
+                .Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
+        }
+
+        public IEnumerable<User> GetWithInclude(params Expression<Func<User, object>>[] includeProperties)
+        {
+            return Include(includeProperties).ToList();
+        }
+
+        public IEnumerable<User> GetWithInclude(Func<User, bool> predicate,
+                params Expression<Func<User, object>>[] includeProperties)
+        {
+            var query = Include(includeProperties);
+            return query.Where(predicate).ToList();
+        }
+
     }
 }

@@ -25,7 +25,7 @@ namespace PhotoService.DAL.Entities
         public virtual ICollection<Role> Roles { get; set; }
         public virtual ICollection<Image> Images { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
-        public ICollection<Collection> Collections { get; set; }
+        public virtual ICollection<Collection> Collections { get; set; }
 
     }
 }
