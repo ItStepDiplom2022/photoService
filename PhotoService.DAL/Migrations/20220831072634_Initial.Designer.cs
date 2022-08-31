@@ -12,7 +12,7 @@ using PhotoService.DAL;
 namespace PhotoService.DAL.Migrations
 {
     [DbContext(typeof(PhotoServiceDbContext))]
-    [Migration("20220829184635_Initial")]
+    [Migration("20220831072634_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -65,7 +65,7 @@ namespace PhotoService.DAL.Migrations
                     b.Property<int>("CollectionTypeId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ImageBase64")
+                    b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

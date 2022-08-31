@@ -11,5 +11,6 @@ namespace PhotoService.DAL.Interfaces
         IEnumerable<Collection> GetCollections(string username);
         Collection GetCollection(string username, string collectionName);
         Task<Collection> Create(Collection collection);
+
     }
 }

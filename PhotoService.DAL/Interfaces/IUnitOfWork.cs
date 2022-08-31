@@ -13,6 +13,7 @@ namespace PhotoService.DAL.Interfaces
         ICollectionRepository CollectionRepository { get; }
         IRoleRepository RoleRepository { get; }
         IHashTagRepository HashTagRepository { get; }
+        ICollectionTypeRepository CollectionTypeRepository { get; }
 
         Task<int> SaveAsync();
     }

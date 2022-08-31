@@ -11,6 +11,7 @@ namespace PhotoService.DAL
         public DbSet<Hashtag> Hashtags { get; set; }
         public DbSet<Collection> Collections { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<CollectionType> CollectionType { get; set; }
 
         public PhotoServiceDbContext(DbContextOptions<PhotoServiceDbContext> options) : base(options)
         {

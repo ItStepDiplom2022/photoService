@@ -63,7 +63,7 @@ namespace PhotoService.DAL.Migrations
                     b.Property<int>("CollectionTypeId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ImageBase64")
+                    b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

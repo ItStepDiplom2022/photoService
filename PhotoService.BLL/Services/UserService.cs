@@ -65,8 +65,34 @@ namespace PhotoService.BLL.Services
             //adding roles
             _unitOfWork.UserRepository.AddRole(addedUser, registeredRole);
             await _unitOfWork.SaveAsync();
+
+            //adding default collections
+            await AddDefaultCollections(addedUser);
         }
 
+        private async Task AddDefaultCollections(User user)
+        {
+            _unitOfWork.UserRepository.AddCollection(
+                user,
+                new Collection {
+                    IsPublic = false,
+                    Name = "Likes",
+                    ImageUrl = "/images/collection-images/bookmark.png",
+                    CollectionType = _unitOfWork.CollectionTypeRepository.GetCollectionTypeByTitle(CollectionTypes.LIKES.ToString())
+                }) ;
+
+            _unitOfWork.UserRepository.AddCollection(
+               user,
+               new Collection
+               {
+                   IsPublic = false,
+                   Name = "Saves",
+                   ImageUrl = "/images/collection-images/Heart.png",
+                   CollectionType = _unitOfWork.CollectionTypeRepository.GetCollectionTypeByTitle(CollectionTypes.SAVES.ToString())
+               });
+
+            await _unitOfWork.SaveAsync();
+        }
         public UserModel GetUserByEmail(string email)
         {
             return _mapper.Map<UserModel>(_unitOfWork.UserRepository.GetUser(email: email));

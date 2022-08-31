@@ -71,6 +71,16 @@ namespace PhotoService.DAL.Repositories
             _dbContext.Users.Update(user);
         }
 
+        public void AddCollection(User user, Collection collection)
+        {
+            if (user.Collections!=null&&user.Collections.Any())
+                user.Collections.Add(collection);
+            else
+                user.Collections = new List<Collection> { collection };
+
+            _dbContext.Users.Update(user);
+        }
+
         public void Update(User user)
         {
             _dbContext.Users.Update(user);

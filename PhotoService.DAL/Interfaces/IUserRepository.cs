@@ -18,6 +18,7 @@ namespace PhotoService.DAL.Interfaces
         void Update(User user);
         IEnumerable<User> FindAll(Expression<Func<User, bool>> predicate);
         void AddRole(User user, Role role);
+        void AddCollection(User user, Collection collection);
         IEnumerable<User> GetWithInclude(Func<User, bool> predicate,
                 params Expression<Func<User, object>>[] includeProperties);
     }

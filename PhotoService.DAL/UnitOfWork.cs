@@ -16,6 +16,7 @@ namespace PhotoService.DAL
         private ICollectionRepository _collectionRepository;
         private IRoleRepository _roleRepository;
         private IHashTagRepository _hashTagRepository;
+        private ICollectionTypeRepository _collectionTypeRepository;
 
         public UnitOfWork(PhotoServiceDbContext dbContext)
         {
@@ -77,6 +78,16 @@ namespace PhotoService.DAL
             }
         }
 
+        public ICollectionTypeRepository CollectionTypeRepository
+        {
+            get
+            {
+                if (_collectionTypeRepository == null)
+                    _collectionTypeRepository = new CollectionTypeRepository(_dbContext);
+
+                return _collectionTypeRepository;
+            }
+        }
 
         public async Task<int> SaveAsync()
         {
