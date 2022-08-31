@@ -48,12 +48,16 @@ namespace PhotoService.DAL.Repositories
 
         public User GetUser(string email)
         {
-            return _dbContext.Users.FirstOrDefault(user => user.Email == email);
+            return GetWithInclude(user => user.Email.ToLower() == email.ToLower(),
+                i => i.Images, i => i.Collections, i => i.Roles).First();
+            //return _dbContext.Users.FirstOrDefault(user => user.Email == email);
         }
 
         public User GetUserByUsername(string username)
         {
-            return _dbContext.Users.FirstOrDefault(user => user.UserName.ToLower() == username.ToLower());
+            return GetWithInclude(user => user.UserName.ToLower() == username.ToLower(),
+                i => i.Images, i => i.Collections, i => i.Roles).First();
+            //return _dbContext.Users.FirstOrDefault(user => user.UserName.ToLower() == username.ToLower());
         }
 
         public IEnumerable<User> GetUsers()

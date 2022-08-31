@@ -10,6 +10,6 @@ namespace PhotoService.BLL.Interfaces
     {
         IList<CollectionModel> GetCollections(string username);
         CollectionModel GetCollection(string username, string name);
-        CollectionModel CreateCollection(string username, string name);
+        Task<CollectionModel> CreateCollection(string username, string name, bool isPublic);
     }
 }
