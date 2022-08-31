@@ -1,4 +1,5 @@
-﻿using PhotoService.DAL.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using PhotoService.DAL.Entities;
 using PhotoService.DAL.Interfaces;
 using System.Linq.Expressions;
 
@@ -112,9 +113,39 @@ namespace PhotoService.DAL.Repositories
             return _dbContext.Images.AsEnumerable();
         }
 
+        public void AddHashTag(Image image, Hashtag hashtag)
+        {
+            if (image.Hashtags.Any())
+                image.Hashtags.Add(hashtag);
+            else
+                image.Hashtags = new List<Hashtag> { hashtag };
+
+            _dbContext.Images.Update(image);
+        }
+
         public void Update(Image image)
         {
             throw new NotImplementedException();
         }
+
+        public IQueryable<Image>Include(params Expression<Func<Image, object>>[] includeProperties)
+        {
+            IQueryable<Image> query = _dbContext.Images;
+            return includeProperties
+                .Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
+        }
+
+        public IEnumerable<Image> GetWithInclude(params Expression<Func<Image, object>>[] includeProperties)
+        {
+            return Include(includeProperties).ToList();
+        }
+
+        public IEnumerable<Image> GetWithInclude(Func<Image, bool> predicate,
+                params Expression<Func<Image, object>>[] includeProperties)
+        {
+            var query = Include(includeProperties);
+            return query.Where(predicate).ToList();
+        }
+
     }
 }

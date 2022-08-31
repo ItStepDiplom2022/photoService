@@ -55,13 +55,14 @@ namespace PhotoService.BLL.Services
                 throw new AuthorizationException(PhotoServiceExceptions.USERNAME_ALREADY_REGISTERED.GetDescription());
 
             var registeredRole = _unitOfWork.RoleRepository.GetRoleByTitle(UserRoles.REGISTERED_USER.ToString());
-           // newUser.Roles.Add(registeredRole);
 
+            //adding user
             newUser.Password = BCrypt.Net.BCrypt.HashPassword(newUser.Password);
             newUser.IsVerified = false;
             var addedUser = await _unitOfWork.UserRepository.Create(_mapper.Map<User>(newUser));
             await _unitOfWork.SaveAsync();
 
+            //adding roles
             _unitOfWork.UserRepository.AddRole(addedUser, registeredRole);
             await _unitOfWork.SaveAsync();
         }

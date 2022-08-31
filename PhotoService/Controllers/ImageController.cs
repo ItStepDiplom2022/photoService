@@ -23,7 +23,7 @@ namespace PhotoService.Controllers
         {
             try
             {
-                var image = _imageService.GetImage(id);
+                var image =  _imageService.GetImage(id);
                 return Ok(image);
             }
             catch (Exception)
@@ -32,6 +32,7 @@ namespace PhotoService.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpGet("email/{email:}")]
         public ActionResult GetImagesByEmail(string email)
         {
@@ -46,8 +47,9 @@ namespace PhotoService.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpGet("username/{username:}")]
-        public ActionResult GetImagesByuserName(string username)
+        public ActionResult GetImagesByUserName(string username)
         {
             try
             {
@@ -62,11 +64,11 @@ namespace PhotoService.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public ActionResult PostImage([FromBody] ImageAddModel image)
+        public async Task<ActionResult> PostImage([FromBody] ImageAddModel image)
         {
             try
             {
-                var addedImage=_imageService.AddImage(image);
+                var addedImage=await _imageService.AddImage(image);
                 return Ok(addedImage);
             }
             catch (Exception e)

@@ -15,6 +15,7 @@ namespace PhotoService.DAL
         private IUserRepository _userRepository;
         private ICollectionRepository _collectionRepository;
         private IRoleRepository _roleRepository;
+        private IHashTagRepository _hashTagRepository;
 
         public UnitOfWork(PhotoServiceDbContext dbContext)
         {
@@ -62,6 +63,17 @@ namespace PhotoService.DAL
                     _roleRepository = new RoleRepository(_dbContext);
 
                 return _roleRepository;
+            }
+        }
+
+        public IHashTagRepository HashTagRepository
+        {
+            get
+            {
+                if (_hashTagRepository == null)
+                    _hashTagRepository = new HashTagRepository(_dbContext);
+
+                return _hashTagRepository;
             }
         }
 

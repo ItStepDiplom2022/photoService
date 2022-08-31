@@ -25,6 +25,7 @@ namespace PhotoService.BLL
                 .ReverseMap();
 
             CreateMap<ImageModel, Image>()
+                .ForMember(i => i.User, im => im.MapFrom(s=>s.Author))
                 .ReverseMap();
             
             CreateMap<SimpleImageViewModel, ImageModel>()
