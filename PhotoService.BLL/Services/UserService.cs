@@ -4,6 +4,7 @@ using PhotoService.BLL.Enums;
 using PhotoService.BLL.Exceptions;
 using PhotoService.BLL.Interfaces;
 using PhotoService.BLL.Models;
+using PhotoService.DAL;
 using PhotoService.DAL.Entities;
 using PhotoService.DAL.Interfaces;
 
@@ -11,14 +12,15 @@ namespace PhotoService.BLL.Services
 {
     public class UserService : IUserService
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IUnitOfWork _unitOfWork;
+        //private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
         private readonly IJwtService _jwtService;
         private readonly string key;
 
-        public UserService(IUserRepository userRepository, IMapper mapper, IConfiguration configuration, IJwtService jwtService)
+        public UserService(IUnitOfWork unitOfWork, IMapper mapper, IConfiguration configuration, IJwtService jwtService)
         {
-            _userRepository = userRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
             key = configuration.GetSection("JwtKey").ToString();
             _jwtService = jwtService;
@@ -26,23 +28,24 @@ namespace PhotoService.BLL.Services
 
         public string Autheticate(string email, string password)
         {
-            var userToAuth = _userRepository.GetUser(email);
+            var userToAuth = _unitOfWork.UserRepository.GetWithInclude(u=>u.Email == email,
+                i => i.Roles).First();
 
             if (userToAuth == null)
                 throw new AuthorizationException(PhotoServiceExceptions.WRONG_CREDENTIALS.GetDescription());
 
-            if (!BCrypt.Net.BCrypt.Verify(password, userToAuth.Password))
+            if (!BCrypt.Net.BCrypt.Verify(password, userToAuth.PasswordHash))
                 throw new AuthorizationException(PhotoServiceExceptions.WRONG_CREDENTIALS.GetDescription());
 
             if (!userToAuth.IsVerified)
                 throw new AuthorizationException(PhotoServiceExceptions.EMAIL_NOT_VERIFIED.GetDescription());
 
-            return _jwtService.CreateToken(key, email, string.Join(",", userToAuth.Roles),userToAuth.UserName);
+            return _jwtService.CreateToken(key, email, string.Join(",", userToAuth.Roles.Select(x=>x.Title)),userToAuth.UserName);
         }
 
-        public void Create(UserRegisterModel newUser)
+        public async Task Create(UserRegisterModel newUser)
         {
-            var users = _userRepository.GetUsers();
+            var users = _unitOfWork.UserRepository.GetUsers();
 
             //checking if user already exists
             if (users.FirstOrDefault(x => x.Email == newUser.Email) != null)
@@ -51,44 +54,77 @@ namespace PhotoService.BLL.Services
             if (users.FirstOrDefault(x => x.UserName == newUser.UserName) != null)
                 throw new AuthorizationException(PhotoServiceExceptions.USERNAME_ALREADY_REGISTERED.GetDescription());
 
-            (newUser.Roles as List<string>).Add(UserRoles.REGISTERED_USER.ToString());
+            var registeredRole = _unitOfWork.RoleRepository.GetRoleByTitle(UserRoles.REGISTERED_USER.ToString());
+
+            //adding user
             newUser.Password = BCrypt.Net.BCrypt.HashPassword(newUser.Password);
             newUser.IsVerified = false;
-            _userRepository.Create(_mapper.Map<User>(newUser));
+            var addedUser = await _unitOfWork.UserRepository.Create(_mapper.Map<User>(newUser));
+            await _unitOfWork.SaveAsync();
+
+            //adding roles
+            _unitOfWork.UserRepository.AddRole(addedUser, registeredRole);
+            await _unitOfWork.SaveAsync();
+
+            //adding default collections
+            await AddDefaultCollections(addedUser);
         }
 
-        public Task<UserModel> GetUser(string id)
+        private async Task AddDefaultCollections(User user)
         {
-            throw new NotImplementedException();
-        }
+            _unitOfWork.UserRepository.AddCollection(
+                user,
+                new Collection {
+                    IsPublic = false,
+                    Name = "Likes",
+                    ImageUrl = "/images/collection-images/bookmark.png",
+                    CollectionType = _unitOfWork.CollectionTypeRepository.GetCollectionTypeByTitle(CollectionTypes.LIKES.ToString())
+                }) ;
 
+            _unitOfWork.UserRepository.AddCollection(
+               user,
+               new Collection
+               {
+                   IsPublic = false,
+                   Name = "Saves",
+                   ImageUrl = "/images/collection-images/Heart.png",
+                   CollectionType = _unitOfWork.CollectionTypeRepository.GetCollectionTypeByTitle(CollectionTypes.SAVES.ToString())
+               });
+
+            await _unitOfWork.SaveAsync();
+        }
         public UserModel GetUserByEmail(string email)
         {
-            return _mapper.Map<UserModel>(_userRepository.GetUser(email: email));
+            return _mapper.Map<UserModel>(_unitOfWork.UserRepository.GetUser(email: email));
         }
 
         public UserModel GetUserByUsername(string username)
         {
-            return _mapper.Map<UserModel>(_userRepository.GetUserByUsername(username));
+            return _mapper.Map<UserModel>(_unitOfWork.UserRepository.GetUserByUsername(username));
         }
 
-        public Task<List<UserModel>> GetUsers()
+        public IEnumerable<UserModel> GetUsers()
         {
-            throw new NotImplementedException();
+            return _mapper.Map<IEnumerable<UserModel>>(_unitOfWork.UserRepository.GetUsers());
         }
 
-        public void VerifyUser(string email)
+        public async Task VerifyUser(string email)
         {
-            var user = _userRepository.GetUser(email);
+            var user = _unitOfWork.UserRepository.GetWithInclude(u => u.Email == email,
+                i => i.Roles).First();
 
             if (user == null)
                 throw new AuthorizationException(PhotoServiceExceptions.EMAIL_NOT_EXIST.GetDescription());
             if (user.IsVerified)
                 throw new AuthorizationException(PhotoServiceExceptions.EMAIL_ALREADY_VERIFIED.GetDescription());
 
-            (user.Roles as List<string>).Add(UserRoles.VERIFIED_USER.ToString());
+            var verifiedRole = _unitOfWork.RoleRepository.GetRoleByTitle(UserRoles.VERIFIED_USER.ToString());
+            _unitOfWork.UserRepository.AddRole(user, verifiedRole);
+            await _unitOfWork.SaveAsync();
+
             user.IsVerified = true;
-            _userRepository.Update(user);
+            _unitOfWork.UserRepository.Update(user);
+            await _unitOfWork.SaveAsync();
         }
     }
 }

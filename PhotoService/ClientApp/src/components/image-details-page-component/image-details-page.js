@@ -31,7 +31,7 @@ const ImageDetailsPage = () => {
     return (
         image?
             <>
-                <a href="#" class="previous-btn" onClick={onReturnClick}>
+                <a href="#" className="previous-btn" onClick={onReturnClick}>
                     <FontAwesomeIcon icon={faArrowLeft}/>
                 </a>
                 <ImageCard image={image.data} />

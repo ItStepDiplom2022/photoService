@@ -9,12 +9,11 @@ namespace PhotoService.BLL.Interfaces
 {
     public interface IUserService
     {
-        Task<List<UserModel>> GetUsers();
-        Task<UserModel> GetUser(string id);
+        IEnumerable<UserModel> GetUsers();
         UserModel GetUserByEmail(string email);
-        void Create(UserRegisterModel user);
+        Task Create(UserRegisterModel user);
         string Autheticate(string email, string password);
-        void VerifyUser(string email);
+        Task VerifyUser(string email);
         UserModel GetUserByUsername(string username);
     }
 }

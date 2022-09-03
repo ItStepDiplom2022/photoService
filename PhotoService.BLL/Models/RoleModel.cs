@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PhotoService.BLL.ViewModels
+namespace PhotoService.BLL.Models
 {
-    public class SimpleImageViewModel
+    public class RoleModel
     {
         public int Id { get; set; }
-        public string ImageBase64 { get; set; }
         public string Title { get; set; }
-        public SimpleUserViewModel Author { get; set; }
+        public virtual ICollection<UserModel> Users { get; set; }
     }
 }

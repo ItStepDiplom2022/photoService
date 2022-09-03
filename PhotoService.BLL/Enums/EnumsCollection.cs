@@ -23,13 +23,6 @@ namespace PhotoService.BLL.Enums
         EMAIL_ALREADY_VERIFIED
     }
 
-    public enum UserRoles
-    {
-        REGISTERED_USER,
-        VERIFIED_USER,
-        ADMIN
-    }
-
     public enum SearchResultType
     {
         Author,

@@ -19,9 +19,15 @@ namespace PhotoService.BLL.Models
 
         public DateTime DateOfBirth { get; set; }
 
-        public IEnumerable<string> Roles { get; set; } = new List<string>();
-
         public string AvatarUrl { get; set; }
+
+        public ICollection<RoleModel> Roles { get; set; }= new List<RoleModel>();
+
+        public ICollection<ImageModel> Images { get; set; }
+
+        public ICollection<CommentModel> Comments { get; set; }
+
+        public ICollection<CollectionModel> Collections { get; set; }
 
     }
 }

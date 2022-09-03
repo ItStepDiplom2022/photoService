@@ -30,7 +30,7 @@ const ImageCard = (props) => {
     }
 
     useEffect(() => {
-        checkIfIsLiked();
+        //checkIfIsLiked();
     },[])
 
     const createFileDonwloadName = () => {

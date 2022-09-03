@@ -10,5 +10,6 @@ namespace PhotoService.BLL.ViewModels
     {
         public string Username { get; set; }
         public string CollectionName { get; set; }
+        public bool IsPublic { get; set; }
     }
 }

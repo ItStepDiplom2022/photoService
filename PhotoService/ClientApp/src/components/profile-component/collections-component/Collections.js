@@ -18,8 +18,8 @@ const Collections = ({username}) => {
         setShowDialog(true);
     }
 
-    const handleSubmitAddCollection = async (collectionName) => {
-        console.log(await profileService.addNewCollection(username, collectionName));
+    const handleSubmitAddCollection = async (collectionName, isPublic) => {
+        console.log(await profileService.addNewCollection(username, collectionName, isPublic));
         updateCollections(username);
     }
 

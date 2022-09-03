@@ -13,29 +13,33 @@ namespace PhotoService.BLL.Services
 {
     public class UserCollectionService : IUserCollectionService
     {
-        private readonly ICollectionRepository _collectionRepository;
-        private readonly IUserRepository _userRepository;
+        //private readonly ICollectionRepository _collectionRepository;
+        private readonly IUnitOfWork _unitOfWork;
+        //private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
 
-        public UserCollectionService(IMapper mapper, ICollectionRepository collectionRepository, IUserRepository userRepository)
+        public UserCollectionService(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _userRepository = userRepository;
-            _collectionRepository = collectionRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
 
-        public CollectionModel CreateCollection(string username, string name)
+        public async Task<CollectionModel> CreateCollection(string username, string name, bool isPublic)
         {
-            var user = _userRepository.GetUserByUsername(username);
+            var user = _unitOfWork.UserRepository.GetUserByUsername(username);
 
             Collection entity = new Collection()
             {
                 Name = name,
-                User = user,
+                Owner = user,
+                IsPublic = isPublic,
                 ImageUrl= "/images/collection-images/Folders.png",
+                CollectionType = _unitOfWork.CollectionTypeRepository.GetCollectionTypeByTitle(CollectionTypes.CUSTOM.ToString())
             };
 
-            return _mapper.Map<CollectionModel>(_collectionRepository.Create(entity));
+            var addedCollection = await _unitOfWork.CollectionRepository.Create(entity);
+            await _unitOfWork.SaveAsync();
+            return _mapper.Map<CollectionModel>(addedCollection);
         }
 
         public CollectionModel GetCollection(string username, string name)
@@ -44,12 +48,12 @@ namespace PhotoService.BLL.Services
 
             var collectionName = collections.First(collection => collection.UrlName == name).Name;
 
-            return _mapper.Map<CollectionModel>(_collectionRepository.GetCollection(username, collectionName));
+            return _mapper.Map<CollectionModel>(_unitOfWork.CollectionRepository.GetCollection(username, collectionName));
         }
 
         public IList<CollectionModel> GetCollections(string username)
         {
-            return _mapper.Map<IList<CollectionModel>>(_collectionRepository.GetCollections(username));
+            return _mapper.Map<IList<CollectionModel>>(_unitOfWork.CollectionRepository.GetCollections(username));
         }
     }
 }

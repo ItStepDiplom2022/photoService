@@ -18,12 +18,14 @@ namespace PhotoService.BLL
                 .ReverseMap();
 
             CreateMap<UserRegisterModel, User>()
+                .ForMember(urm => urm.PasswordHash, u => u.MapFrom(cd => cd.Password))
                 .ReverseMap();
             
             CreateMap<SimpleUserViewModel, UserModel>()
                 .ReverseMap();
 
             CreateMap<ImageModel, Image>()
+                .ForMember(i => i.User, im => im.MapFrom(s=>s.Author))
                 .ReverseMap();
             
             CreateMap<SimpleImageViewModel, ImageModel>()
@@ -38,9 +40,8 @@ namespace PhotoService.BLL
             CreateMap<HashtagModel, Hashtag>()
                 .ReverseMap();
 
-            CreateMap<LikeModel, Like>()
+            CreateMap<RoleModel, Role>()
                 .ReverseMap();
-
 
             CreateMap<HashtagModel, SearchResultModel>()
                 .ConvertUsing(tag => new SearchResultModel()

@@ -1,10 +1,11 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.FileProviders;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using PhotoService.BLL;
 using PhotoService.BLL.Interfaces;
 using PhotoService.BLL.Services;
+using PhotoService.DAL;
 using PhotoService.DAL.Interfaces;
 using PhotoService.DAL.Repositories;
 using PhotoService.Renderes;
@@ -14,25 +15,36 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+    .AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
+
 var mappingConfig = new MapperConfiguration(mc =>
 {
     mc.AddProfile(new AutoMapperSettings());
 });
 
+builder.Services.AddDbContext<PhotoServiceDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("PhotoService")));
+
+
 IMapper mapper = mappingConfig.CreateMapper();
 builder.Services.AddSingleton(mapper);
 
-builder.Services.AddSingleton<IUserRepository, UserRepository>();
-builder.Services.AddSingleton<IImageRepository, ImageRepository>();
-builder.Services.AddSingleton<ICollectionRepository, CollectionRepository>();
-builder.Services.AddSingleton<IJwtService,JwtService>();
-builder.Services.AddSingleton<IUserService, UserService>();
-builder.Services.AddSingleton<IImageService, ImageService>();
-builder.Services.AddSingleton<IEmailService, EmailService>();
-builder.Services.AddSingleton<ISearchService, SearchService>();
-builder.Services.AddSingleton<IUserCollectionService, UserCollectionService>();
-builder.Services.AddSingleton<IHtmlRenderer, HtmlRenderer>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IImageRepository, ImageRepository>();
+builder.Services.AddScoped<ICollectionRepository, CollectionRepository>();
+builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+builder.Services.AddScoped<IHashTagRepository, HashTagRepository>();
+builder.Services.AddScoped<IJwtService,JwtService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IImageService, ImageService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<ISearchService, SearchService>();
+builder.Services.AddScoped<IUserCollectionService, UserCollectionService>();
+builder.Services.AddScoped<IHtmlRenderer, HtmlRenderer>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddAuthentication(x =>
 {

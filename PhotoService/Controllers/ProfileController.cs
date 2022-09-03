@@ -39,11 +39,11 @@ namespace PhotoService.Controllers
         [AllowAnonymous]
         [HttpPost]
         [Route("collections/create")]
-        public ActionResult CreateNewCollection([FromBody]CollectionCreateViewModel model)
+        public async Task<ActionResult> CreateNewCollection([FromBody]CollectionCreateViewModel model)
         {
             try
             {
-                var collection = _userCollectionService.CreateCollection(model.Username, model.CollectionName);
+                var collection = await _userCollectionService.CreateCollection(model.Username, model.CollectionName, model.IsPublic);
                 return Ok(collection);
             }
             catch (Exception)

@@ -8,8 +8,9 @@ namespace PhotoService.DAL.Interfaces
 {
     public interface ICollectionRepository
     {
-        IList<Collection> GetCollections(string username);
+        IEnumerable<Collection> GetCollections(string username);
         Collection GetCollection(string username, string collectionName);
-        Collection Create(Collection collection);
+        Task<Collection> Create(Collection collection);
+
     }
 }
