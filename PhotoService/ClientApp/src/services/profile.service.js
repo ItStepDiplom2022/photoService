@@ -20,8 +20,8 @@ class ProfileService {
         .catch((err) => {throw err.response.data})
     }
 
-    addNewCollection(username, collectionName) {
-        return axios.post(API_URL+'collections/create', {username, collectionName})
+    addNewCollection(username, collectionName,isPublic) {
+        return axios.post(API_URL+'collections/create', {username, collectionName, isPublic})
         .then((respond) => {
             return respond
         })

@@ -15,7 +15,7 @@ const CommentsSection = (props) => {
             <div className='add-comment'>
 
                 <p className='comment-amount'><b>Comments ({commentsAmount})</b></p>
-                <textarea class="form-control" id="exampleFormControlTextarea1" placeholder='Add your comment' rows={4}></textarea>
+                <textarea className="form-control" id="exampleFormControlTextarea1" placeholder='Add your comment' rows={4}></textarea>
                 <button className='btn btn-primary add-comment-btn'>Add</button>
             </div>
 

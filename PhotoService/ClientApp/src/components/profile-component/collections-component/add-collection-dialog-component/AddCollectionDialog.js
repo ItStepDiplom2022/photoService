@@ -1,12 +1,17 @@
-import { Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@mui/material';
+import { Button, Checkbox, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel, TextField } from '@mui/material';
 import React, { useState } from 'react'
 import profileService from '../../../../services/profile.service';
 
 const AddCollectionDialog = ({submitAction, setVisible, isVisible}) => {
     const [entered, setEntered] = useState("")
+    const [isPublic, setIsPublic] = useState(false)
 
     const handleChange = (ev) => {
         setEntered(ev.target.value);
+    }
+
+    const handleIsPublicChange  = (e) =>{
+        setIsPublic(e.target.checked)
     }
 
     const handleClose = () => {
@@ -14,8 +19,9 @@ const AddCollectionDialog = ({submitAction, setVisible, isVisible}) => {
     };
 
     const handleCreate = () => {
-        submitAction(entered)
+        submitAction(entered,isPublic)
         console.log(entered)
+        setEntered("")
         setVisible(false);
     }
 
@@ -37,6 +43,8 @@ const AddCollectionDialog = ({submitAction, setVisible, isVisible}) => {
                                 my: "5px"
                             }}
                         />
+                        <br/>
+                        <FormControlLabel control={<Checkbox value={isPublic} onChange={handleIsPublicChange}/>} label="Is public" />
                     </DialogContent>
                     <DialogActions sx={{mx: 'auto', width: "45vh", justifyContent: "left", paddingInlineStart: 0}}>
                         <Button onClick={handleCreate} color="success" variant='contained'>Create</Button>
