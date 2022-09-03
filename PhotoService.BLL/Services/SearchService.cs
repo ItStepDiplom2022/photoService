@@ -2,6 +2,7 @@
 using PhotoService.BLL.Interfaces;
 using PhotoService.BLL.Models;
 using PhotoService.BLL.ViewModels;
+using PhotoService.DAL.Entities;
 using PhotoService.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -14,16 +15,16 @@ namespace PhotoService.BLL.Services
 {
     public class SearchService : ISearchService
     {
-        private readonly IImageRepository _imageRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        private IEnumerable<ImageModel> _imageList { get => _mapper.Map<IList<ImageModel>> (_imageRepository.GetImages()); }
+        private IEnumerable<ImageModel> _imageList { get => _mapper.Map<IList<ImageModel>> (_unitOfWork.ImageRepository.GetWithInclude(x=>x is Image,i=>i.User, i=>i.Hashtags)); }
         private IEnumerable<HashtagModel> _tagList;
         private IEnumerable<UserModel> _authorList;
 
-        public SearchService(IImageRepository imageRepository, IMapper mapper)
+        public SearchService(IUnitOfWork unitOfWork, IMapper mapper)
         {
-            _imageRepository = imageRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
 
             _tagList = _imageList.SelectMany(item => item.Hashtags).Distinct().ToList();
