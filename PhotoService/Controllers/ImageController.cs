@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PhotoService.BLL.Interfaces;
 using PhotoService.BLL.Models;
+using PhotoService.BLL.ViewModels;
 
 namespace PhotoService.Controllers
 {
@@ -24,6 +25,7 @@ namespace PhotoService.Controllers
             try
             {
                 var image =  _imageService.GetImage(id);
+
                 return Ok(image);
             }
             catch (Exception)
@@ -70,6 +72,21 @@ namespace PhotoService.Controllers
             {
                 var addedImage=await _imageService.AddImage(image);
                 return Ok(addedImage);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpPost("comment")]
+        public async Task<ActionResult> PostCommentToImage([FromBody] CommentAddViewModel image)
+        {
+            try
+            {
+                await _imageService.AddComment(image);
+                return Ok();
             }
             catch (Exception e)
             {

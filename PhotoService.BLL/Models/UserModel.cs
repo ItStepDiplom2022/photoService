@@ -25,7 +25,7 @@ namespace PhotoService.BLL.Models
 
         public ICollection<ImageModel> Images { get; set; }
 
-        public ICollection<CommentModel> Comments { get; set; }
+        public ICollection<CommentModel> Comments { get; set; } = new List<CommentModel>();
 
         public ICollection<CollectionModel> Collections { get; set; }
 

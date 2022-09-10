@@ -2,12 +2,13 @@ import './comment.css'
 import React from 'react';
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { data } from 'jquery';
 
 const Comment = (props) => {
 
     const getDateParsed = () =>{
         let date = new Date(Date.parse(props.date))
-        return `${date.getFullYear()}/${date.getMonth()}/${date.getDay()}`
+        return date.toLocaleString()
     }
 
     return (
@@ -18,8 +19,8 @@ const Comment = (props) => {
                 </div>
 
                 <div className="comment-text">
-                    <h5><b>{props.userName}</b> <small className='date-text'>{getDateParsed()}</small></h5>
-                    <p className="">{props.commentText}</p>
+                    <h5><b>{props?.userName}</b> <small className='date-text'>{getDateParsed()}</small></h5>
+                    <p className="">{props?.commentText}</p>
                 </div>
             </div>
 

@@ -17,6 +17,7 @@ namespace PhotoService.DAL
         private IRoleRepository _roleRepository;
         private IHashTagRepository _hashTagRepository;
         private ICollectionTypeRepository _collectionTypeRepository;
+        private ICommentRepository _commentRepository;
 
         public UnitOfWork(PhotoServiceDbContext dbContext)
         {
@@ -86,6 +87,17 @@ namespace PhotoService.DAL
                     _collectionTypeRepository = new CollectionTypeRepository(_dbContext);
 
                 return _collectionTypeRepository;
+            }
+        }
+
+        public ICommentRepository CommentRepository
+        {
+            get
+            {
+                if (_commentRepository == null)
+                    _commentRepository = new CommentRepository(_dbContext);
+
+                return _commentRepository;
             }
         }
 
