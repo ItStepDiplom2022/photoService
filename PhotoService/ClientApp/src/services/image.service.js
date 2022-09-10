@@ -50,6 +50,20 @@ class ImageService{
         });
     }
 
+    postCommentToImage(username,comment,imageId){
+        return axios.post(API_URL+'/comment',{
+            username,comment,imageId
+        }, { 
+            headers: authHeader() 
+        })
+        .then((promise)=> {
+            return promise
+        }).catch((err)=>{
+            throw err.response.data
+        });
+    }
+
+
     async convertImageToBase64(file){
         return new Promise((resolve, reject) => {
             const fileReader = new FileReader();

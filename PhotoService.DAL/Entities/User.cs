@@ -24,7 +24,7 @@ namespace PhotoService.DAL.Entities
         public string? AvatarUrl { get; set; }
         public virtual ICollection<Role> Roles { get; set; }
         public virtual ICollection<Image> Images { get; set; }
-        public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
         public virtual ICollection<Collection> Collections { get; set; }
 
     }

@@ -123,6 +123,16 @@ namespace PhotoService.DAL.Repositories
             _dbContext.Images.Update(image);
         }
 
+        public void AddComment(Image image, Comment comment)
+        {
+            if (image.Comments.Any())
+                image.Comments.Add(comment);
+            else
+                image.Comments = new List<Comment> { comment };
+
+            _dbContext.Images.Update(image);
+        }
+
         public void Update(Image image)
         {
             throw new NotImplementedException();

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using PhotoService.BLL.Interfaces;
 using PhotoService.BLL.Models;
+using PhotoService.BLL.ViewModels;
 using PhotoService.DAL.Entities;
 using PhotoService.DAL.Interfaces;
 using System;
@@ -43,7 +44,7 @@ namespace PhotoService.BLL.Services
             image.DateAdded = DateTime.Now;
 
             var tagsToAdd = new List<Hashtag>();
-            foreach(var tagModel in model.Hashtags)
+            foreach (var tagModel in model.Hashtags)
             {
                 var tagFromDB = _unitOfWork.HashTagRepository.GetHashTagByTitle(tagModel.Title);
                 var tagToAdd = tagFromDB ?? _mapper.Map<Hashtag>(tagModel);
@@ -55,7 +56,7 @@ namespace PhotoService.BLL.Services
             var addedImage = await _unitOfWork.ImageRepository.Add(image);
             await _unitOfWork.SaveAsync();
 
-            foreach(var hashTag in tagsToAdd)
+            foreach (var hashTag in tagsToAdd)
             {
                 _unitOfWork.ImageRepository.AddHashTag(addedImage, hashTag);
             }
@@ -63,6 +64,21 @@ namespace PhotoService.BLL.Services
 
             return _mapper.Map<ImageModel>(addedImage);
         }
+
+        public async Task AddComment(CommentAddViewModel commentAdd)
+        {
+            var image = _unitOfWork.ImageRepository.GetWithInclude(img => img.Id == commentAdd.ImageId, i => i.Comments).First();
+            var comment = new Comment
+            {
+                CommentText = commentAdd.Comment,
+                DateAdded = DateTime.Now,
+                UserAdded = _unitOfWork.UserRepository.GetWithInclude(u => u.UserName == commentAdd.Username,i=>i.Comments).First()
+            };
+
+            _unitOfWork.ImageRepository.AddComment(image,comment);
+            await _unitOfWork.SaveAsync();
+        }
+
 
         public IEnumerable<ImageModel> GetImagesByUserEmail(string email)
         {

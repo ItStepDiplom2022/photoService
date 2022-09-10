@@ -7,21 +7,35 @@ import { useNavigate, useParams } from 'react-router';
 import CommentsSection from './comments-section-component/comments-sections';
 import ImageCard from './image-card-component/image-card';
 import imageService from '../../services/image.service';
+import authService from '../../services/auth.service';
+import commentService from '../../services/comment.service';
 
 const ImageDetailsPage = () => {
 
     let navigate=useNavigate()
 
     const [image,setImage]=useState()
+    const [comments, setComments] = useState()
     const {id} = useParams()
+    const currentUsername = authService.getOwnerUsername()
     
     useEffect(()=>{
         fetchImage()
+        fetchComments()
     },[])
+
 
     const fetchImage = async () => {
         setImage(await imageService.getImage(id))
-        }
+    }
+
+    const fetchComments = async() =>{
+        setComments(await commentService.getComments(id))
+    }
+
+    const addCommentHandler =  async(comment) => {
+        await imageService.postCommentToImage(currentUsername,comment,id)
+    }
 
     const onReturnClick = (e) =>{
         e.preventDefault()
@@ -35,7 +49,7 @@ const ImageDetailsPage = () => {
                     <FontAwesomeIcon icon={faArrowLeft}/>
                 </a>
                 <ImageCard image={image.data} />
-                <CommentsSection comments={image.data?.comments} commentsAmount={image.data?.comments?.length}/>
+                <CommentsSection addComment={addCommentHandler} comments={comments?.data} commentsAmount={comments?.data?.length}/>
             </>
         :<div>loading</div>
     );
