@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PhotoService.BLL.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,5 +12,6 @@ namespace PhotoService.BLL.Interfaces
         IList<CollectionModel> GetCollections(string username);
         CollectionModel GetCollection(string username, string name);
         Task<CollectionModel> CreateCollection(string username, string name, bool isPublic);
+        Task AddImageToCollection(AddImageToCollectionViewModel model);
     }
 }

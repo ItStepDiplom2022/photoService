@@ -7,11 +7,15 @@ import { faShareFromSquare } from '@fortawesome/free-solid-svg-icons'
 import { faDownload } from '@fortawesome/free-solid-svg-icons'
 import { faSave, faHeart, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useState } from 'react';
+import AddToCollectionModal from './add-to-colletion-modal-component/add-to-collection-modal';
+import { Alert, Snackbar } from '@mui/material';
+import authService from '../../../services/auth.service';
 
 const ImageCard = (props) => {
-
     const [isLiked, setIsLiked] = useState(false);
     const [image] = useState(props.image)
+    const [showDialog, setShowDialog] = useState(false);
+    const [snackBarOptions, setSnackBarOptions] = useState({ isOpen: false })
 
     const onLikePressed = () => {
         setIsLiked(!isLiked)
@@ -38,6 +42,21 @@ const ImageCard = (props) => {
             image.imageBase64.indexOf('/')+1,image.imageBase64.indexOf(';')
         )
     }
+
+    const handleAddToCollection = async (collectionName, isPublic) => {
+        alert(23)
+    }
+
+    const handleSaveWindowOpen = () =>{
+        if(authService.isLoggedIn())
+            setShowDialog(true);
+        else
+            setSnackBarOptions({isOpen:true, severity:'error',message:'Log in to do this action'})
+    }
+
+    const handleSnackBarClose = (event) => {
+        setSnackBarOptions({ isOpen: false, severity:'error' })
+    };
 
     return (
         <>
@@ -87,14 +106,21 @@ const ImageCard = (props) => {
                                     Download</a>
                             </button>
 
-                            <button className='btn btn-info'>
-                                <FontAwesomeIcon className='btn-icon' icon={faSave} />
+                            <button className='btn btn-info' onClick={handleSaveWindowOpen}>
+                                <FontAwesomeIcon className='btn-icon' icon={faSave}/>
                                 Save
                             </button>
                         </div>
 
                     </div>
                 </div>
+                <AddToCollectionModal isVisible={showDialog} setVisible={setShowDialog} submitAction={handleAddToCollection}/>
+
+                <Snackbar open={snackBarOptions.isOpen} autoHideDuration={5000} onClose={handleSnackBarClose} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
+                <Alert severity={snackBarOptions.severity} sx={{ width: '100%' }} onClose={handleSnackBarClose} variant="filled">
+                    {snackBarOptions.message}
+                </Alert>
+            </Snackbar>
             </div>
 
         </>

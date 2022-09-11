@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PhotoService.BLL.Exceptions;
 using PhotoService.BLL.Interfaces;
 using PhotoService.BLL.Models;
 using PhotoService.BLL.ViewModels;
@@ -13,9 +14,11 @@ namespace PhotoService.Controllers
     public class ImageController : ControllerBase
     {
         private readonly IImageService _imageService;
-        public ImageController(IImageService imageService)
+        private readonly IUserCollectionService _userCollectionService;
+        public ImageController(IImageService imageService, IUserCollectionService userCollectionService)
         {
             _imageService = imageService;
+            _userCollectionService = userCollectionService;
         }
 
         [AllowAnonymous]
@@ -76,6 +79,28 @@ namespace PhotoService.Controllers
             catch (Exception e)
             {
                 return BadRequest(e.Message);
+            }
+        }
+
+        /// <summary>
+        /// adds image to collection
+        /// </summary>
+        [AllowAnonymous]
+        [HttpPost("collection")]
+        public async Task<ActionResult> AddToCollection([FromBody] AddImageToCollectionViewModel model)
+        {
+            try
+            {
+                await _userCollectionService.AddImageToCollection(model);
+                return Ok();
+            }
+            catch (CollectionException e)
+            {
+                return BadRequest(e.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
             }
         }
 

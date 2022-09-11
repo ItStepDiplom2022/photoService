@@ -135,7 +135,7 @@ namespace PhotoService.DAL.Repositories
 
         public void Update(Image image)
         {
-            throw new NotImplementedException();
+            _dbContext.Images.Update(image);
         }
 
         public IQueryable<Image>Include(params Expression<Func<Image, object>>[] includeProperties)

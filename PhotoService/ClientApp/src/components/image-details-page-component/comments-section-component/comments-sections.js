@@ -6,8 +6,6 @@ import './comments-section.css'
 
 
 const CommentsSection = (props) => {
-
-    console.log(props.comments)
     const [commentsAmount, setCommentsAmount] = useState(props.commentsAmount);
     const [comments, setComments] = useState(props.comments)
 

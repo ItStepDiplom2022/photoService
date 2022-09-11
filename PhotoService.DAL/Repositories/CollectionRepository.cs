@@ -78,14 +78,12 @@ namespace PhotoService.DAL.Repositories
 
         public Collection GetCollection(string username, string collectionName)
         {
-            return _dbContext.Collections.First();
-            //return _dbContext.Collections.Where(collection => collection.Name == collectionName && collection.User.UserName == username).FirstOrDefault();
+            return _dbContext.Collections.Where(collection => collection.Name == collectionName && collection.Owner.UserName == username).FirstOrDefault();
         }
 
         public IEnumerable<Collection> GetCollections(string username)
         {
-            return _dbContext.Collections;
-           // return _dbContext.Collections.Where(collection => collection.User.UserName.ToLower() == username.ToLower());
+            return _dbContext.Collections.Where(collection => collection.Owner.UserName.ToLower() == username.ToLower());
         }
     }
 }
