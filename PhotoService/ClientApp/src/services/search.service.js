@@ -6,13 +6,13 @@ const API_URL = `${configData.SERVER_URL}search/`;
 
 
 class SearchService {
-    search(query = {tag:null,author:null,q:null}) {
+    search(query = {tag:null,author:null,q:null,last:0,count:20}) {
 
         // return images;
 
         return axios.get(API_URL, {params: query})
         .then((respond) => {
-            console.log(respond.data);
+            //console.log(respond.data);
             return respond;
         })
         .catch((err) => {throw err.response.data})
