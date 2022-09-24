@@ -20,7 +20,7 @@ const AddToCollectionModal = ({ submitAction, setVisible, isVisible }) => {
     }
 
     const handleCollectionChange = (e) =>{
-        setChosenCollection(e.target.value)
+        setChosenCollection(e.target.outerText)
     }
 
     const handleClose = () => {
@@ -28,8 +28,7 @@ const AddToCollectionModal = ({ submitAction, setVisible, isVisible }) => {
     };
 
     const handleCreate = () => {
-        submitAction()
-        setChosenCollection("Saved")
+        submitAction(chosenCollection)
         setVisible(false);
     }
 
@@ -43,9 +42,9 @@ const AddToCollectionModal = ({ submitAction, setVisible, isVisible }) => {
                             disablePortal
                             id="combo-box-demo"
                             options={collections}
-                            value={chosenCollection }
                             sx={{ width: 300, mt:1 }}
-                            renderInput={(params) => <TextField {...params} label="Collection" onChange={handleCollectionChange}
+                            onChange={handleCollectionChange}
+                            renderInput={(params) => <TextField {...params} label="Collection"
                             />}
                         />
                     </DialogContent>

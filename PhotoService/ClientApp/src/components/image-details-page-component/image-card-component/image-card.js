@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import AddToCollectionModal from './add-to-colletion-modal-component/add-to-collection-modal';
 import { Alert, Snackbar } from '@mui/material';
 import authService from '../../../services/auth.service';
+import imageService from '../../../services/image.service';
 
 const ImageCard = (props) => {
     const [isLiked, setIsLiked] = useState(false);
@@ -43,8 +44,20 @@ const ImageCard = (props) => {
         )
     }
 
-    const handleAddToCollection = async (collectionName, isPublic) => {
-        alert(23)
+    const handleAddToCollection = async (collectionName) => {
+        if(!authService.isLoggedIn()){
+            setSnackBarOptions({isOpen:true, severity:'error',message:'Log in to perform this action'})
+            return
+        }
+        
+        let username = authService.getOwnerUsername()
+        imageService.addToCollection(username, image.id, collectionName)
+            .then(() => {
+                setSnackBarOptions({isOpen:true, severity:'success',message:'Image was successfuly added to collection'})
+            })
+            .catch(e=>{
+                setSnackBarOptions({isOpen:true, severity:'error',message:e})
+            })
     }
 
     const handleSaveWindowOpen = () =>{
@@ -55,7 +68,7 @@ const ImageCard = (props) => {
     }
 
     const handleSnackBarClose = (event) => {
-        setSnackBarOptions({ isOpen: false, severity:'error' })
+        setSnackBarOptions({ isOpen: false, severity:snackBarOptions.severity })
     };
 
     return (

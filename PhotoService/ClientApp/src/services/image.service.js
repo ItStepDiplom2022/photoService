@@ -63,6 +63,18 @@ class ImageService{
         });
     }
 
+    addToCollection(username,imageId,collectionName){
+        return axios.post(API_URL+'/collection',{
+            username,imageId,collectionName
+        }, { 
+            headers: authHeader() 
+        })
+        .then((promise)=> {
+            return promise
+        }).catch((err)=>{
+            throw err.response.data
+        });
+    }
 
     async convertImageToBase64(file){
         return new Promise((resolve, reject) => {
