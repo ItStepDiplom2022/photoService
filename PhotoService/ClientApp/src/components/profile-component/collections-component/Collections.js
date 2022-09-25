@@ -4,6 +4,7 @@ import CollectionItem from './collection-item-component/CollectionItem';
 import profileService from '../../../services/profile.service';
 import './Collections.css'
 import AddCollectionDialog from './add-collection-dialog-component/AddCollectionDialog';
+import authService from '../../../services/auth.service';
 
 const Collections = ({username}) => {
     const [collections, setCollections] = useState([]);
@@ -19,12 +20,13 @@ const Collections = ({username}) => {
     }
 
     const handleSubmitAddCollection = async (collectionName, isPublic) => {
-        console.log(await profileService.addNewCollection(username, collectionName, isPublic));
         updateCollections(username);
     }
 
     const updateCollections = async (username) => {
-        setCollections((await profileService.getUserCollections(username)).data);
+        //user can`t see private collections of other users
+        var onlyPublicCollections = username !== authService.getOwnerUsername()
+        setCollections((await profileService.getUserCollections(username,onlyPublicCollections)).data);
     }
 
     useEffect(() => {

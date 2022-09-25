@@ -53,9 +53,15 @@ namespace PhotoService.BLL.Services
             return _mapper.Map<CollectionModel>(collection);
         }
 
-        public IList<CollectionModel> GetCollections(string username)
+        public IList<CollectionModel> GetCollections(string username, bool publicOnly)
         {
-            return _mapper.Map<IList<CollectionModel>>(_unitOfWork.CollectionRepository.GetCollections(username));
+            IEnumerable<Collection> collections;
+            if (publicOnly)
+                collections = _unitOfWork.CollectionRepository.FindAll(x => x.Owner.UserName.ToLower() == username.ToLower()&&x.IsPublic);
+            else
+                collections = _unitOfWork.CollectionRepository.GetCollections(username);
+
+            return _mapper.Map<IList<CollectionModel>>(collections);
         }
 
         public async Task AddImageToCollection(AddImageToCollectionViewModel model)

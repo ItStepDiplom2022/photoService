@@ -59,6 +59,7 @@ namespace PhotoService.BLL
                 });
 
             CreateMap<Collection, CollectionModel>()
+                .ForMember(c=>c.User, cm => cm.MapFrom(x=>x.Owner))
                 .AfterMap((collection, collectionModel) => collectionModel.UrlName = collection.Name.ToLower().Replace(' ', '-'))
                 .ReverseMap();
         }

@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from 'react'
+import authService from '../../../../services/auth.service';
 import imageService from '../../../../services/image.service';
 import ImageView from '../../../shared/image-view-component/image-view';
 import './ViewCollection.css'
 
 const ViewCollection = (props) => {
-    const [images, setImages] = useState([]);
+    const [collection, setCollection] = useState()
 
     const fetchImages = async (username,collectionName) => {
-        setImages((await imageService.getImagesByColection(username,collectionName)).data);
+        setCollection((await imageService.getImagesByColection(username,collectionName)).data)
+    }
+
+    const havePermissionToView= () => {
+        return collection?.isPublic||authService.getOwnerUsername()===collection?.user?.userName
     }
 
     useEffect(() => {
@@ -17,9 +22,11 @@ const ViewCollection = (props) => {
     return (
         <>
             {
-            images?.map(image=>
+            havePermissionToView()?
+            collection?.images?.map(image=>
                     <ImageView image={image} likes={0} savings={0} downloads={0}/>
-            )
+            ):
+            'You don`t have permission to view this'
             }
         </>
     );

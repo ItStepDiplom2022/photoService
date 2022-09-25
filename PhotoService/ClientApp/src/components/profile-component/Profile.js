@@ -22,12 +22,11 @@ const Profile = () => {
     const fetchUser = async (username) => {
         const data = {...((await profileService.getUser(username)).data), isLoaded: true}
         setUser(data);
-        console.log(user);
     }
 
     useEffect(() => {
         fetchUser(username)
-    }, [])
+    }, [username])
 
     return (
         <div className='profile-page'>

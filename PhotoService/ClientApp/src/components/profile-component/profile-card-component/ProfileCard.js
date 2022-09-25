@@ -5,7 +5,6 @@ import defaultUserImage from './tempfiles/default-user-icon.jpg'
 
 const ProfileCard = ({user={avatarUrl: defaultUserImage}, tab="uploads", isOwnerProfile=false}) => {
     const navigate = useNavigate();
-    console.log(user);
 
     const handleClick = (subpath) => {
         if(user.isLoaded)

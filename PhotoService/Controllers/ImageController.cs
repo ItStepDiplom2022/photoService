@@ -113,7 +113,7 @@ namespace PhotoService.Controllers
         {
             try
             {
-                var result = _userCollectionService.GetCollection(username,collectionName).Images;
+                var result = _userCollectionService.GetCollection(username,collectionName);
                 return Ok(result);
             }
             catch (CollectionException e)
