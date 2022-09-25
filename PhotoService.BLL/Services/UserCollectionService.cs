@@ -45,11 +45,12 @@ namespace PhotoService.BLL.Services
 
         public CollectionModel GetCollection(string username, string name)
         {
-            var collections = GetCollections(username);
+            var collection = _unitOfWork.CollectionRepository.GetCollection(username, name);
 
-            var collectionName = collections.First(collection => collection.UrlName == name).Name;
+            if (collection == null)
+                throw new CollectionException(PhotoServiceExceptions.COLLECTION_DOES_NOT_EXIST.GetDescription());
 
-            return _mapper.Map<CollectionModel>(_unitOfWork.CollectionRepository.GetCollection(username, collectionName));
+            return _mapper.Map<CollectionModel>(collection);
         }
 
         public IList<CollectionModel> GetCollections(string username)

@@ -37,6 +37,17 @@ class ImageService{
         });
     }
 
+    getImagesByColection(userName,collectionName){
+        return axios.get(API_URL + `/collection/${userName}?collectionName=${collectionName}`, { 
+            headers: authHeader() 
+        })
+        .then((promise)=> {
+            return promise
+        }).catch((err)=>{
+            throw err.response.data
+        });
+    }
+
     postImage(title,description,hashtags,imageBase64,userEmail){
         return axios.post(API_URL,{
             title,description,hashtags,imageBase64,userEmail

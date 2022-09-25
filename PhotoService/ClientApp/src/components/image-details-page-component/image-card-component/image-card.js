@@ -49,7 +49,7 @@ const ImageCard = (props) => {
             setSnackBarOptions({isOpen:true, severity:'error',message:'Log in to perform this action'})
             return
         }
-        
+
         let username = authService.getOwnerUsername()
         imageService.addToCollection(username, image.id, collectionName)
             .then(() => {
@@ -67,7 +67,7 @@ const ImageCard = (props) => {
             setSnackBarOptions({isOpen:true, severity:'error',message:'Log in to do this action'})
     }
 
-    const handleSnackBarClose = (event) => {
+    const handleSnackBarClose = () => {
         setSnackBarOptions({ isOpen: false, severity:snackBarOptions.severity })
     };
 

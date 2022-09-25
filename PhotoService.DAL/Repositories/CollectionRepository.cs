@@ -1,7 +1,9 @@
-﻿using PhotoService.DAL.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using PhotoService.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -78,12 +80,33 @@ namespace PhotoService.DAL.Repositories
 
         public Collection GetCollection(string username, string collectionName)
         {
-            return _dbContext.Collections.Where(collection => collection.Name == collectionName && collection.Owner.UserName == username).FirstOrDefault();
+            return _dbContext.Collections.Where(collection => collection.Name == collectionName && collection.Owner.UserName == username)
+               .Include(x=>x.Images).FirstOrDefault();
         }
 
         public IEnumerable<Collection> GetCollections(string username)
         {
-            return _dbContext.Collections.Where(collection => collection.Owner.UserName.ToLower() == username.ToLower());
+            return _dbContext.Collections.Where(collection => collection.Owner.UserName.ToLower() == username.ToLower())
+                .Include(i=>i.Images);
+        }
+
+        public IQueryable<Collection> Include(params Expression<Func<Collection, object>>[] includeProperties)
+        {
+            IQueryable<Collection> query = _dbContext.Collections;
+            return includeProperties
+                .Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
+        }
+
+        public IEnumerable<Collection> GetWithInclude(params Expression<Func<Collection, object>>[] includeProperties)
+        {
+            return Include(includeProperties).ToList();
+        }
+
+        public IEnumerable<Collection> GetWithInclude(Func<Collection, bool> predicate,
+                params Expression<Func<Collection, object>>[] includeProperties)
+        {
+            var query = Include(includeProperties);
+            return query.Where(predicate).ToList();
         }
     }
 }

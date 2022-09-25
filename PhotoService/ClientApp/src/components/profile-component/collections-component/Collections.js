@@ -10,8 +10,8 @@ const Collections = ({username}) => {
     const [showDialog, setShowDialog] = useState(false);
     const navigate = useNavigate();
 
-    const handleCollectionClick = (id) => {
-        navigate(`./collections/view/${id}`);
+    const handleCollectionClick = (name) => {
+        navigate(`./collections/?collectionName=${name}`);
     }
 
     const handleAddCollectionClick = () => {

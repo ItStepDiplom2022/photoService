@@ -104,6 +104,28 @@ namespace PhotoService.Controllers
             }
         }
 
+        /// <summary>
+        /// gets images from certain collection
+        /// </summary>
+        [AllowAnonymous]
+        [HttpGet("collection/{username:}")]
+        public async Task<ActionResult> GetImagesByCollection(string username, [FromQuery] string collectionName)
+        {
+            try
+            {
+                var result = _userCollectionService.GetCollection(username,collectionName).Images;
+                return Ok(result);
+            }
+            catch (CollectionException e)
+            {
+                return BadRequest(e.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
+
         [AllowAnonymous]
         [HttpPost("comment")]
         public async Task<ActionResult> PostCommentToImage([FromBody] CommentAddViewModel image)
