@@ -71,6 +71,13 @@ const ImageCard = (props) => {
         setSnackBarOptions({ isOpen: false, severity:snackBarOptions.severity })
     };
 
+    const shareHandler = () =>{
+        let url = window.location.href
+        navigator.clipboard.writeText(url)
+
+        setSnackBarOptions({isOpen:true, severity:'success',message:'Link to image was successfuly copied to clipboard'})
+    }
+
     return (
         <>
             <div className='center-div'>
@@ -108,8 +115,8 @@ const ImageCard = (props) => {
                                 {isLiked ? 'Liked' : 'Like'} | {image.likes?.length}
                             </button>
 
-                            <button className='btn btn-primary'>
-                                <FontAwesomeIcon className='btn-icon' icon={faShareFromSquare} />
+                            <button className='btn btn-primary' onClick={shareHandler}>
+                                <FontAwesomeIcon className='btn-icon' icon={faShareFromSquare}/>
                                 Share
                             </button>
 

@@ -15,7 +15,7 @@ const AddToCollectionModal = ({ submitAction, setVisible, isVisible }) => {
     )
 
     const fetchCollections = async () =>{
-        let cols = await profileService.getUserCollections(currentUsername)
+        let cols = await profileService.getUserCollections(currentUsername,false)
         setCollections(cols?.data.map(c=>c.name))
     }
 

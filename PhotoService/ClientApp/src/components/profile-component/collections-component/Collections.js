@@ -42,7 +42,7 @@ const Collections = ({username}) => {
                     );
                 })
             }
-            {username == authService.getOwnerUsername()?
+            {username === authService.getOwnerUsername()?
                 <>
                     <CollectionItem data={{ name: "Add new", imageUrl: "/images/collection-images/plus.png"}}  handleClick={handleAddCollectionClick}/>
                     <AddCollectionDialog isVisible={showDialog} setVisible={setShowDialog} submitAction={handleSubmitAddCollection} />
