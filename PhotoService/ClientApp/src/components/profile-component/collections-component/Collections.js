@@ -42,8 +42,13 @@ const Collections = ({username}) => {
                     );
                 })
             }
-            <CollectionItem data={{ name: "Add new", imageUrl: "/images/collection-images/plus.png"}}  handleClick={handleAddCollectionClick}/>
-            <AddCollectionDialog isVisible={showDialog} setVisible={setShowDialog} submitAction={handleSubmitAddCollection} />
+            {username == authService.getOwnerUsername()?
+                <>
+                    <CollectionItem data={{ name: "Add new", imageUrl: "/images/collection-images/plus.png"}}  handleClick={handleAddCollectionClick}/>
+                    <AddCollectionDialog isVisible={showDialog} setVisible={setShowDialog} submitAction={handleSubmitAddCollection} />
+                </>
+            :''
+            }
         </div>
     );
 }

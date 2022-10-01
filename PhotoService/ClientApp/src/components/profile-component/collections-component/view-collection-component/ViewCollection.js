@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import authService from '../../../../services/auth.service';
 import imageService from '../../../../services/image.service';
 import ImageView from '../../../shared/image-view-component/image-view';
+import NotFound from '../../../shared/not-found-component/NotFound';
 import './ViewCollection.css'
 
 const ViewCollection = (props) => {
@@ -23,10 +24,14 @@ const ViewCollection = (props) => {
         <>
             {
             havePermissionToView()?
-            collection?.images?.map(image=>
-                    <ImageView image={image} likes={0} savings={0} downloads={0}/>
-            ):
-            'You don`t have permission to view this'
+            (
+                collection?.images.length!==0?
+                collection?.images?.map(image=>
+                    <ImageView image={image} likes={0} savings={0} downloads={0}/>)
+                : <NotFound message="Nothing found :("/>
+            )
+            :
+            <NotFound message="No access :("/>
             }
         </>
     );
