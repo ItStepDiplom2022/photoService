@@ -45,6 +45,7 @@ builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<ISearchService, SearchService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddScoped<IUserCollectionService, UserCollectionService>();
+builder.Services.AddScoped<ILikeService, LikeService>();
 builder.Services.AddScoped<IHtmlRenderer, HtmlRenderer>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 

@@ -64,6 +64,16 @@ namespace PhotoService.BLL.Services
             return _mapper.Map<IList<CollectionModel>>(collections);
         }
 
+        public bool ChechIfIsLiked(string username, int imageId)
+        {
+            var collection = _unitOfWork.CollectionRepository.GetCollection(username,"Likes");
+
+            if (collection == null)
+                throw new CollectionException(PhotoServiceExceptions.COLLECTION_DOES_NOT_EXIST.GetDescription());
+
+            return collection.Images.Any(i=>i.Id == imageId);
+        }
+
         public async Task AddImageToCollection(AddImageToCollectionViewModel model)
         {
             var collection = _unitOfWork.CollectionRepository.GetCollection(model.Username,model.CollectionName);
@@ -76,6 +86,22 @@ namespace PhotoService.BLL.Services
                 throw new CollectionException(PhotoServiceExceptions.COLLECTION_ALREADY_CONTAINS_IMAGE.GetDescription());
 
             image.Collections.Add(collection);
+            _unitOfWork.ImageRepository.Update(image);
+            await _unitOfWork.SaveAsync();
+        }
+
+        public async Task RemoveImageFromCollection(AddImageToCollectionViewModel model)
+        {
+            var collection = _unitOfWork.CollectionRepository.GetCollection(model.Username, model.CollectionName);
+            var image = _unitOfWork.ImageRepository.GetWithInclude(x => x.Id == model.ImageId, i => i.Collections).First();
+
+            if (collection == null)
+                throw new CollectionException(PhotoServiceExceptions.COLLECTION_DOES_NOT_EXIST.GetDescription());
+
+            if (!image.Collections.Any(c => c.Name == model.CollectionName))
+                throw new CollectionException(PhotoServiceExceptions.IMAGE_IS_NOT_PRESENT_IN_LIKES.GetDescription());
+
+            image.Collections.Remove(collection);
             _unitOfWork.ImageRepository.Update(image);
             await _unitOfWork.SaveAsync();
         }

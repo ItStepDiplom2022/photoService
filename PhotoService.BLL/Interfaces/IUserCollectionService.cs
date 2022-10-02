@@ -13,5 +13,7 @@ namespace PhotoService.BLL.Interfaces
         CollectionModel GetCollection(string username, string name);
         Task<CollectionModel> CreateCollection(string username, string name, bool isPublic);
         Task AddImageToCollection(AddImageToCollectionViewModel model);
+        public bool ChechIfIsLiked(string username, int imageId);
+        Task RemoveImageFromCollection(AddImageToCollectionViewModel model);
     }
 }
