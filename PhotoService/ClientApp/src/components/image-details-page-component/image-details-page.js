@@ -9,6 +9,7 @@ import ImageCard from './image-card-component/image-card';
 import imageService from '../../services/image.service';
 import authService from '../../services/auth.service';
 import commentService from '../../services/comment.service';
+import LoadingSpinner from '../spinner/Spinner';
 
 const ImageDetailsPage = () => {
 
@@ -51,7 +52,10 @@ const ImageDetailsPage = () => {
                 <ImageCard image={image.data} />
                 <CommentsSection addComment={addCommentHandler} comments={comments?.data} commentsAmount={comments?.data?.length}/>
             </>
-        :<div>loading</div>
+        :
+        <div style={{marginTop:20}}>
+            <LoadingSpinner/>
+        </div>
     );
 }
 
