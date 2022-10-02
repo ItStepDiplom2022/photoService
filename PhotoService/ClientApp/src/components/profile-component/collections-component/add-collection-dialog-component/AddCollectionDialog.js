@@ -20,7 +20,6 @@ const AddCollectionDialog = ({submitAction, setVisible, isVisible}) => {
 
     const handleCreate = () => {
         submitAction(entered,isPublic)
-        console.log(entered)
         setEntered("")
         setVisible(false);
     }

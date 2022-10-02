@@ -20,6 +20,7 @@ const Collections = ({username}) => {
     }
 
     const handleSubmitAddCollection = async (collectionName, isPublic) => {
+        await profileService.addNewCollection(authService.getOwnerUsername(),collectionName,isPublic)
         updateCollections(username);
     }
 
