@@ -2,7 +2,6 @@
 using PhotoService.BLL.Interfaces;
 using PhotoService.BLL.Models;
 using PhotoService.BLL.ViewModels;
-using PhotoService.DAL;
 using PhotoService.DAL.Entities;
 using PhotoService.DAL.Interfaces;
 using System;
@@ -16,8 +15,6 @@ namespace PhotoService.BLL.Services
 {
     public class ImageService : IImageService
     {
-        //private readonly IImageRepository _imageRepository;
-        //private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
@@ -30,9 +27,9 @@ namespace PhotoService.BLL.Services
         public ImageModel GetImage(int id)
         {
             var model = _mapper.Map<ImageModel>(_unitOfWork.ImageRepository.GetWithInclude(i => i.Id == id,
-                c => c.Comments, u => u.User, c => c.Collections, h => h.Hashtags).First());
+                c => c.Comments, u => u.User, h => h.Hashtags).First());
 
-            var images = _unitOfWork.CollectionRepository.GetWithInclude(c => c.Name == "Likes", i => i.Images).Select(x=>x.Images);
+            var images = _unitOfWork.CollectionRepository.GetWithInclude(c => c.Name == "Likes", i => i.Images).Select(x => x.Images);
             model.LikesCount = images.Where(x => x.Any(img => img.Id == id)).Count();
 
             return model;
@@ -90,14 +87,14 @@ namespace PhotoService.BLL.Services
         {
             return _mapper.Map<IEnumerable<ImageModel>>
                             (_unitOfWork.ImageRepository.GetWithInclude(i => i.User.Email==email,
-                c => c.Comments, u => u.User, c => c.Collections, h => h.Hashtags));
+                c => c.Comments, u => u.User, h => h.Hashtags));
         }
 
         public IEnumerable<ImageModel> GetImagesByUserName(string username)
         {
             return _mapper.Map<IEnumerable<ImageModel>>
                             (_unitOfWork.ImageRepository.GetWithInclude(i => i.User.UserName==username,
-                c => c.Comments, u => u.User, c => c.Collections, h => h.Hashtags));
+                c => c.Comments, u => u.User, h => h.Hashtags));
         }
     }
 }
