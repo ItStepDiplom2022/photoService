@@ -4,14 +4,15 @@ import CollectionItem from './collection-item-component/CollectionItem';
 import profileService from '../../../services/profile.service';
 import './Collections.css'
 import AddCollectionDialog from './add-collection-dialog-component/AddCollectionDialog';
+import authService from '../../../services/auth.service';
 
 const Collections = ({username}) => {
     const [collections, setCollections] = useState([]);
     const [showDialog, setShowDialog] = useState(false);
     const navigate = useNavigate();
 
-    const handleCollectionClick = (id) => {
-        navigate(`./collections/view/${id}`);
+    const handleCollectionClick = (name) => {
+        navigate(`./collections/?collectionName=${name}`);
     }
 
     const handleAddCollectionClick = () => {
@@ -19,12 +20,13 @@ const Collections = ({username}) => {
     }
 
     const handleSubmitAddCollection = async (collectionName, isPublic) => {
-        console.log(await profileService.addNewCollection(username, collectionName, isPublic));
         updateCollections(username);
     }
 
     const updateCollections = async (username) => {
-        setCollections((await profileService.getUserCollections(username)).data);
+        //user can`t see private collections of other users
+        var onlyPublicCollections = username !== authService.getOwnerUsername()
+        setCollections((await profileService.getUserCollections(username,onlyPublicCollections)).data);
     }
 
     useEffect(() => {
@@ -40,8 +42,13 @@ const Collections = ({username}) => {
                     );
                 })
             }
-            <CollectionItem data={{ name: "Add new", imageUrl: "/images/collection-images/plus.png"}}  handleClick={handleAddCollectionClick}/>
-            <AddCollectionDialog isVisible={showDialog} setVisible={setShowDialog} submitAction={handleSubmitAddCollection} />
+            {username === authService.getOwnerUsername()?
+                <>
+                    <CollectionItem data={{ name: "Add new", imageUrl: "/images/collection-images/plus.png"}}  handleClick={handleAddCollectionClick}/>
+                    <AddCollectionDialog isVisible={showDialog} setVisible={setShowDialog} submitAction={handleSubmitAddCollection} />
+                </>
+            :''
+            }
         </div>
     );
 }

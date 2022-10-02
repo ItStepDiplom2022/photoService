@@ -1,11 +1,11 @@
-import './my-upload.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDownload } from '@fortawesome/free-solid-svg-icons'
 import { faSave, faHeart } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
+import './image-view.css'
 
-const MyUpload = (props) => {
+const ImageView = (props) => {
     const [image] = useState(props.image)
     const navigate = useNavigate()
     
@@ -55,4 +55,4 @@ const MyUpload = (props) => {
     );
 }
 
-export default MyUpload;
+export default ImageView;

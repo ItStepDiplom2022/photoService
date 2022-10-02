@@ -37,6 +37,17 @@ class ImageService{
         });
     }
 
+    getImagesByColection(userName,collectionName){
+        return axios.get(API_URL + `/collection/${userName}?collectionName=${collectionName}`, { 
+            headers: authHeader() 
+        })
+        .then((promise)=> {
+            return promise
+        }).catch((err)=>{
+            throw err.response.data
+        });
+    }
+
     postImage(title,description,hashtags,imageBase64,userEmail){
         return axios.post(API_URL,{
             title,description,hashtags,imageBase64,userEmail
@@ -63,6 +74,18 @@ class ImageService{
         });
     }
 
+    addToCollection(username,imageId,collectionName){
+        return axios.post(API_URL+'/collection',{
+            username,imageId,collectionName
+        }, { 
+            headers: authHeader() 
+        })
+        .then((promise)=> {
+            return promise
+        }).catch((err)=>{
+            throw err.response.data
+        });
+    }
 
     async convertImageToBase64(file){
         return new Promise((resolve, reject) => {

@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
+using PhotoService.BLL.Enums;
+using PhotoService.BLL.Exceptions;
 using PhotoService.BLL.Interfaces;
 using PhotoService.BLL.Models;
+using PhotoService.BLL.ViewModels;
 using PhotoService.DAL;
 using PhotoService.DAL.Interfaces;
 using System;
@@ -13,9 +16,7 @@ namespace PhotoService.BLL.Services
 {
     public class UserCollectionService : IUserCollectionService
     {
-        //private readonly ICollectionRepository _collectionRepository;
         private readonly IUnitOfWork _unitOfWork;
-        //private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
 
         public UserCollectionService(IUnitOfWork unitOfWork, IMapper mapper)
@@ -44,16 +45,39 @@ namespace PhotoService.BLL.Services
 
         public CollectionModel GetCollection(string username, string name)
         {
-            var collections = GetCollections(username);
+            var collection = _unitOfWork.CollectionRepository.GetCollection(username, name);
 
-            var collectionName = collections.First(collection => collection.UrlName == name).Name;
+            if (collection == null)
+                throw new CollectionException(PhotoServiceExceptions.COLLECTION_DOES_NOT_EXIST.GetDescription());
 
-            return _mapper.Map<CollectionModel>(_unitOfWork.CollectionRepository.GetCollection(username, collectionName));
+            return _mapper.Map<CollectionModel>(collection);
         }
 
-        public IList<CollectionModel> GetCollections(string username)
+        public IList<CollectionModel> GetCollections(string username, bool publicOnly)
         {
-            return _mapper.Map<IList<CollectionModel>>(_unitOfWork.CollectionRepository.GetCollections(username));
+            IEnumerable<Collection> collections;
+            if (publicOnly)
+                collections = _unitOfWork.CollectionRepository.FindAll(x => x.Owner.UserName.ToLower() == username.ToLower()&&x.IsPublic);
+            else
+                collections = _unitOfWork.CollectionRepository.GetCollections(username);
+
+            return _mapper.Map<IList<CollectionModel>>(collections);
+        }
+
+        public async Task AddImageToCollection(AddImageToCollectionViewModel model)
+        {
+            var collection = _unitOfWork.CollectionRepository.GetCollection(model.Username,model.CollectionName);
+            var image = _unitOfWork.ImageRepository.GetWithInclude(x=>x.Id==model.ImageId,i=>i.Collections).First();
+
+            if(collection==null)
+                throw new CollectionException(PhotoServiceExceptions.COLLECTION_DOES_NOT_EXIST.GetDescription());
+
+            if (image.Collections.Any(c => c.Name == model.CollectionName))
+                throw new CollectionException(PhotoServiceExceptions.COLLECTION_ALREADY_CONTAINS_IMAGE.GetDescription());
+
+            image.Collections.Add(collection);
+            _unitOfWork.ImageRepository.Update(image);
+            await _unitOfWork.SaveAsync();
         }
     }
 }

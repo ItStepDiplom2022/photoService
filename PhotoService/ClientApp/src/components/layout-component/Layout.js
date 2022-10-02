@@ -12,6 +12,7 @@ import VerificationPage from '../verification-page-component/verification-page';
 import Footer from './footer-component/footer';
 import Navbar from './navbar-component/navbar';
 import './Layout.css'
+import NotFound from '../shared/not-found-component/NotFound';
 
 export default function Layout() {
   
@@ -38,6 +39,7 @@ export default function Layout() {
             <Route exact path=":tab" element={<Profile/>} />
           </Route>
           <Route exact path='/' element={<Home/>} />
+          <Route exact path='*' element={<NotFound/>} />
         </Routes>
       </div>
       <Footer />

@@ -23,11 +23,11 @@ namespace PhotoService.Controllers
         [AllowAnonymous]
         [HttpGet]
         [Route("collections")]
-        public ActionResult GetCollections(string username)
+        public ActionResult GetCollections([FromQuery]string username, [FromQuery] bool publicOnly)
         {
             try
             {
-                var collections = _userCollectionService.GetCollections(username);
+                var collections = _userCollectionService.GetCollections(username, publicOnly);
                 return Ok(collections);
             }
             catch (Exception)

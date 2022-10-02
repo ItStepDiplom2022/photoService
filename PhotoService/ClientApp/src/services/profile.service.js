@@ -12,8 +12,8 @@ class ProfileService {
         .catch((err) => {throw err.response.data})
     }
 
-    getUserCollections(username) {
-        return axios.get(API_URL+'collections', {params: {username}})
+    getUserCollections(username,publicOnly) {
+        return axios.get(API_URL+'collections', {params: {username, publicOnly}})
         .then((respond) => {
             return respond
         })

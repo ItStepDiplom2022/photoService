@@ -77,7 +77,7 @@ namespace PhotoService.BLL.Services
                 new Collection {
                     IsPublic = false,
                     Name = "Likes",
-                    ImageUrl = "/images/collection-images/bookmark.png",
+                    ImageUrl = "/images/collection-images/Heart.png",
                     CollectionType = _unitOfWork.CollectionTypeRepository.GetCollectionTypeByTitle(CollectionTypes.LIKES.ToString())
                 }) ;
 
@@ -87,7 +87,7 @@ namespace PhotoService.BLL.Services
                {
                    IsPublic = false,
                    Name = "Saves",
-                   ImageUrl = "/images/collection-images/Heart.png",
+                   ImageUrl = "/images/collection-images/bookmark.png",
                    CollectionType = _unitOfWork.CollectionTypeRepository.GetCollectionTypeByTitle(CollectionTypes.SAVES.ToString())
                });
 

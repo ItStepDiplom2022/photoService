@@ -1,3 +1,4 @@
+import { Alert, Snackbar } from '@mui/material';
 import { useState } from 'react';
 import authService from '../../../services/auth.service';
 import './../../shared/shared-styles.css'
@@ -6,14 +7,18 @@ import './comments-section.css'
 
 
 const CommentsSection = (props) => {
-
-    console.log(props.comments)
     const [commentsAmount, setCommentsAmount] = useState(props.commentsAmount);
     const [comments, setComments] = useState(props.comments)
+    const [snackBarOptions, setSnackBarOptions] = useState({ isOpen: false })
 
     const [commentText, setCommentText] = useState('')
 
     const addCommentHandler = () =>{
+        if(!authService.isLoggedIn()){
+            setSnackBarOptions({isOpen:true, severity:'error',message:'Log in to perform this action'})
+            return
+        }
+
         setCommentsAmount(commentsAmount+1)
         setComments([
             { userAdded:{userName:authService.getOwnerUsername()}, dateAdded:new Date(), commentText:commentText},
@@ -29,6 +34,10 @@ const CommentsSection = (props) => {
         setCommentText(e.target.value)
     }
 
+    const handleSnackBarClose = () => {
+        setSnackBarOptions({ isOpen: false, severity:snackBarOptions.severity })
+    };
+
     return (
         <div className='comments-wrapper'>
 
@@ -41,6 +50,12 @@ const CommentsSection = (props) => {
             <div className='all-comments'>
                 {comments?.map((c) => <Comment userName={c.userAdded?.userName} date={c.dateAdded} commentText={c.commentText} />)}
             </div> 
+
+            <Snackbar open={snackBarOptions.isOpen} autoHideDuration={5000} onClose={handleSnackBarClose} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
+                <Alert severity={snackBarOptions.severity} sx={{ width: '100%' }} onClose={handleSnackBarClose} variant="filled">
+                    {snackBarOptions.message}
+                </Alert>
+            </Snackbar>
         </div>
     )
 }
