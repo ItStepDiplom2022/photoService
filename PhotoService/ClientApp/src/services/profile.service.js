@@ -13,7 +13,7 @@ class ProfileService {
     }
 
     getUserCollections(username,publicOnly) {
-        return axios.get(API_URL+`collections/?username=${username}&publicOnly=${publicOnly}`)
+        return axios.get(API_URL+'collections', {params: {username, publicOnly}})
         .then((respond) => {
             return respond
         })
