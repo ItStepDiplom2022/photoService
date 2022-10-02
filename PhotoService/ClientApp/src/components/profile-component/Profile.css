@@ -1,7 +1,19 @@
 .profile-page {
     margin: 10px 50px;
+    display: flex
 }
 
 .profile-page>div {
     flex-wrap: nowrap;
+}
+
+.profileCard{
+    width: 30%
+}
+
+@media screen and (max-width: 758px) {
+    .profile-page{
+        flex-direction: column;
+        justify-content: center;
+    } 
 }

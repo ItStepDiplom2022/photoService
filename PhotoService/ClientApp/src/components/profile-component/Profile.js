@@ -30,26 +30,24 @@ const Profile = () => {
 
     return (
         <div className='profile-page'>
-            <div className='row'>
-                <div className="col-auto fs-4">
-                    <ProfileCard user={user} tab={tab} isOwnerProfile={ownerName?.toLowerCase() === username.toLowerCase()}/>
-                </div>
-                <div className="col">
-                    {
-                        tab === "collections" && (
-                            searchParams.get('collectionName')
-                            ?
-                            <ViewCollection collectionName={searchParams.get('collectionName')} username = {username}/>
-                            :
-                            <Collections username={username}/>
-                        )
-                    }
-                    {
-                        tab === "uploads" && (
-                            <MyUploads userName={username}/>
-                        )
-                    }
-                </div>
+            <div className="profileCard">
+                <ProfileCard user={user} tab={tab} isOwnerProfile={ownerName?.toLowerCase() === username.toLowerCase()}/>
+            </div>
+            <div className="col">
+                {
+                    tab === "collections" && (
+                        searchParams.get('collectionName')
+                        ?
+                        <ViewCollection collectionName={searchParams.get('collectionName')} username = {username}/>
+                        :
+                        <Collections username={username}/>
+                    )
+                }
+                {
+                    tab === "uploads" && (
+                        <MyUploads userName={username}/>
+                    )
+                }
             </div>
         </div>
     );
