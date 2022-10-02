@@ -1,9 +1,8 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDownload } from '@fortawesome/free-solid-svg-icons'
-import { faSave, faHeart } from '@fortawesome/free-solid-svg-icons'
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import './image-view.css'
+import Tag from '../tag-component/tag';
 
 const ImageView = (props) => {
     const [image] = useState(props.image)
@@ -12,6 +11,11 @@ const ImageView = (props) => {
     const handleSeeMoreClick = (e) =>{
         e.preventDefault()
         navigate(`../image/${image.id}`)
+    }
+
+    const getDateParsed = () =>{
+        let date = new Date(Date.parse(image.dateAdded))
+        return `${date.getFullYear()}/${date.getMonth()}/${date.getDay()}`
     }
 
     return (
@@ -28,20 +32,19 @@ const ImageView = (props) => {
                             {image.title }
                         </h1>
 
-                        <p className='image-details'>
-                            <FontAwesomeIcon className='btn-icon' icon={faHeart} />
-                            {props.likes} Likes
-                        </p>
+                        <div>
+                            <AccountCircleIcon className='profile-picture' />
+                            <a href={'profile/'+image?.author.userName} className='image-author'>{image?.author.userName}</a>
+                            <span className='divider'>|</span>
+                            <span className='image-date'>{getDateParsed()}</span>
+                        </div>
 
-                        <p className='image-details'>
-                            <FontAwesomeIcon className='btn-icon' icon={faDownload} />
-                            {props.downloads} Downloads
-                        </p>
+                        <br/>
 
-                        <p className='image-details'>
-                            <FontAwesomeIcon className='btn-icon' icon={faSave} />
-                            {props.savings} Savings
-                        </p>
+                        <div className='image-tags'>
+                                <b>Tags:</b>
+                                {image.hashtags?.map(tag => <Tag tagName={tag.title}></Tag>)}
+                        </div>
 
                         <button type="button" class="btn btn-link link" onClick={handleSeeMoreClick}>See more</button>
                     </div>

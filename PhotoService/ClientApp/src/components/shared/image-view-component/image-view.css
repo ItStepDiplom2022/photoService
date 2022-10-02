@@ -17,6 +17,11 @@
     width: 40%;
 }
 
+.image-tags {
+    display: flex;
+    flex-wrap: wrap;
+}
+
 .image-part img {
     width: 100%;
     border-radius: 2vh;

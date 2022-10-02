@@ -4,6 +4,7 @@ import authService from '../../../services/auth.service';
 import './my-uploads.css'
 import { useNavigate } from 'react-router';
 import ImageView from '../../shared/image-view-component/image-view';
+import LoadingSpinner from '../../spinner/Spinner';
 
 const MyUploads = (props) => {
     const [projects, setProjects] = useState()
@@ -27,7 +28,8 @@ const MyUploads = (props) => {
 
     return (
         <>
-            {projects?.map(project=>
+            {!projects?<LoadingSpinner/>:
+            projects?.map(project=>
                     <ImageView image={project} likes={0} savings={0} downloads={0}/>
                     )}
             {isOwner?
