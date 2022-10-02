@@ -2,6 +2,7 @@
 using PhotoService.BLL.Interfaces;
 using PhotoService.BLL.Models;
 using PhotoService.BLL.ViewModels;
+using PhotoService.DAL;
 using PhotoService.DAL.Entities;
 using PhotoService.DAL.Interfaces;
 using System;
@@ -28,8 +29,13 @@ namespace PhotoService.BLL.Services
 
         public ImageModel GetImage(int id)
         {
-            return _mapper.Map<ImageModel>(_unitOfWork.ImageRepository.GetWithInclude(i => i.Id == id,
+            var model = _mapper.Map<ImageModel>(_unitOfWork.ImageRepository.GetWithInclude(i => i.Id == id,
                 c => c.Comments, u => u.User, c => c.Collections, h => h.Hashtags).First());
+
+            var images = _unitOfWork.CollectionRepository.GetWithInclude(c => c.Name == "Likes", i => i.Images).Select(x=>x.Images);
+            model.LikesCount = images.Where(x => x.Any(img => img.Id == id)).Count();
+
+            return model;
         }
 
         public IEnumerable<ImageModel> GetImages()
