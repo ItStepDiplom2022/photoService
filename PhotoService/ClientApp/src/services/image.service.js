@@ -35,7 +35,7 @@ class ImageService{
         });
     }
 
-    getImagesByColection(userName,collectionName){
+    getImagesByCollection(userName,collectionName){
         return axios.get(API_URL + `/collection/${userName}?collectionName=${collectionName}`)
         .then((promise)=> {
             return promise

@@ -9,7 +9,7 @@ const ViewCollection = (props) => {
     const [collection, setCollection] = useState()
 
     const fetchImages = async (username,collectionName) => {
-        setCollection((await imageService.getImagesByColection(username,collectionName)).data)
+        setCollection((await imageService.getImagesByCollection(username,collectionName)).data)
     }
 
     const havePermissionToView= () => {
