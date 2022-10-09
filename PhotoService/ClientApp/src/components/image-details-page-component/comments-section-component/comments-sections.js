@@ -21,7 +21,7 @@ const CommentsSection = (props) => {
 
         setCommentsAmount(commentsAmount+1)
         setComments([
-            { userAdded:{userName:authService.getOwnerUsername()}, dateAdded:new Date(), commentText:commentText},
+            { userAdded:{userName:authService.getCurrentUserUsername()}, dateAdded:new Date(), commentText:commentText},
             ...comments
         ])
 

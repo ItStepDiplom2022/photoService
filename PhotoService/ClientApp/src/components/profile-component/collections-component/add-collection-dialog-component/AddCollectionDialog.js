@@ -1,6 +1,5 @@
 import { Button, Checkbox, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel, TextField } from '@mui/material';
 import React, { useState } from 'react'
-import profileService from '../../../../services/profile.service';
 
 const AddCollectionDialog = ({submitAction, setVisible, isVisible}) => {
     const [entered, setEntered] = useState("")

@@ -1,10 +1,17 @@
 import axios from "axios";
 import configData from "../config.json";
-import authHeader from './auth.header';
 
 const API_URL = `${configData.SERVER_URL}account/`;
 
 class AuthService{
+
+    getUser(username) {
+        return axios.get(API_URL, {params: {username}})
+        .then((respond) => {
+            return respond
+        })
+        .catch((err) => {throw err.response.data})
+    }
 
     signup(username,email,password){
         return axios.post(API_URL + "signup", {
@@ -39,11 +46,11 @@ class AuthService{
         return JSON.parse(localStorage.getItem('user'));;
     }
 
-    getOwnerEmail(){
+    getCurrentUserEmail(){
         return JSON.parse(localStorage.getItem('user')).email
     }
 
-    getOwnerUsername(){
+    getCurrentUserUsername(){
         return JSON.parse(localStorage.getItem('user'))?.username 
     }
 }

@@ -18,11 +18,11 @@ export default function Layout() {
   
 
   const [isLoggedIn, setIsLogged] = useState(authService.isLoggedIn())
-  const [username, setUsername] = useState(authService.getOwnerUsername())
+  const [username, setUsername] = useState(authService.getCurrentUserUsername())
 
   const onLoggedChange = () => {
     setIsLogged(authService.isLoggedIn())
-    setUsername(authService.getOwnerUsername())
+    setUsername(authService.getCurrentUserUsername())
   }
 
   return (

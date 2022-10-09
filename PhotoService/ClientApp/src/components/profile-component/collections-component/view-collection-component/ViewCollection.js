@@ -13,7 +13,7 @@ const ViewCollection = (props) => {
     }
 
     const havePermissionToView= () => {
-        return collection?.isPublic||authService.getOwnerUsername()===collection?.user?.userName
+        return collection?.isPublic||authService.getCurrentUserUsername()===collection?.user?.userName
     }
 
     useEffect(() => {

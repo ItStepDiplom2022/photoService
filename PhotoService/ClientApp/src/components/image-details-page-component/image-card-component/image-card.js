@@ -10,8 +10,8 @@ import { useEffect, useState } from 'react';
 import AddToCollectionModal from './add-to-colletion-modal-component/add-to-collection-modal';
 import { Alert, Snackbar } from '@mui/material';
 import authService from '../../../services/auth.service';
-import imageService from '../../../services/image.service';
 import likeService from '../../../services/like.service';
+import collectionService from '../../../services/collection.service';
 
 const ImageCard = (props) => {
     const [isLiked, setIsLiked] = useState(false);
@@ -21,7 +21,7 @@ const ImageCard = (props) => {
     const [snackBarOptions, setSnackBarOptions] = useState({ isOpen: false })
 
     const onLikePressed = () => {
-        let username = authService.getOwnerUsername()
+        let username = authService.getCurrentUserUsername()
 
         if(isLiked){
             likeService.dislike(username,props.image.id)
@@ -42,7 +42,7 @@ const ImageCard = (props) => {
     }
 
     const checkIfIsLiked = () =>{
-        let username = authService.getOwnerUsername()
+        let username = authService.getCurrentUserUsername()
 
         likeService.getIfIsLiked(username,props.image.id)
             .then(res=>setIsLiked(res.data))
@@ -64,8 +64,8 @@ const ImageCard = (props) => {
             return
         }
 
-        let username = authService.getOwnerUsername()
-        imageService.addToCollection(username, image.id, collectionName)
+        let username = authService.getCurrentUserUsername()
+        collectionService.addToCollection(username, image.id, collectionName)
             .then(() => {
                 setSnackBarOptions({isOpen:true, severity:'success',message:'Image was successfuly added to collection'})
             })

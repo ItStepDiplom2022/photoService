@@ -15,7 +15,7 @@ const ImageAddingForm = () => {
     const [isTagDeleting, setIsTagDeleting] = useState(false)
     const [image, setImage] = useState()
     const [imageName, setImageName] = useState()
-    const ownerEmail = authService.getOwnerEmail()
+    const currentUserEmail = authService.getCurrentUserEmail()
 
     const navigate = useNavigate()
 
@@ -74,7 +74,7 @@ const ImageAddingForm = () => {
                 return {title:tagName}
             }),
             image,
-            ownerEmail).then((promise)=>{
+            currentUserEmail).then((promise)=>{
                 navigate(`../image/${promise.data.id}`)
             })
     }

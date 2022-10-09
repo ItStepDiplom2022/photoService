@@ -27,9 +27,7 @@ class ImageService{
     }
 
     getImagesByUserName(userName){
-        return axios.get(API_URL + `/userName/${userName}`, { 
-            headers: authHeader() 
-        })
+        return axios.get(API_URL + `/userName/${userName}`)
         .then((promise)=> {
             return promise
         }).catch((err)=>{
@@ -38,9 +36,7 @@ class ImageService{
     }
 
     getImagesByColection(userName,collectionName){
-        return axios.get(API_URL + `/collection/${userName}?collectionName=${collectionName}`, { 
-            headers: authHeader() 
-        })
+        return axios.get(API_URL + `/collection/${userName}?collectionName=${collectionName}`)
         .then((promise)=> {
             return promise
         }).catch((err)=>{
@@ -51,32 +47,6 @@ class ImageService{
     postImage(title,description,hashtags,imageBase64,userEmail){
         return axios.post(API_URL,{
             title,description,hashtags,imageBase64,userEmail
-        }, { 
-            headers: authHeader() 
-        })
-        .then((promise)=> {
-            return promise
-        }).catch((err)=>{
-            throw err.response.data
-        });
-    }
-
-    postCommentToImage(username,comment,imageId){
-        return axios.post(API_URL+'/comment',{
-            username,comment,imageId
-        }, { 
-            headers: authHeader() 
-        })
-        .then((promise)=> {
-            return promise
-        }).catch((err)=>{
-            throw err.response.data
-        });
-    }
-
-    addToCollection(username,imageId,collectionName){
-        return axios.post(API_URL+'/collection',{
-            username,imageId,collectionName
         }, { 
             headers: authHeader() 
         })

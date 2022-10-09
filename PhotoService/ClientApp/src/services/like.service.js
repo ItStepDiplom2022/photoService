@@ -2,12 +2,12 @@ import axios from "axios";
 import configData from "../config.json";
 import authHeader from './auth.header';
 
-const API_URL = `${configData.SERVER_URL}like`;
+const API_URL = `${configData.SERVER_URL}like/`;
 
 class LikeService{
 
     getIfIsLiked(userName, imageId){
-        return axios.get(API_URL + '/isLiked/', { 
+        return axios.get(API_URL + 'isLiked/', { 
             params: {userName, imageId},
             headers: authHeader() 
         })
@@ -32,7 +32,7 @@ class LikeService{
     }
 
     dislike(userName, imageId){
-        return axios.post(API_URL+"/dislike",{
+        return axios.post(API_URL+"dislike",{
             userName, imageId
         }, { 
             headers: authHeader() 

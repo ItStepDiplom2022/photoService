@@ -1,10 +1,9 @@
-import { Avatar } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router';
 import './ProfileCard.css';
 import defaultUserImage from './tempfiles/default-user-icon.jpg'
 
-const ProfileCard = ({user={avatarUrl: defaultUserImage}, tab="uploads", isOwnerProfile=false}) => {
+const ProfileCard = ({user={avatarUrl: defaultUserImage}, tab="uploads", isCurrentUserProfile: isCurrentUserProfile=false}) => {
     const navigate = useNavigate();
 
     const handleClick = (subpath) => {
@@ -14,7 +13,7 @@ const ProfileCard = ({user={avatarUrl: defaultUserImage}, tab="uploads", isOwner
 
     const getClassesForTab = (name) => {
         let classes = "tab";
-        classes = classes.concat(isOwnerProfile ? " my" : "");
+        classes = classes.concat(isCurrentUserProfile ? " my" : "");
         classes = classes.concat(tab === name ? " selected" : "");
         return classes;
     }

@@ -18,15 +18,13 @@ namespace PhotoService.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IUserService _userService;
-        private readonly IJwtService _jwtService;
         private readonly IHtmlRenderer _htmlRenderer;
         private readonly IEmailService _emailService;
         private readonly string _key;
 
-        public AccountController(IUserService userService, IJwtService jwtService, IEmailService emailService, IConfiguration configuration, IHtmlRenderer htmlRenderer)
+        public AccountController(IUserService userService, IEmailService emailService, IConfiguration configuration, IHtmlRenderer htmlRenderer)
         {
             _userService = userService;
-            _jwtService = jwtService;
             _emailService = emailService;
             _htmlRenderer = htmlRenderer;
             _key = configuration.GetSection("JwtKey").ToString();
@@ -119,6 +117,20 @@ namespace PhotoService.Controllers
             }
         }
 
+        [AllowAnonymous]
+        [HttpGet]
+        public ActionResult GetUser([FromQuery] string username)
+        {
+            try
+            {
+                var user = _userService.GetUserByUsername(username);
+                return Ok(user);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
 
     }
 }

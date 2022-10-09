@@ -18,7 +18,7 @@ const ImageDetailsPage = () => {
     const [image,setImage]=useState()
     const [comments, setComments] = useState()
     const {id} = useParams()
-    const currentUsername = authService.getOwnerUsername()
+    const currentUsername = authService.getCurrentUserUsername()
     
     useEffect(()=>{
         fetchImage()
@@ -35,7 +35,7 @@ const ImageDetailsPage = () => {
     }
 
     const addCommentHandler =  async(comment) => {
-        await imageService.postCommentToImage(currentUsername,comment,id)
+        await commentService.postCommentToImage(currentUsername,comment,id)
     }
 
     const onReturnClick = (e) =>{
