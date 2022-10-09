@@ -13,7 +13,6 @@ import ViewCollection from './collections-component/view-collection-component/Vi
 const Profile = () => {
     const {username, tab="uploads"} = useParams();
     const [user, setUser] = useState({isLoaded: false});
-    //const user = { username: username };
     const ownerName = authService.getOwnerUsername();
 
     const [searchParams, setSearchParams] = useSearchParams();
@@ -33,7 +32,7 @@ const Profile = () => {
             <div className="profileCard">
                 <ProfileCard user={user} tab={tab} isOwnerProfile={ownerName?.toLowerCase() === username.toLowerCase()}/>
             </div>
-            <div className="col">
+            <div className="profile-content">
                 {
                     tab === "collections" && (
                         searchParams.get('collectionName')

@@ -49,10 +49,7 @@ const Collections = ({username}) => {
                     <CollectionItem data={{ name: "Add new", imageUrl: "/images/collection-images/plus.png"}}  handleClick={handleAddCollectionClick}/>
                     <AddCollectionDialog isVisible={showDialog} setVisible={setShowDialog} submitAction={handleSubmitAddCollection} />
                 </>
-            :
-             <div style={{marginTop:20}}>
-                 <LoadingSpinner/>
-             </div>
+            :""
             }
         </div>
     );

@@ -29,7 +29,7 @@ namespace PhotoService.BLL.Services
         public string Autheticate(string email, string password)
         {
             var userToAuth = _unitOfWork.UserRepository.GetWithInclude(u=>u.Email == email,
-                i => i.Roles).First();
+                i => i.Roles).FirstOrDefault();
 
             if (userToAuth == null)
                 throw new AuthorizationException(PhotoServiceExceptions.WRONG_CREDENTIALS.GetDescription());

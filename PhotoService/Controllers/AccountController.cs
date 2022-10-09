@@ -38,8 +38,8 @@ namespace PhotoService.Controllers
         {
             try
             {
-                var username = _userService.GetUserByEmail(userModel.Email).UserName;
                 var token = _userService.Autheticate(userModel.Email, userModel.Password);
+                var username = _userService.GetUserByEmail(userModel.Email).UserName;
 
                 return Ok(new { token, email = userModel.Email, username = username });
             }

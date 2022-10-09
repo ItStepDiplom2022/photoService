@@ -1,3 +1,4 @@
+import { Avatar } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import './ProfileCard.css';
@@ -25,13 +26,18 @@ const ProfileCard = ({user={avatarUrl: defaultUserImage}, tab="uploads", isOwner
                     <div className='profile-card'>
                         <div className="user-info-part">
                             <div className="avatar-wrapper">
-                                <img src={user.avatarUrl} height="100%" width="100%" alt="avatar"/>
+                                <img src={
+                                    user.avatarUrl?
+                                    user.avatarUrl
+                                    :
+                                    "https://www.flaticon.com/free-icons/user"
+                                } height="100%" width="100%" alt="avatar"/>
                             </div>
                             <span id='profile-username'>{user.userName}</span>
                         </div>  
                         <div className="tabs-part">
                             <a className={getClassesForTab('uploads')} onClick={(e) => { e.preventDefault(); handleClick('uploads')}}>Uploads</a>
-                            <a className={getClassesForTab('collections')} onClick={(e) => { e.preventDefault(); handleClick('collections')}}>Collection</a>
+                            <a className={getClassesForTab('collections')} onClick={(e) => { e.preventDefault(); handleClick('collections')}}>Collections</a>
                         </div>
                     </div>
                 )
