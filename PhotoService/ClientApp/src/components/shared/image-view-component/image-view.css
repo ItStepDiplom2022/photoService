@@ -6,7 +6,7 @@
 
 .upload-card-content {
     display: flex;
-    width: 85%;
+    width: 80%;
     padding: 3vh;
     margin: 0;
     background-color: #ffffff;
@@ -15,6 +15,11 @@
 
 .image-part {
     width: 40%;
+}
+
+.image-tags {
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .image-part img {

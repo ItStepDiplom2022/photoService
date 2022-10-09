@@ -2,7 +2,6 @@
 using PhotoService.BLL.Interfaces;
 using PhotoService.BLL.Models;
 using PhotoService.BLL.ViewModels;
-using System.Collections.Generic;
 
 namespace PhotoService.Controllers
 {
@@ -18,7 +17,7 @@ namespace PhotoService.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index([FromQuery] string? author, [FromQuery] string? tag, [FromQuery] string? q, [FromQuery] int last, [FromQuery] int count)
+        public IActionResult FindImages([FromQuery] string? author, [FromQuery] string? tag, [FromQuery] string? q, [FromQuery] int last, [FromQuery] int count)
         {
             if (last < 0)
                 return BadRequest();

@@ -76,13 +76,14 @@ namespace PhotoService.BLL.Services
 
         public async Task AddImageToCollection(AddImageToCollectionViewModel model)
         {
-            var collection = _unitOfWork.CollectionRepository.GetCollection(model.Username,model.CollectionName);
+            var collection = _unitOfWork.CollectionRepository.GetWithInclude(x => x.Owner.UserName == model.Username && x.Name == model.CollectionName, i => i.Owner).First();
+            //var collection = _unitOfWork.CollectionRepository.GetCollection(model.Username,model.CollectionName);
             var image = _unitOfWork.ImageRepository.GetWithInclude(x=>x.Id==model.ImageId,i=>i.Collections).First();
 
             if(collection==null)
                 throw new CollectionException(PhotoServiceExceptions.COLLECTION_DOES_NOT_EXIST.GetDescription());
 
-            if (image.Collections.Any(c => c.Name == model.CollectionName))
+            if (image.Collections.Any(c => c.Name == model.CollectionName && c.Owner.UserName == model.Username))
                 throw new CollectionException(PhotoServiceExceptions.COLLECTION_ALREADY_CONTAINS_IMAGE.GetDescription());
 
             image.Collections.Add(collection);

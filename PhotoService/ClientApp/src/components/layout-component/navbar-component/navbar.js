@@ -4,7 +4,6 @@ import React from 'react';
 import authService from '../../../services/auth.service';
 import SearchBar from '../../search-bar-component/SearchBar';
 
-
 export default function Navbar({isLoggedIn, onLoggedChange, username}) {
 
 

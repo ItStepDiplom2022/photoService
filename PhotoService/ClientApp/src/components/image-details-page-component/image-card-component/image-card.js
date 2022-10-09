@@ -10,15 +10,29 @@ import { useEffect, useState } from 'react';
 import AddToCollectionModal from './add-to-colletion-modal-component/add-to-collection-modal';
 import { Alert, Snackbar } from '@mui/material';
 import authService from '../../../services/auth.service';
-import imageService from '../../../services/image.service';
+import likeService from '../../../services/like.service';
+import collectionService from '../../../services/collection.service';
 
 const ImageCard = (props) => {
     const [isLiked, setIsLiked] = useState(false);
+    const [likeCount, setLikeCount] = useState(props.image.likesCount)
     const [image] = useState(props.image)
     const [showDialog, setShowDialog] = useState(false);
     const [snackBarOptions, setSnackBarOptions] = useState({ isOpen: false })
 
     const onLikePressed = () => {
+        let username = authService.getCurrentUserUsername()
+
+        if(isLiked){
+            likeService.dislike(username,props.image.id)
+            setLikeCount(likeCount-1)
+        }
+        else{
+            likeService.like(username,props.image.id)
+            setLikeCount(likeCount+1)
+        }
+            
+
         setIsLiked(!isLiked)
     }
 
@@ -28,14 +42,14 @@ const ImageCard = (props) => {
     }
 
     const checkIfIsLiked = () =>{
-        let ls = localStorage.getItem("user")
-        let email = JSON.parse(ls).email
+        let username = authService.getCurrentUserUsername()
 
-        setIsLiked( image.likes.filter(like=>like.user?.email===email).length===1)
+        likeService.getIfIsLiked(username,props.image.id)
+            .then(res=>setIsLiked(res.data))
     }
 
     useEffect(() => {
-        //checkIfIsLiked();
+        checkIfIsLiked();
     },[])
 
     const createFileDonwloadName = () => {
@@ -50,8 +64,8 @@ const ImageCard = (props) => {
             return
         }
 
-        let username = authService.getOwnerUsername()
-        imageService.addToCollection(username, image.id, collectionName)
+        let username = authService.getCurrentUserUsername()
+        collectionService.addToCollection(username, image.id, collectionName)
             .then(() => {
                 setSnackBarOptions({isOpen:true, severity:'success',message:'Image was successfuly added to collection'})
             })
@@ -112,7 +126,7 @@ const ImageCard = (props) => {
 
                             <button className={isLiked ? 'btn btn-danger' : 'btn btn-secondary'} onClick={onLikePressed}>
                                 <FontAwesomeIcon className='btn-icon' icon={faHeart} />
-                                {isLiked ? 'Liked' : 'Like'} | {image.likes?.length}
+                                {isLiked ? 'Liked' : 'Like'} | {likeCount}
                             </button>
 
                             <button className='btn btn-primary' onClick={shareHandler}>

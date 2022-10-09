@@ -4,16 +4,17 @@ import authService from '../../../services/auth.service';
 import './my-uploads.css'
 import { useNavigate } from 'react-router';
 import ImageView from '../../shared/image-view-component/image-view';
+import LoadingSpinner from '../../spinner/Spinner';
 
 const MyUploads = (props) => {
     const [projects, setProjects] = useState()
-    const [isOwner, setIsOwner] = useState(false)    
+    const [isCurrentUser, setIsCurrentUser] = useState(false)    
 
     const navigate = useNavigate()
 
     useEffect(()=>{
         fetchProjects();
-        setIsOwner(props.userName===authService.getOwnerUsername())
+        setIsCurrentUser(props.userName===authService.getCurrentUserUsername())
     },[])
 
     const fetchProjects = async () => {
@@ -27,10 +28,11 @@ const MyUploads = (props) => {
 
     return (
         <>
-            {projects?.map(project=>
+            {!projects?<LoadingSpinner/>:
+            projects?.map(project=>
                     <ImageView image={project} likes={0} savings={0} downloads={0}/>
                     )}
-            {isOwner?
+            {isCurrentUser?
                 <button type="button" className="btn btn-link link" onClick={addNewHandle}>Add new</button>
             :null   
             }

@@ -1,11 +1,11 @@
 import { Autocomplete, Button, Container, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import authService from '../../../../services/auth.service';
-import profileService from '../../../../services/profile.service';
+import collectionService from '../../../../services/collection.service';
 
 const AddToCollectionModal = ({ submitAction, setVisible, isVisible }) => {
     const [collections, setCollections] = useState([])
-    const currentUsername = authService.getOwnerUsername()
+    const currentUsername = authService.getCurrentUserUsername()
     const [chosenCollection, setChosenCollection] = useState()
 
     useEffect(
@@ -15,7 +15,7 @@ const AddToCollectionModal = ({ submitAction, setVisible, isVisible }) => {
     )
 
     const fetchCollections = async () =>{
-        let cols = await profileService.getUserCollections(currentUsername,false)
+        let cols = await collectionService.getUserCollections(currentUsername,false)
         setCollections(cols?.data.map(c=>c.name))
     }
 

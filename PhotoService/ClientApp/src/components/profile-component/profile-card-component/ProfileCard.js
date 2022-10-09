@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router';
 import './ProfileCard.css';
 import defaultUserImage from './tempfiles/default-user-icon.jpg'
 
-const ProfileCard = ({user={avatarUrl: defaultUserImage}, tab="uploads", isOwnerProfile=false}) => {
+const ProfileCard = ({user={avatarUrl: defaultUserImage}, tab="uploads", isCurrentUserProfile: isCurrentUserProfile=false}) => {
     const navigate = useNavigate();
 
     const handleClick = (subpath) => {
@@ -13,7 +13,7 @@ const ProfileCard = ({user={avatarUrl: defaultUserImage}, tab="uploads", isOwner
 
     const getClassesForTab = (name) => {
         let classes = "tab";
-        classes = classes.concat(isOwnerProfile ? " my" : "");
+        classes = classes.concat(isCurrentUserProfile ? " my" : "");
         classes = classes.concat(tab === name ? " selected" : "");
         return classes;
     }
@@ -25,13 +25,18 @@ const ProfileCard = ({user={avatarUrl: defaultUserImage}, tab="uploads", isOwner
                     <div className='profile-card'>
                         <div className="user-info-part">
                             <div className="avatar-wrapper">
-                                <img src={user.avatarUrl} height="100%" width="100%" alt="avatar"/>
+                                <img src={
+                                    user.avatarUrl?
+                                    user.avatarUrl
+                                    :
+                                    "https://www.flaticon.com/free-icons/user"
+                                } height="100%" width="100%" alt="avatar"/>
                             </div>
                             <span id='profile-username'>{user.userName}</span>
                         </div>  
                         <div className="tabs-part">
                             <a className={getClassesForTab('uploads')} onClick={(e) => { e.preventDefault(); handleClick('uploads')}}>Uploads</a>
-                            <a className={getClassesForTab('collections')} onClick={(e) => { e.preventDefault(); handleClick('collections')}}>Collection</a>
+                            <a className={getClassesForTab('collections')} onClick={(e) => { e.preventDefault(); handleClick('collections')}}>Collections</a>
                         </div>
                     </div>
                 )

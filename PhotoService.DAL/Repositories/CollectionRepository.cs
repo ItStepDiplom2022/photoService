@@ -81,7 +81,12 @@ namespace PhotoService.DAL.Repositories
         public Collection GetCollection(string username, string collectionName)
         {
             return _dbContext.Collections.Where(collection => collection.Name == collectionName && collection.Owner.UserName == username)
-               .Include(x=>x.Images).Include(x=>x.Owner).FirstOrDefault();
+               .Include(x=>x.Images)
+               .ThenInclude(x=>x.Hashtags)
+               .Include(x=>x.Images)
+               .ThenInclude(x=>x.User)
+               .Include(x=>x.Owner)
+               .FirstOrDefault();
         }
 
         public IEnumerable<Collection> GetCollections(string username)

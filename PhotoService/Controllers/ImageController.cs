@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PhotoService.BLL.Exceptions;
 using PhotoService.BLL.Interfaces;
 using PhotoService.BLL.Models;
-using PhotoService.BLL.ViewModels;
 
 namespace PhotoService.Controllers
 {
@@ -67,7 +65,6 @@ namespace PhotoService.Controllers
             }
         }
 
-        [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult> PostImage([FromBody] ImageAddModel image)
         {
@@ -79,28 +76,6 @@ namespace PhotoService.Controllers
             catch (Exception e)
             {
                 return BadRequest(e.Message);
-            }
-        }
-
-        /// <summary>
-        /// adds image to collection
-        /// </summary>
-        [AllowAnonymous]
-        [HttpPost("collection")]
-        public async Task<ActionResult> AddToCollection([FromBody] AddImageToCollectionViewModel model)
-        {
-            try
-            {
-                await _userCollectionService.AddImageToCollection(model);
-                return Ok();
-            }
-            catch (CollectionException e)
-            {
-                return BadRequest(e.Message);
-            }
-            catch (Exception)
-            {
-                return StatusCode(500);
             }
         }
 
@@ -123,21 +98,6 @@ namespace PhotoService.Controllers
             catch (Exception)
             {
                 return StatusCode(500);
-            }
-        }
-
-        [AllowAnonymous]
-        [HttpPost("comment")]
-        public async Task<ActionResult> PostCommentToImage([FromBody] CommentAddViewModel image)
-        {
-            try
-            {
-                await _imageService.AddComment(image);
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e.Message);
             }
         }
 

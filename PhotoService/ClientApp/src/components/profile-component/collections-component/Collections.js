@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router';
 import CollectionItem from './collection-item-component/CollectionItem';
-import profileService from '../../../services/profile.service';
 import './Collections.css'
 import AddCollectionDialog from './add-collection-dialog-component/AddCollectionDialog';
 import authService from '../../../services/auth.service';
+import collectionService from '../../../services/collection.service';
 
 const Collections = ({username}) => {
     const [collections, setCollections] = useState([]);
@@ -20,13 +20,13 @@ const Collections = ({username}) => {
     }
 
     const handleSubmitAddCollection = async (collectionName, isPublic) => {
+        await collectionService.addNewCollection(authService.getCurrentUserUsername(),collectionName,isPublic)
         updateCollections(username);
     }
 
     const updateCollections = async (username) => {
-        //user can`t see private collections of other users
-        var onlyPublicCollections = username !== authService.getOwnerUsername()
-        setCollections((await profileService.getUserCollections(username,onlyPublicCollections)).data);
+        var onlyPublicCollections = username !== authService.getCurrentUserUsername()
+        setCollections((await collectionService.getUserCollections(username,onlyPublicCollections)).data);
     }
 
     useEffect(() => {
@@ -42,12 +42,12 @@ const Collections = ({username}) => {
                     );
                 })
             }
-            {username === authService.getOwnerUsername()?
+            {username === authService.getCurrentUserUsername()?
                 <>
                     <CollectionItem data={{ name: "Add new", imageUrl: "/images/collection-images/plus.png"}}  handleClick={handleAddCollectionClick}/>
                     <AddCollectionDialog isVisible={showDialog} setVisible={setShowDialog} submitAction={handleSubmitAddCollection} />
                 </>
-            :''
+            :""
             }
         </div>
     );
