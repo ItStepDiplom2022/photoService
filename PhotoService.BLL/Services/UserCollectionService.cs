@@ -59,7 +59,7 @@ namespace PhotoService.BLL.Services
             if (publicOnly)
                 collections = _unitOfWork.CollectionRepository.FindAll(x => x.Owner.UserName.ToLower() == username.ToLower()&&x.IsPublic);
             else
-                collections = _unitOfWork.CollectionRepository.GetCollections(username);
+                collections = _unitOfWork.CollectionRepository.FindAll(x => x.Owner.UserName.ToLower() == username.ToLower());
 
             return _mapper.Map<IList<CollectionModel>>(collections);
         }

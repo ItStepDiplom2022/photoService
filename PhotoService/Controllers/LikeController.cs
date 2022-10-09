@@ -7,6 +7,7 @@ using PhotoService.BLL.ViewModels;
 
 namespace PhotoService.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class LikeController : ControllerBase
@@ -22,7 +23,6 @@ namespace PhotoService.Controllers
         /// <summary>
         /// checks if image is liked by user
         /// </summary>
-        [AllowAnonymous]
         [HttpGet("isLiked")]
         public ActionResult CheckIfLiked([FromQuery] int imageId, [FromQuery] string userName)
         {
@@ -45,7 +45,6 @@ namespace PhotoService.Controllers
         /// <summary>
         /// adds image to collection
         /// </summary>
-        [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult> AddLike([FromBody] AddLikeViewModel model)
         {
@@ -74,7 +73,6 @@ namespace PhotoService.Controllers
         /// <summary>
         /// adds image to collection
         /// </summary>
-        [AllowAnonymous]
         [HttpPost("dislike")]
         public async Task<ActionResult> AddDislike([FromBody] AddLikeViewModel model)
         {

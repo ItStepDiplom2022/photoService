@@ -7,6 +7,7 @@ import MyUploads from './my-uploads-component/my-uploads';
 import authService from '../../services/auth.service';
 import { useSearchParams } from 'react-router-dom';
 import ViewCollection from './collections-component/view-collection-component/ViewCollection';
+import NotFound from '../shared/not-found-component/NotFound';
  
 const Profile = () => {
     const {username, tab="uploads"} = useParams();
@@ -44,6 +45,10 @@ const Profile = () => {
                     tab === "uploads" && (
                         <MyUploads userName={username}/>
                     )
+                }
+                {
+                    tab !== "uploads" && tab !== "collections" &&
+                    (<NotFound/>)
                 }
             </div>
         </div>

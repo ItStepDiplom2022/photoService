@@ -53,7 +53,6 @@ namespace PhotoService.Controllers
             }
         }
 
-        [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult> CreateNewCollection([FromBody] CollectionCreateViewModel model)
         {
