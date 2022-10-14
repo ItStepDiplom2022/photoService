@@ -34,7 +34,7 @@ namespace PhotoService.BLL.Services
                 Name = name,
                 Owner = user,
                 IsPublic = isPublic,
-                ImageUrl= "/images/collection-images/Folders.png",
+                CollectionAvatarUrl= "/images/collection-images/Folders.png",
                 CollectionType = _unitOfWork.CollectionTypeRepository.GetCollectionTypeByTitle(CollectionTypes.CUSTOM.ToString())
             };
 

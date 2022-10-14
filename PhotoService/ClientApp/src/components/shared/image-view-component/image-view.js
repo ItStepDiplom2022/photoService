@@ -24,7 +24,7 @@ const ImageView = (props) => {
                 <div className='upload-card-content'>
 
                     <div className='image-part'>
-                        <img src={image.imageBase64 } />
+                        <img src={image.imageUrl } alt="" />
                     </div>
 
                     <div className='description-part'>

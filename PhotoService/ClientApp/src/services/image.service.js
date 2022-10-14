@@ -44,9 +44,9 @@ class ImageService{
         });
     }
 
-    postImage(title,description,hashtags,imageBase64,userEmail){
+    postImage(title,description,hashtags,imageUrl,userEmail){
         return axios.post(API_URL,{
-            title,description,hashtags,imageBase64,userEmail
+            title,description,hashtags,imageUrl,userEmail
         }, { 
             headers: authHeader() 
         })

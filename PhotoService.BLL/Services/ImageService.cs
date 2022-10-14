@@ -17,17 +17,22 @@ namespace PhotoService.BLL.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IBlobService _blobService;
 
-        public ImageService(IUnitOfWork unitOfWork, IMapper mapper)
+        public ImageService(IUnitOfWork unitOfWork, IMapper mapper, IBlobService blobService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _blobService = blobService;
         }
 
         public ImageModel GetImage(int id)
         {
-            var model = _mapper.Map<ImageModel>(_unitOfWork.ImageRepository.GetWithInclude(i => i.Id == id,
-                c => c.Comments, u => u.User, h => h.Hashtags).First());
+            var entity = _unitOfWork.ImageRepository.GetWithInclude(i => i.Id == id,
+                c => c.Comments, u => u.User, h => h.Hashtags).First();
+
+            var model = _mapper.Map<ImageModel>(entity);
+            model.Author = new UserModel { UserName = entity.User.UserName };
 
             var images = _unitOfWork.CollectionRepository.GetWithInclude(c => c.Name == "Likes", i => i.Images).Select(x => x.Images);
             model.LikesCount = images.Where(x => x.Any(img => img.Id == id)).Count();
@@ -56,7 +61,10 @@ namespace PhotoService.BLL.Services
             }
 
             image.Hashtags = new List<Hashtag>();
+
+            image.ImageUrl = await _blobService.UploadPhoto(image.Title+".png", image.ImageUrl.Substring(image.ImageUrl.LastIndexOf(',') + 1));
             var addedImage = await _unitOfWork.ImageRepository.Add(image);
+
             await _unitOfWork.SaveAsync();
 
             foreach (var hashTag in tagsToAdd)

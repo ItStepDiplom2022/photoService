@@ -31,7 +31,7 @@ const Collections = ({username}) => {
 
     useEffect(() => {
         updateCollections(username);
-    }, [])
+    }, [username])
 
     return (
         <div className='collections-component'>
@@ -44,7 +44,7 @@ const Collections = ({username}) => {
             }
             {username === authService.getCurrentUserUsername()?
                 <>
-                    <CollectionItem data={{ name: "Add new", imageUrl: "/images/collection-images/plus.png"}}  handleClick={handleAddCollectionClick}/>
+                    <CollectionItem data={{ name: "Add new", collectionAvatarUrl: "/images/collection-images/plus.png"}}  handleClick={handleAddCollectionClick}/>
                     <AddCollectionDialog isVisible={showDialog} setVisible={setShowDialog} submitAction={handleSubmitAddCollection} />
                 </>
             :""

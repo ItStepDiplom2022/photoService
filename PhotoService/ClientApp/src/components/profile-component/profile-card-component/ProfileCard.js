@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router';
 import './ProfileCard.css';
 import defaultUserImage from './tempfiles/default-user-icon.jpg'
 
-const ProfileCard = ({user={avatarUrl: defaultUserImage}, tab="uploads", isCurrentUserProfile: isCurrentUserProfile=false}) => {
+const ProfileCard = ({user={avatarUrl: defaultUserImage}, tab="uploads", isCurrentUserProfile = false}) => {
     const navigate = useNavigate();
 
     const handleClick = (subpath) => {
