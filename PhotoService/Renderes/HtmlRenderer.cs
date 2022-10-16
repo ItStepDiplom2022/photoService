@@ -28,7 +28,6 @@ namespace PhotoService.Renderes
 
         private async Task<string> RenderEmailTemplateAsStringAsync<T>(string viewName, T model)
         {
-            var templatePath = $"{viewName}.cshtml";
             return await _razorLightEngine.CompileRenderAsync(viewName, model);
         }
     }

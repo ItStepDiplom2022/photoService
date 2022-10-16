@@ -10,7 +10,6 @@ namespace PhotoService.BLL
     {
         public AutoMapperSettings()
         {
-            //TODO: add all necessary mappings
             CreateMap<User, UserLoginModel>()
                 .ReverseMap();
 
@@ -55,7 +54,7 @@ namespace PhotoService.BLL
                 {
                     Text = user.UserName,
                     Type = Enums.SearchResultType.Author,
-                    ImageBase64 = user.AvatarUrl
+                    ImageUrl = user.AvatarUrl
                 });
 
             CreateMap<Collection, CollectionModel>()

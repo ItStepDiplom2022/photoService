@@ -6,7 +6,7 @@ namespace PhotoService.DAL
     public class Collection : BaseEntity
     {
         [Required]
-        public string ImageUrl { get; set; }
+        public string CollectionAvatarUrl { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]

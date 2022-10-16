@@ -1,9 +1,4 @@
 ﻿using PhotoService.BLL.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PhotoService.BLL.Models
 {
@@ -13,7 +8,7 @@ namespace PhotoService.BLL.Models
 
         public SearchResultType Type { get; set; }
 
-        public string? ImageBase64 { get; set; }
+        public string? ImageUrl { get; set; }
 
         public float MatchPercent { get; set; } = 0.0f;
     }

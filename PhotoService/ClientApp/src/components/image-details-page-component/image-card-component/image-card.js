@@ -5,7 +5,7 @@ import Tag from '../../shared/tag-component/tag';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShareFromSquare } from '@fortawesome/free-solid-svg-icons'
 import { faDownload } from '@fortawesome/free-solid-svg-icons'
-import { faSave, faHeart, faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import { faSave, faHeart } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useState } from 'react';
 import AddToCollectionModal from './add-to-colletion-modal-component/add-to-collection-modal';
 import { Alert, Snackbar } from '@mui/material';
@@ -21,6 +21,11 @@ const ImageCard = (props) => {
     const [snackBarOptions, setSnackBarOptions] = useState({ isOpen: false })
 
     const onLikePressed = () => {
+        if(!authService.isLoggedIn()){
+            setSnackBarOptions({isOpen:true, severity:'error',message:'Log in to perform this action'})
+            return
+        }
+
         let username = authService.getCurrentUserUsername()
 
         if(isLiked){
@@ -38,7 +43,7 @@ const ImageCard = (props) => {
 
     const getDateParsed = () =>{
         let date = new Date(Date.parse(image.dateAdded))
-        return `${date.getFullYear()}/${date.getMonth()}/${date.getDay()}`
+        return `${date.getFullYear()}/${date.getMonth()+1}/${date.getDate()}`
     }
 
     const checkIfIsLiked = () =>{
@@ -53,8 +58,8 @@ const ImageCard = (props) => {
     },[])
 
     const createFileDonwloadName = () => {
-        return image.title + '.' + image.imageBase64.slice(
-            image.imageBase64.indexOf('/')+1,image.imageBase64.indexOf(';')
+        return image.title + '.' + image.imageUrl.slice(
+            image.imageUrl.indexOf('/')+1,image.imageUrl.indexOf(';')
         )
     }
 
@@ -78,7 +83,7 @@ const ImageCard = (props) => {
         if(authService.isLoggedIn())
             setShowDialog(true);
         else
-            setSnackBarOptions({isOpen:true, severity:'error',message:'Log in to do this action'})
+            setSnackBarOptions({isOpen:true, severity:'error',message:'Log in to perform this action'})
     }
 
     const handleSnackBarClose = () => {
@@ -98,7 +103,7 @@ const ImageCard = (props) => {
                 <div className='card-content'>
 
                     <div className='image-part'>
-                        <img src={image.imageBase64 } />
+                        <img src={image.imageUrl} alt={image.title} />
                     </div>
 
                     <div className='description-part'>
@@ -135,7 +140,7 @@ const ImageCard = (props) => {
                             </button>
 
                             <button className='btn btn-success'>
-                                <a className='download-link' download={createFileDonwloadName()} href={image.imageBase64}>
+                                <a className='download-link' download={createFileDonwloadName()} href={image.imageUrl}>
                                     <FontAwesomeIcon className='btn-icon' icon={faDownload} />
                                     Download</a>
                             </button>
@@ -151,10 +156,10 @@ const ImageCard = (props) => {
                 <AddToCollectionModal isVisible={showDialog} setVisible={setShowDialog} submitAction={handleAddToCollection}/>
 
                 <Snackbar open={snackBarOptions.isOpen} autoHideDuration={5000} onClose={handleSnackBarClose} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
-                <Alert severity={snackBarOptions.severity} sx={{ width: '100%' }} onClose={handleSnackBarClose} variant="filled">
-                    {snackBarOptions.message}
-                </Alert>
-            </Snackbar>
+                    <Alert severity={snackBarOptions.severity} sx={{ width: '100%' }} onClose={handleSnackBarClose} variant="filled">
+                        {snackBarOptions.message}
+                    </Alert>
+                </Snackbar>
             </div>
 
         </>

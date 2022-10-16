@@ -3,27 +3,34 @@ import authService from '../../../../services/auth.service';
 import imageService from '../../../../services/image.service';
 import ImageView from '../../../shared/image-view-component/image-view';
 import NotFound from '../../../shared/not-found-component/NotFound';
+import LoadingSpinner from '../../../spinner/Spinner';
 import './ViewCollection.css'
 
 const ViewCollection = (props) => {
     const [collection, setCollection] = useState()
+    const [isFetching, setIsFetching] = useState(true)
+    const [isEnabled, setIsEnabled] = useState()
 
-    const fetchImages = async (username,collectionName) => {
-        setCollection((await imageService.getImagesByCollection(username,collectionName)).data)
+    const fetchImages = (username,collectionName) => {
+        imageService.getImagesByCollection(username,collectionName)
+        .then(response=>{
+            setIsFetching(false)
+            setIsEnabled(response.data.isPublic||authService.getCurrentUserUsername()===response.data.user?.userName)
+            setCollection(response.data)
+        })
     }
 
-    const havePermissionToView= () => {
-        return collection?.isPublic||authService.getCurrentUserUsername()===collection?.user?.userName
-    }
 
     useEffect(() => {
         fetchImages(props.username,props.collectionName);
-    }, [])
+    },[])
 
     return (
         <>
-            {
-            havePermissionToView()?
+            {isFetching?
+                <LoadingSpinner/>
+            :
+            isEnabled?
             (
                 collection?.images.length!==0?
                 collection?.images?.map(image=>

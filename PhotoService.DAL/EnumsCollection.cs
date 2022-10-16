@@ -1,6 +1,4 @@
-﻿
-
-namespace PhotoService.DAL
+﻿namespace PhotoService.DAL
 {
     public enum UserRoles
     {

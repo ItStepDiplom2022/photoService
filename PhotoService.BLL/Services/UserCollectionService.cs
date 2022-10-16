@@ -1,16 +1,11 @@
 ﻿using AutoMapper;
 using PhotoService.BLL.Enums;
 using PhotoService.BLL.Exceptions;
+using PhotoService.BLL.ExtensionMethods;
 using PhotoService.BLL.Interfaces;
-using PhotoService.BLL.Models;
 using PhotoService.BLL.ViewModels;
 using PhotoService.DAL;
 using PhotoService.DAL.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PhotoService.BLL.Services
 {
@@ -34,12 +29,13 @@ namespace PhotoService.BLL.Services
                 Name = name,
                 Owner = user,
                 IsPublic = isPublic,
-                ImageUrl= "/images/collection-images/Folders.png",
+                CollectionAvatarUrl= "/images/collection-images/Folders.png",
                 CollectionType = _unitOfWork.CollectionTypeRepository.GetCollectionTypeByTitle(CollectionTypes.CUSTOM.ToString())
             };
 
             var addedCollection = await _unitOfWork.CollectionRepository.Create(entity);
             await _unitOfWork.SaveAsync();
+
             return _mapper.Map<CollectionModel>(addedCollection);
         }
 
@@ -77,7 +73,6 @@ namespace PhotoService.BLL.Services
         public async Task AddImageToCollection(AddImageToCollectionViewModel model)
         {
             var collection = _unitOfWork.CollectionRepository.GetWithInclude(x => x.Owner.UserName == model.Username && x.Name == model.CollectionName, i => i.Owner).First();
-            //var collection = _unitOfWork.CollectionRepository.GetCollection(model.Username,model.CollectionName);
             var image = _unitOfWork.ImageRepository.GetWithInclude(x=>x.Id==model.ImageId,i=>i.Collections).First();
 
             if(collection==null)

@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PhotoService.BLL.Exceptions;
 using PhotoService.BLL.Interfaces;
@@ -10,7 +9,7 @@ using PhotoService.Renderes;
 namespace PhotoService.Controllers
 {
     /// <summary>
-    /// this controller manages account operations
+    ///  manages user account operations
     /// </summary>
     [Authorize]
     [Route("api/[controller]")]
@@ -20,16 +19,22 @@ namespace PhotoService.Controllers
         private readonly IUserService _userService;
         private readonly IHtmlRenderer _htmlRenderer;
         private readonly IEmailService _emailService;
-        private readonly string _key;
 
-        public AccountController(IUserService userService, IEmailService emailService, IConfiguration configuration, IHtmlRenderer htmlRenderer)
+        public AccountController(IUserService userService, IEmailService emailService, IHtmlRenderer htmlRenderer)
         {
             _userService = userService;
             _emailService = emailService;
             _htmlRenderer = htmlRenderer;
-            _key = configuration.GetSection("JwtKey").ToString();
         }
 
+        /// <summary>
+        /// endpoint for user login
+        /// </summary>
+        /// <param name="userModel">model with user email and password</param>
+        /// <returns>
+        ///     if succeded: 200 with token, username, and email
+        ///     if failed: 400 with custom error message / 500
+        /// </returns>
         [AllowAnonymous]
         [HttpPost("login")]
         public ActionResult Login(UserLoginModel userModel)
@@ -51,6 +56,14 @@ namespace PhotoService.Controllers
             }
         }
 
+        /// <summary>
+        /// endpoint for user signup (also authomatically sends and email for verification)
+        /// </summary>
+        /// <param name="user">model with user email, username and password</param>
+        /// <returns>
+        ///     if succeded: 200 with user email
+        ///     if failed: 400 with custom error message / 500
+        /// </returns>
         [AllowAnonymous]
         [HttpPost("signup")]
         public async Task<ActionResult> Signup(UserRegisterModel user)
@@ -61,6 +74,7 @@ namespace PhotoService.Controllers
 
                 await _userService.Create(user);
                 await _emailService.SendEmail(user.Email, "PHOTO SERVICE EMAIL VERIFICATION", htmlBody);
+
                 return Ok(new { email = user.Email });
             }
             catch (AuthorizationException e)
@@ -74,11 +88,12 @@ namespace PhotoService.Controllers
         }
 
         /// <summary>
-        /// verifies user email
+        /// endpoint to verify user email
         /// </summary>
         /// <param name="email">email to verify</param>
-        /// <returns>if succeeded: 200
-        ///          if email is not registered: 400
+        /// <returns>
+        ///     if succeeded: 200
+        ///     if email is not registered: 400
         /// </returns>
         [AllowAnonymous]
         [HttpGet("verify")]
@@ -90,6 +105,7 @@ namespace PhotoService.Controllers
 
                 await _userService.VerifyUser(email);
                 await _emailService.SendEmail(email, "PHOTO SERVICE EMAIL VERIFICATION SUCCESSFUL", htmlBody);
+
                 return Ok("Your email was successfuly verified");
             }
             catch (AuthorizationException e)
@@ -102,10 +118,15 @@ namespace PhotoService.Controllers
             }
         }
 
-
-        [AllowAnonymous]
+        /// <summary>
+        /// endpoint for getting all users
+        /// </summary>
+        /// <returns>
+        ///     if succeded: 200 with collection of user models
+        ///     if fails: 500
+        /// </returns>
         [HttpGet("all")]
-        public async Task<ActionResult> GetAllUsers()
+        public ActionResult GetAllUsers()
         {
             try
             {
@@ -117,6 +138,14 @@ namespace PhotoService.Controllers
             }
         }
 
+        /// <summary>
+        /// endpoint to get userinfo
+        /// </summary>
+        /// <param name="username">username to find</param>
+        /// <returns>
+        ///     if succeded: 200 with user model
+        ///     if fails: 500
+        /// </returns>
         [AllowAnonymous]
         [HttpGet]
         public ActionResult GetUser([FromQuery] string username)
