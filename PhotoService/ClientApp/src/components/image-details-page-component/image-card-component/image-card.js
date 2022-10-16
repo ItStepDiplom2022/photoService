@@ -55,7 +55,7 @@ const ImageCard = (props) => {
 
     useEffect(() => {
         checkIfIsLiked();
-    })
+    },[])
 
     const createFileDonwloadName = () => {
         return image.title + '.' + image.imageUrl.slice(

@@ -3,3 +3,8 @@
     flex-wrap: wrap;
     min-width: 540px;
 }
+
+.center-spinner{
+    width: 100%;
+    margin-left: auto;
+}
