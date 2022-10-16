@@ -1,14 +1,14 @@
 import React from "react";
 import "./DataItem.css";
 
-function DataItem({ displayText, link="#", avatarUrl=""}) {
+function DataItem({ displayText, handleClick, imageUrl=""}) {
   return (
-    <a className="dataItem" href={link}>
-      <div className="avatar-wrapper">
-        { avatarUrl !== "" && avatarUrl !== null ? <img src={avatarUrl} height="100%" width="100%" alt="avatar"/> : <div/>}
+    <div className="dataItem" onClick={handleClick}>
+      <div className="image-wrapper">
+        { imageUrl !== "" && imageUrl !== null ? <img src={imageUrl} height="100%" width="100%" alt=""/> : <div/>}
       </div>
       <p>{displayText}</p>
-    </a>
+    </div>
   );
 }
 

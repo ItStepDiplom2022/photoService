@@ -46,7 +46,8 @@ namespace PhotoService.BLL
                 .ConvertUsing(tag => new SearchResultModel()
                 {
                     Text = tag.Title,
-                    Type = Enums.SearchResultType.Tag
+                    Type = Enums.SearchResultType.Tag,
+                    ImageUrl = "/images/hashtag.png"
                 });
 
             CreateMap<UserModel, SearchResultModel>()

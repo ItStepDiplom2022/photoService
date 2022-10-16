@@ -13,16 +13,13 @@ namespace PhotoService.BLL.Services
         private readonly IMapper _mapper;
 
         private IEnumerable<ImageModel> _imageList { get => _mapper.Map<IList<ImageModel>> (_unitOfWork.ImageRepository.GetWithInclude(x=>x is Image,i=>i.User, i=>i.Hashtags)); }
-        private IEnumerable<HashtagModel> _tagList;
-        private IEnumerable<UserModel> _authorList;
+        private IEnumerable<HashtagModel> _tagList { get => _mapper.Map<IList<HashtagModel>>(_unitOfWork.HashTagRepository.GetHashTags()); }
+        private IEnumerable<UserModel> _authorList { get => _mapper.Map<IList<UserModel>>(_unitOfWork.UserRepository.GetUsers()); }
 
         public SearchService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
-
-            _tagList = _imageList.SelectMany(item => item.Hashtags).Distinct().ToList();
-            _authorList = _imageList.Select(item => item.Author).Distinct().ToList();
         }
 
         public IEnumerable<SimpleImageViewModel> GetImagesByFilter(ImageFilterModel filter)
@@ -49,17 +46,30 @@ namespace PhotoService.BLL.Services
 
         public IEnumerable<SearchResultModel> GetResultsByFilter(string filter)
         {
-            var filtredAuthors = _authorList.Where(author => author.UserName.Contains(filter));
-            var filtredTags = _tagList.Where(tag => tag.Title.Contains(filter));
+            bool isTag = false;
+
+            string searchWord = filter;
+            if(searchWord.StartsWith('#'))
+            {
+                isTag = true;
+                searchWord = searchWord.Substring(1);
+            }
+
+            IEnumerable<UserModel> filtredAuthors = new List<UserModel>();
+            if(!isTag)
+            {
+                filtredAuthors = _authorList.Where(author => author.UserName.Contains(searchWord));
+            }
+            var filtredTags = _tagList.Where(tag => tag.Title.Contains(searchWord));
 
             List<SearchResultModel> results = new List<SearchResultModel>();
             results.AddRange(_mapper.Map<IEnumerable<SearchResultModel>>(filtredTags));
             results.AddRange(_mapper.Map<IEnumerable<SearchResultModel>>(filtredAuthors));
-            if(filter.Length > 1)
+            if(searchWord.Length > 1)
             {
                 foreach (var item in results)
                 {
-                    item.MatchPercent = SimilarityTool.CompareStrings(item.Text, filter);
+                    item.MatchPercent = SimilarityTool.CompareStrings(item.Text, searchWord);
                 }
             }
             results.Sort((a, b) => a.MatchPercent.CompareTo(b.MatchPercent));

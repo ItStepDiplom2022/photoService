@@ -16,5 +16,10 @@ namespace PhotoService.DAL.Repositories
         {
             return _dbContext.Hashtags.FirstOrDefault(tag => tag.Title == title);
         }
+
+        public IEnumerable<Hashtag> GetHashTags()
+        {
+            return _dbContext.Hashtags;
+        }
     }
 }

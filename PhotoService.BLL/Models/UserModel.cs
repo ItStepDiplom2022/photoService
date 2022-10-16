@@ -8,17 +8,17 @@
 
         public bool IsVerified { get; set; }
 
-        public string FirstName { get; set; }
+        public string? FirstName { get; set; }
 
-        public string LastName { get; set; }
+        public string? LastName { get; set; }
 
-        public string Country { get; set; }
+        public string? Country { get; set; }
 
-        public string City { get; set; }
+        public string? City { get; set; }
 
-        public DateTime DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
 
-        public string AvatarUrl { get; set; }
+        public string? AvatarUrl { get; set; }
 
         public ICollection<RoleModel> Roles { get; set; }= new List<RoleModel>();
 

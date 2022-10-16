@@ -4,11 +4,11 @@
   margin-bottom: auto;
 }
 
-.dataResult a {
+.dataResult .dataItem {
   text-decoration: none;
 }
 
-.dataResult a:hover {
+.dataResult .dataItem:hover {
   background-color: lightgrey;
   color: black;
 }
@@ -19,9 +19,10 @@
   display: flex;
   align-items: center;
   color: black;
+  cursor: pointer;
 }
 
-.dataItem .avatar-wrapper {
+.dataItem .image-wrapper {
   height: 80%; 
   aspect-ratio: 1;
   border-radius: 100%;
