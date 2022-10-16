@@ -1,13 +1,7 @@
 ﻿using AutoMapper;
 using PhotoService.BLL.Interfaces;
 using PhotoService.BLL.Models;
-using PhotoService.DAL.Entities;
 using PhotoService.DAL.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PhotoService.BLL.Services
 {

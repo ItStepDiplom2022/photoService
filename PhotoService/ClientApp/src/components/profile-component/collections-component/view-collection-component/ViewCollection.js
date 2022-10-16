@@ -23,7 +23,7 @@ const ViewCollection = (props) => {
 
     useEffect(() => {
         fetchImages(props.username,props.collectionName);
-    }, [])
+    })
 
     return (
         <>

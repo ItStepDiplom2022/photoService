@@ -4,12 +4,6 @@ using PhotoService.BLL.Models;
 using PhotoService.BLL.ViewModels;
 using PhotoService.DAL.Entities;
 using PhotoService.DAL.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace PhotoService.BLL.Services
 {

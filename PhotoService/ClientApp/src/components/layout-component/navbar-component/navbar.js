@@ -32,9 +32,6 @@ export default function Navbar({isLoggedIn, onLoggedChange, username}) {
                         <li className="nav-item">
                             <Link className="nav-link nav-link-custom" to="/">Main</Link>
                         </li>
-                        <li className="nav-item">
-                            <Link className="nav-link nav-link-custom" to="/">About us</Link>
-                        </li>
                         {
                             isLoggedIn ?
                                 <>

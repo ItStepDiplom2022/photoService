@@ -2,7 +2,6 @@ import './comment.css'
 import React from 'react';
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { data } from 'jquery';
 
 const Comment = (props) => {
 

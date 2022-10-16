@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Router, useMatch, useRouteMatch } from 'react-router';
 import { Route, Routes } from 'react-router';
 import authService from '../../services/auth.service';
 import Home  from '../Home';

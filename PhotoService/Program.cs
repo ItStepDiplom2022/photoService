@@ -13,8 +13,6 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllersWithViews()
     .AddNewtonsoftJson(options =>
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
@@ -46,7 +44,6 @@ builder.Services.AddScoped<ISearchService, SearchService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddScoped<IUserCollectionService, UserCollectionService>();
 builder.Services.AddScoped<IBlobService, BlobService>();
-builder.Services.AddScoped<ILikeService, LikeService>();
 builder.Services.AddScoped<IHtmlRenderer, HtmlRenderer>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 

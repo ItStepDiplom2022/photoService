@@ -29,7 +29,10 @@ namespace PhotoService.BLL.Enums
         COLLECTION_DOES_NOT_EXIST,
 
         [Description("This image is not present in your likes")]
-        IMAGE_IS_NOT_PRESENT_IN_LIKES
+        IMAGE_IS_NOT_PRESENT_IN_LIKES,
+
+        [Description("You`ve already downloaded an image with such title")]
+        IMAGE_ALREADY_UPLOADED
 
     }
 

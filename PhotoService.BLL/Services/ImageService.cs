@@ -1,15 +1,13 @@
 ﻿using AutoMapper;
+using Azure;
+using PhotoService.BLL.Enums;
+using PhotoService.BLL.Exceptions;
+using PhotoService.BLL.ExtensionMethods;
 using PhotoService.BLL.Interfaces;
 using PhotoService.BLL.Models;
 using PhotoService.BLL.ViewModels;
 using PhotoService.DAL.Entities;
 using PhotoService.DAL.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PhotoService.BLL.Services
 {
@@ -51,6 +49,7 @@ namespace PhotoService.BLL.Services
             image.User = _unitOfWork.UserRepository.GetUser(model.UserEmail);
             image.DateAdded = DateTime.Now;
 
+            //adding hashtags to db
             var tagsToAdd = new List<Hashtag>();
             foreach (var tagModel in model.Hashtags)
             {
@@ -59,14 +58,23 @@ namespace PhotoService.BLL.Services
 
                 tagsToAdd.Add(tagToAdd);
             }
-
             image.Hashtags = new List<Hashtag>();
 
-            image.ImageUrl = await _blobService.UploadPhoto(image.Title+".png", image.ImageUrl.Substring(image.ImageUrl.LastIndexOf(',') + 1));
+            //saving image in blob container
+            try
+            {
+                image.ImageUrl = await _blobService.UploadPhoto($"{image.User.UserName}_{image.Title}.png", image.ImageUrl.Substring(image.ImageUrl.LastIndexOf(',') + 1));
+            }
+            catch (RequestFailedException)
+            {
+               throw new BlobException(PhotoServiceExceptions.IMAGE_ALREADY_UPLOADED.GetDescription());
+            }
+
             var addedImage = await _unitOfWork.ImageRepository.Add(image);
 
             await _unitOfWork.SaveAsync();
 
+            //adding hashtags to image
             foreach (var hashTag in tagsToAdd)
             {
                 _unitOfWork.ImageRepository.AddHashTag(addedImage, hashTag);

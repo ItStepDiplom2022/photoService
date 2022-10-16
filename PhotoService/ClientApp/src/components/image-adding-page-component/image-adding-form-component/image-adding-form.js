@@ -18,6 +18,7 @@ const ImageAddingForm = () => {
     const [imageName, setImageName] = useState()
     const currentUserEmail = authService.getCurrentUserEmail()
     const [snackBarOptions, setSnackBarOptions] = useState({ isOpen: false })
+    const [isBtnDisabled, setIsBtnDisabled] = useState(false)
 
 
     const navigate = useNavigate()
@@ -70,6 +71,7 @@ const ImageAddingForm = () => {
     const addImage = (e) => {
         e.preventDefault()
         setSnackBarOptions({isOpen: true, message:  "Wait a few seconds...", severity: "info"})
+        setIsBtnDisabled(true)
 
         imageService.postImage(
             title,
@@ -85,6 +87,9 @@ const ImageAddingForm = () => {
             })
             .catch(e=>{
                 setSnackBarOptions({isOpen: true, severity:"error", message:e})
+            })
+            .finally(()=>{
+                setIsBtnDisabled(false)
             })
 
     }
@@ -162,13 +167,13 @@ const ImageAddingForm = () => {
                         {tagsCollection}
                     </div>
 
-                    <button className='btn btn-success btn-submit'>
+                    <button disabled={isBtnDisabled} className='btn btn-success btn-submit'>
                         Submit
                     </button>
                 </form>
 
                 <Snackbar open={snackBarOptions.isOpen} autoHideDuration={5000} onClose={handleSnackBarClose} anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}>
-                    <Alert severity={snackBarOptions.severity} sx={{ width: '100%' }} onClose={handleSnackBarClose} variant="filled">
+                    <Alert severity={snackBarOptions.severity} sx={{ width: '100%' }} onClose={handleSnackBarClose}  autoHideDuration={10000} variant="filled">
                         {snackBarOptions.message}
                     </Alert>
                 </Snackbar>

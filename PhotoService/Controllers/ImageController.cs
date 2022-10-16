@@ -6,6 +6,9 @@ using PhotoService.BLL.Models;
 
 namespace PhotoService.Controllers
 {
+    /// <summary>
+    /// manages all operations related to image
+    /// </summary>
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
@@ -19,6 +22,14 @@ namespace PhotoService.Controllers
             _userCollectionService = userCollectionService;
         }
 
+        /// <summary>
+        /// endpoint to get image by its id
+        /// </summary>
+        /// <param name="id">image id</param>
+        /// <returns>
+        ///     if succeeded: 200 with image model
+        ///     if fails: 500
+        /// </returns>
         [AllowAnonymous]
         [HttpGet("{id:}")]
         public ActionResult GetImage(int id)
@@ -35,6 +46,14 @@ namespace PhotoService.Controllers
             }
         }
 
+        /// <summary>
+        /// endpoint to get images by user email
+        /// </summary>
+        /// <param name="email">user email</param>
+        /// <returns>
+        ///     if succeeded: 200 with collection of images
+        ///     if fails: 500
+        /// </returns>
         [AllowAnonymous]
         [HttpGet("email/{email:}")]
         public ActionResult GetImagesByEmail(string email)
@@ -50,6 +69,14 @@ namespace PhotoService.Controllers
             }
         }
 
+        /// <summary>
+        /// endpoint to get images by username
+        /// </summary>
+        /// <param name="username">username</param>
+        /// <returns>
+        ///     if succeeded: 200 with collection of images
+        ///     if fails: 500
+        /// </returns>
         [AllowAnonymous]
         [HttpGet("username/{username:}")]
         public ActionResult GetImagesByUserName(string username)
@@ -65,6 +92,14 @@ namespace PhotoService.Controllers
             }
         }
 
+        /// <summary>
+        /// endpoint for adding an image
+        /// </summary>
+        /// <param name="image">image model to add</param>
+        /// <returns>
+        ///     if succeeded: 200 with added image
+        ///     if fails: 400 with custom message / 500
+        /// </returns>
         [HttpPost]
         public async Task<ActionResult> PostImage([FromBody] ImageAddModel image)
         {
@@ -73,15 +108,25 @@ namespace PhotoService.Controllers
                 var addedImage=await _imageService.AddImage(image);
                 return Ok(addedImage);
             }
-            catch (Exception e)
+            catch(BlobException e)
             {
                 return BadRequest(e.Message);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
             }
         }
 
         /// <summary>
-        /// gets images from certain collection
+        /// endpoint to get images by collection
         /// </summary>
+        /// <param name="username">collection owner</param>
+        /// <param name="collectionName">collection name</param>
+        /// <returns>
+        ///     if succeeded: 200 with collection of images
+        ///     if fails: 400 with custom message / 500
+        /// </returns>
         [AllowAnonymous]
         [HttpGet("collection/{username:}")]
         public async Task<ActionResult> GetImagesByCollection(string username, [FromQuery] string collectionName)

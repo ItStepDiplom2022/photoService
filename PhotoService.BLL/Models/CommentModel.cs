@@ -1,5 +1,4 @@
-﻿
-namespace PhotoService.BLL.Models
+﻿namespace PhotoService.BLL.Models
 {
     public class CommentModel
     {

@@ -10,7 +10,6 @@ namespace PhotoService.BLL
     {
         public AutoMapperSettings()
         {
-            //TODO: add all necessary mappings
             CreateMap<User, UserLoginModel>()
                 .ReverseMap();
 

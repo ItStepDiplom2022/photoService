@@ -5,6 +5,9 @@ using PhotoService.BLL.ViewModels;
 
 namespace PhotoService.Controllers
 {
+    /// <summary>
+    /// manages image search operations
+    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     public class SearchController : Controller
@@ -16,6 +19,17 @@ namespace PhotoService.Controllers
             _searchService = searchService;
         }
 
+        /// <summary>
+        /// gets images by filter model
+        /// </summary>
+        /// <param name="author">username</param>
+        /// <param name="tag">image tag</param>
+        /// <param name="q">query to search in title</param>
+        /// <param name="last">number of last fetched image</param>
+        /// <param name="count">number of images to fetch</param>
+        /// <returns>
+        ///     collection of filtered images
+        /// </returns>
         [HttpGet]
         public IActionResult FindImages([FromQuery] string? author, [FromQuery] string? tag, [FromQuery] string? q, [FromQuery] int last, [FromQuery] int count)
         {
@@ -39,6 +53,13 @@ namespace PhotoService.Controllers
             return Ok(new {Items=res, Last=last+itemsCount, IsLast=(itemsCount < count && count != 0)});
         }
 
+        /// <summary>
+        /// get images by string filter
+        /// </summary>
+        /// <param name="filter">filter</param>
+        /// <returns>
+        ///     collection of filtered images
+        /// </returns>
         [HttpGet]
         [Route("filter")]
         public IActionResult Filter([FromQuery]string filter = "")

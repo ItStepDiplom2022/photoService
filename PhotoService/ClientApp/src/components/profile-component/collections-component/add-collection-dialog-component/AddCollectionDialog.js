@@ -1,4 +1,4 @@
-import { Button, Checkbox, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControlLabel, TextField } from '@mui/material';
+import { Button, Checkbox, Container, Dialog, DialogActions, DialogContent,  DialogTitle, FormControlLabel, TextField } from '@mui/material';
 import React, { useState } from 'react'
 
 const AddCollectionDialog = ({submitAction, setVisible, isVisible}) => {

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using PhotoService.BLL.Enums;
 using PhotoService.BLL.Exceptions;
+using PhotoService.BLL.ExtensionMethods;
 using PhotoService.BLL.Interfaces;
 using PhotoService.BLL.Models;
 using PhotoService.DAL;
@@ -13,7 +14,6 @@ namespace PhotoService.BLL.Services
     public class UserService : IUserService
     {
         private readonly IUnitOfWork _unitOfWork;
-        //private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
         private readonly IJwtService _jwtService;
         private readonly string key;

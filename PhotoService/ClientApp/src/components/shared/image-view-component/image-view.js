@@ -15,7 +15,7 @@ const ImageView = (props) => {
 
     const getDateParsed = () =>{
         let date = new Date(Date.parse(image.dateAdded))
-        return `${date.getFullYear()}/${date.getMonth()}/${date.getDay()}`
+        return `${date.getFullYear()}/${date.getMonth()+1}/${date.getDate()}`
     }
 
     return (

@@ -21,6 +21,11 @@ const ImageCard = (props) => {
     const [snackBarOptions, setSnackBarOptions] = useState({ isOpen: false })
 
     const onLikePressed = () => {
+        if(!authService.isLoggedIn()){
+            setSnackBarOptions({isOpen:true, severity:'error',message:'Log in to perform this action'})
+            return
+        }
+
         let username = authService.getCurrentUserUsername()
 
         if(isLiked){
@@ -38,7 +43,7 @@ const ImageCard = (props) => {
 
     const getDateParsed = () =>{
         let date = new Date(Date.parse(image.dateAdded))
-        return `${date.getFullYear()}/${date.getMonth()}/${date.getDay()}`
+        return `${date.getFullYear()}/${date.getMonth()+1}/${date.getDate()}`
     }
 
     const checkIfIsLiked = () =>{
@@ -78,7 +83,7 @@ const ImageCard = (props) => {
         if(authService.isLoggedIn())
             setShowDialog(true);
         else
-            setSnackBarOptions({isOpen:true, severity:'error',message:'Log in to do this action'})
+            setSnackBarOptions({isOpen:true, severity:'error',message:'Log in to perform this action'})
     }
 
     const handleSnackBarClose = () => {
