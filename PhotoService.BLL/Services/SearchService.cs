@@ -26,16 +26,22 @@ namespace PhotoService.BLL.Services
         {
             return _mapper.Map<IEnumerable<SimpleImageViewModel>>(_imageList.Where(image =>
             {
+                if(filter.Query != null)
+                {
+                    filter.Tag = filter.Query;
+                    filter.Author = filter.Query;
+                }
+
                 var isCurrent = false;
-                if(filter.Tag != null)
+                if(filter.Tag != null && !isCurrent)
                 {
                     isCurrent = image.Hashtags.Any(tag => tag.Title.ToUpper().Contains(filter.Tag.ToUpper()));
                 }
-                if(filter.Author != null)
+                if(filter.Author != null && !isCurrent)
                 {
                     isCurrent = image.Author.UserName.ToUpper().Contains(filter.Author.ToUpper());
                 }
-                if(filter.Query != null)
+                if(filter.Query != null && !isCurrent)
                 {
                     isCurrent = image.Title.ToUpper().Contains(filter.Query.ToUpper()) || image.Description.ToUpper().Contains(filter.Query.ToUpper());
                 }
