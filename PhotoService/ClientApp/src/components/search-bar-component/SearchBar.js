@@ -6,9 +6,10 @@ import DataItem from "./dataItem-component/DataItem";
 import { useNavigate } from "react-router";
 import SearchService from "../../services/search.service";
 
-function SearchBar({ placeholder="" }) {
+function SearchBar({ placeholder = "Search..." }) {
   const [filterData, setFilterData] = useState([]);
   const [wordEntered, setWordEntered] = useState("");
+  const [isOnFocus, setIsOnFocus] = useState(false);
   const navigate = useNavigate();
 
   const handleFilter = async (event) => {
@@ -18,7 +19,6 @@ function SearchBar({ placeholder="" }) {
     if (searchWord !== "") {
       newFilter = (await SearchService.getByFilter(searchWord)).data;
     }
-
     console.log(newFilter);
 
     setFilterData(newFilter);
@@ -30,13 +30,18 @@ function SearchBar({ placeholder="" }) {
   };
 
   const defaultSearch = () => {
-    if(wordEntered !== "")
-      navigate(`/?q=${wordEntered}`);
-  }
+    if (wordEntered !== "") navigate(`/?q=${wordEntered}`);
+  };
 
   return (
     <div className="search">
-      <div className="searchInputs">
+      <div
+        className="searchInputs"
+        onFocus={(e) => {
+          setIsOnFocus(true);
+          handleFilter(e);
+        }}
+      >
         <input
           type="text"
           placeholder={placeholder}
@@ -45,26 +50,41 @@ function SearchBar({ placeholder="" }) {
           onKeyPress={(ev) => {
             if (ev.key === "Enter") {
               navigate(`/?q=${wordEntered}`);
+              setIsOnFocus(false);
             }
           }}
         />
         <div className="searchIcon">
           {filterData.length === 0 ? (
-            <SearchIcon id="searchBtn" onClick={defaultSearch}/>
+            <SearchIcon id="searchBtn" onClick={defaultSearch} />
           ) : (
             <Close id="clearBtn" onClick={clearInput} />
           )}
         </div>
       </div>
-      {filterData.length !== 0 && (
+      {filterData.length !== 0 && isOnFocus && (
         <div className="dataResult">
           {filterData.slice(0, 15).map((value, key) => {
+            let searchType;
+
+            if (value.type == 0) {
+              searchType = "/?author=";
+            } else {
+              searchType = "/?tag=";
+            }
+
+            let handler = () => {
+              navigate(searchType + value.text);
+              setIsOnFocus(false);
+              setWordEntered(value.text);
+            };
+
             return (
-              <DataItem 
+              <DataItem
                 displayText={value.text}
-                link={value.type == 0 ? `/?author=${value.text}` : `/?tag=${value.text}` } 
-                avatarUrl={value.imageUrl}
-                />
+                handleClick={handler}
+                imageUrl={value.imageUrl}
+              />
             );
           })}
         </div>
