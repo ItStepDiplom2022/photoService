@@ -23,6 +23,7 @@ export default function Gallery({images}) {
     });
   };
   window.addEventListener("resize", resizeAll);
+  window.addEventListener("load", resizeAll);
 
   function resizeItem(item) {
     if (item.complete) {
