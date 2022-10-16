@@ -28,14 +28,19 @@ const MyUploads = (props) => {
 
     return (
         <>
-            {!projects?<LoadingSpinner/>:
-            projects?.map(project=>
-                    <ImageView image={project} likes={0} savings={0} downloads={0}/>
-                    )}
             {isCurrentUser?
-                <button type="button" className="btn btn-link link" onClick={addNewHandle}>Add new</button>
+                <div className='button-div'>
+                    <button type="button" className="btn btn-outline-primary" onClick={addNewHandle}>Add new</button>
+                </div>
             :null   
             }
+            {
+            !projects?
+                <LoadingSpinner/>
+            :
+                projects?.map(project=>
+                    <ImageView image={project} likes={0} savings={0} downloads={0}/>
+                    )}
         </>
     );
 }
