@@ -19,7 +19,6 @@ function SearchBar({ placeholder = "Search..." }) {
     if (searchWord !== "") {
       newFilter = (await SearchService.getByFilter(searchWord)).data;
     }
-    console.log(newFilter);
 
     setFilterData(newFilter);
   };

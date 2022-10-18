@@ -5,7 +5,6 @@ import "./gallery-item.css"
 export default function GalleryItem(props)
 {
     let navigate = useNavigate();
-    console.log(props.image)
 
     return (
         <div className="gallery-item">

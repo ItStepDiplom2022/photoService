@@ -16,7 +16,7 @@ const ImageDetailsPage = () => {
     let navigate=useNavigate()
 
     const [image,setImage]=useState()
-    const [comments, setComments] = useState()
+    const [comments, setComments] = useState([])
     const {id} = useParams()
     const currentUsername = authService.getCurrentUserUsername()
     
@@ -31,7 +31,7 @@ const ImageDetailsPage = () => {
     }
 
     const fetchComments = async() =>{
-        setComments(await commentService.getComments(id))
+        setComments((await commentService.getComments(id)).data)
     }
 
     const addCommentHandler =  async(comment) => {
@@ -50,7 +50,7 @@ const ImageDetailsPage = () => {
                     <FontAwesomeIcon icon={faArrowLeft}/>
                 </a>
                 <ImageCard image={image.data} />
-                <CommentsSection addComment={addCommentHandler} comments={comments?.data} commentsAmount={comments?.data?.length}/>
+                <CommentsSection addComment={addCommentHandler} comments={comments} commentsAmount={comments?.length}/>
             </>
         :
         <div style={{marginTop:20}}>
