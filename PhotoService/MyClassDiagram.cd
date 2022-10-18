@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access" MembersFormat="FullSignature">
+  <Class Name="PhotoService.Controllers.AccountController">
+    <Position X="10.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAEAAAAAAAAAQAAAACAAAEAAUAAEAAAA=</HashCode>
+      <FileName>Controllers\AccountController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_emailService" />
+      <Field Name="_htmlRenderer" />
+      <Field Name="_userService" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="PhotoService.Controllers.CollectionController">
+    <Position X="17" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAECAAAAAAAAgAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\CollectionController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_userCollectionService" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="PhotoService.Controllers.CommentController">
+    <Position X="17" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAEAAAAAAAAAAAAAAEgAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Controllers\CommentController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_commentService" />
+      <Field Name="_imageService" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="PhotoService.Controllers.ImageController">
+    <Position X="10.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAEAEAAAAAAAAAAAQAAAAABAAAAAAAAIAAEA=</HashCode>
+      <FileName>Controllers\ImageController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_imageService" />
+      <Field Name="_userCollectionService" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="PhotoService.Controllers.LikeController">
+    <Position X="17" Y="6.25" Width="1.5" />
+    <AssociationLine Name="_userCollectionService" Type="PhotoService.BLL.Interfaces.IUserCollectionService" FixedFromPoint="true">
+      <Path>
+        <Point X="17" Y="7.188" />
+        <Point X="15" Y="7.188" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAEAAAAAAAAAAAAAABAAAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>Controllers\LikeController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_userCollectionService" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="PhotoService.Controllers.SearchController">
+    <Position X="17" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>Controllers\SearchController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_searchService" />
+    </ShowAsAssociation>
+  </Class>
+  <Interface Name="PhotoService.BLL.Interfaces.IImageService">
+    <Position X="13.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="PhotoService.BLL.Interfaces.IUserCollectionService">
+    <Position X="13.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="PhotoService.BLL.Interfaces.IEmailService">
+    <Position X="13.75" Y="8.25" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="PhotoService.Renderes.IHtmlRenderer">
+    <Position X="13.75" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Renderes\IHtmlRenderer.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="PhotoService.BLL.Interfaces.IUserService">
+    <Position X="13.75" Y="11" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="PhotoService.BLL.Interfaces.ICommentService">
+    <Position X="20.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="PhotoService.BLL.Interfaces.ISearchService">
+    <Position X="20.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
